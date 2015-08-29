@@ -1,0 +1,2 @@
+configurations.create("default")
+artifacts.add("default", file('freebuilder-1.0-rc5.jar'))

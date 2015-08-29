@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="freebuilder-1.0-rc5.freebuilder-1.0-rc5">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/freebuilder-1.0-rc5/freebuilder-1.0-rc5.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
