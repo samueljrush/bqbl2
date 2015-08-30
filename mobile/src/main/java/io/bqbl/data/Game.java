@@ -1,7 +1,6 @@
 package io.bqbl.data;
 
 import android.util.Log;
-import android.util.Pair;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -11,18 +10,18 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.List;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import io.bqbl.data.Team.ResultType;
 import io.bqbl.utils.Listener;
 import io.bqbl.utils.URLs;
 import io.bqbl.utils.WebUtils;
-import io.bqbl.data.Team.ResultType;
 
 import static io.bqbl.MyApplication.logTag;
 
@@ -41,13 +40,6 @@ public abstract class Game {
   protected Map<Integer, Team> userToTeam = new HashMap<>();
 
   public static Game create(int gameId, int sportId, int creator, String placeId, String date, List<Team> teams, List<Integer> woohoos) {
-    Collections.sort(teams, new Comparator<Team>() {
-      @Override
-      public int compare(Team lhs, Team rhs) {
-        return lhs.rank() - rhs.rank();
-      }
-    });
-
     Game game = new AutoValue_Game.Builder()
         .id(gameId)
         .sportId(sportId)
@@ -57,12 +49,20 @@ public abstract class Game {
         .teams(teams)
         .woohoos(woohoos)
         .build();
+    Collections.sort(teams, new Comparator<Team>() {
+      @Override
+      public int compare(Team lhs, Team rhs) {
+        return lhs.rank() - rhs.rank();
+      }
+    });
+    setResultTypes(teams);
 
     for (Team team : teams) {
       for(Integer userId : team.users()) {
         game.userToTeam.put(userId, team);
       }
     }
+
 
     return game;
   }
@@ -75,7 +75,6 @@ public abstract class Game {
       for (int teamId = 0; teamId < teamsArray.length(); teamId++) {
         teams.add(Team.fromJSON(gameId, teamId, teamsArray.getJSONObject(teamId)));
       }
-      setResultTypes(teams);
       JSONArray woohoosArray = json.getJSONArray(JSON_KEY_WOOHOOS);
       for (int i = 0; i < woohoosArray.length(); i++) {
         woohoos.add(Integer.valueOf(woohoosArray.getString(i)));
