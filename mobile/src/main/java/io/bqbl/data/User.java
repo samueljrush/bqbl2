@@ -22,9 +22,18 @@ public abstract class User {
   public static final String JSON_KEY_PENIS_SIZE = "penis_size";
   public static final String JSON_KEY_EMAIL = "email";
   private static final String JSON_KEY_USERID = "userid";
+  private static final String JSON_KEY_GCM_TOKEN = "gcm_token";
 
-  public static User create(int id, String email, String first, String last, String phone, double penis) {
-    return new AutoValue_User.Builder().id(id).email(email).first(first).last(last).phone(phone).penis(penis).build();
+  public static User create(int id, String email, String first, String last, String phone, double penis, String gcmToken) {
+    return new AutoValue_User
+        .Builder()
+        .id(id)
+        .email(email)
+        .first(first)
+        .last(last)
+        .phone(phone)
+        .penis(penis)
+        .gcmToken(gcmToken).build();
     // (or just AutoValue_BQBLObjects_Animal if this is not nested)
   }
 
@@ -37,6 +46,7 @@ public abstract class User {
           .last(json.getString(JSON_KEY_LAST_NAME))
           .phone(json.getString(JSON_KEY_PHONE_NUMBER))
           .penis(json.getDouble(JSON_KEY_PENIS_SIZE))
+          .gcmToken(json.getString(JSON_KEY_GCM_TOKEN))
           .build();
     } catch (JSONException e) {
       return null;
@@ -52,6 +62,7 @@ public abstract class User {
       json.put(JSON_KEY_LAST_NAME, last());
       json.put(JSON_KEY_PHONE_NUMBER, phone());
       json.put(JSON_KEY_PENIS_SIZE, penis());
+      json.put(JSON_KEY_GCM_TOKEN, gcmToken());
     } catch (JSONException e) {
       // TODO: handle error
     }
@@ -85,6 +96,7 @@ public abstract class User {
   public abstract String last();
   public abstract String phone();
   public abstract double penis();
+  public abstract String gcmToken();
   public abstract Builder toBuilder();
 
   @AutoValue.Builder
@@ -95,6 +107,7 @@ public abstract class User {
     public abstract Builder last(String last);
     public abstract Builder phone(String phone);
     public abstract Builder penis(double penis);
+    public abstract Builder gcmToken(String gcmToken);
     public abstract User build();
     }
   }
