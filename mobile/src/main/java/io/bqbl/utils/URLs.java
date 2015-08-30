@@ -1,5 +1,7 @@
 package io.bqbl.utils;
 
+import android.net.Uri;
+
 /**
  * Created by sam on 7/25/2015.
  */
@@ -14,5 +16,9 @@ public final class URLs {
   public static final String FRIENDS_PHP = BQBLIO_JSON_URL + "/friends.php";
 
   private URLs() {}
+
+  public static final String getUserPhotoUrl(int userId) {
+    return String.format(USER_PHOTO_FORMAT, userId);
+  }
 
 }

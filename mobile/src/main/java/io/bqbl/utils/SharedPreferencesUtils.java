@@ -44,6 +44,9 @@ public final class SharedPreferencesUtils {
     return prefs.getString(context.getString(keyResource), context.getString(defaultResource));
   }
 
+  public static int getCurrentUserId(Context context) {
+    return getInt(context, R.string.pref_current_user, R.string.pref_current_user_default);
+  }
   private static SharedPreferences getSharedPreferences(Context context) {
     return context.getSharedPreferences(context.getString(R.string.prefs_file_name), Context.MODE_PRIVATE);
   }

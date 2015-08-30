@@ -5,6 +5,7 @@ import android.app.Fragment;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.view.GravityCompat;
@@ -12,6 +13,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -24,6 +26,14 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import io.bqbl.data.User;
+import io.bqbl.utils.Listener;
+import io.bqbl.utils.SharedPreferencesUtils;
+import io.bqbl.utils.URLs;
+import io.bqbl.utils.WebUtils;
+
+import static io.bqbl.MyApplication.logTag;
 
 /**
  * Fragment used for managing interactions for and presentation of a navigation drawer.
@@ -273,7 +283,27 @@ public class NavigationDrawerFragment extends Fragment {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
       if (position == 0) {
-        return mLayoutInflater.inflate(R.layout.drawer_user_item, parent, false);
+        Resources resources = getActivity().getResources();
+        int statusBarHeight = resources.getDimensionPixelSize(resources.getIdentifier("status_bar_height", "dimen", "android"));
+        View view = mLayoutInflater.inflate(R.layout.drawer_user_item, parent, false);
+        view.findViewById(R.id.nav_drawer_user).setPadding(0, statusBarHeight, 0, 0);
+        ImageView userImageView = (ImageView) view.findViewById(R.id.user_photo);
+        final TextView emailTextView = (TextView) view.findViewById(R.id.email_text);
+        final TextView nameTextView = (TextView) view.findViewById(R.id.name_text);
+
+        int userId = SharedPreferencesUtils.getCurrentUser(getActivity());
+        String userPhotoUri = URLs.getUserPhotoUrl(userId);
+        WebUtils.setImageRemoteUri(userImageView, userPhotoUri);
+        Log.d(logTag(this), "Requesting user...");
+        MyApplication.getInstance().addToRequestQueue(User.requestUser(userId, new Listener<User>() {
+          @Override
+          public void onResult(User user) {
+            Log.d(logTag(this), "User: " + user.toString());
+            emailTextView.setText(user.email());
+            nameTextView.setText(user.first() + " " + user.last());
+          }
+        }));
+        return view;
       } else {
         int listPosition = position - 1;
         View itemRoot = convertView;

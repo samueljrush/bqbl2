@@ -1,22 +1,60 @@
 package io.bqbl.data;
 
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.os.AsyncTask;
+import android.util.Log;
 import android.util.LruCache;
 import android.util.Pair;
 
 import com.google.android.gms.location.places.Place;
 
+import java.io.File;
+
+import io.bqbl.BuildConfig;
+import io.bqbl.MyApplication;
+import io.bqbl.utils.DiskLruCache;
+
+import static io.bqbl.MyApplication.logTag;
+
 /**
  * Created by sam on 7/26/2015.
  */
 public final class CacheManager {
+  private static final String DISK_CACHE_SUBDIR = "images";
+  private static final int DISK_CACHE_SIZE = 1024 * 1024 * 10;
   private static CacheManager sInstance;
 
   private LruCache<Integer, User> mUsers = new LruCache<>(100);
   private LruCache<Pair<Integer, Integer>, Team> mTeams = new LruCache<>(100);
   private LruCache<Integer, Game> mGames = new LruCache<>(100);
   private LruCache<String, Place> mPlaces = new LruCache<>(100);
+  private LruCache<String, Bitmap> mBitmapMemCache = new LruCache<>(10);
+
+  private Object mBitmapDiskCacheLock = new Object();
+  private DiskLruCache<Bitmap> mBitmapDiskCache;
+  private boolean mDiskCacheStarting = true;
 
   private CacheManager() {
+    File cacheDir = getDiskCacheDir(MyApplication.getInstance(), DISK_CACHE_SUBDIR);
+    new InitDiskCacheTask().execute(cacheDir);
+  }
+
+  class InitDiskCacheTask extends AsyncTask<File, Void, Void> {
+    @Override
+    protected Void doInBackground(File... params) {
+      synchronized (mBitmapDiskCacheLock) {
+        File cacheDir = params[0];
+        try {
+          mBitmapDiskCache = DiskLruCache.open(cacheDir, BuildConfig.VERSION_CODE, 1 /* value count */, DISK_CACHE_SIZE);
+          mDiskCacheStarting = false; // Finished initialization
+          mBitmapDiskCacheLock.notifyAll(); // Wake any waiting threads
+        } catch (Exception e) {
+          Log.e(logTag(this), "Error setting up Disk Cache", e);
+        }
+      }
+      return null;
+    }
   }
 
   public static CacheManager getInstance() {
@@ -56,5 +94,39 @@ public final class CacheManager {
 
   public Place getPlace(String id) {
     return mPlaces.get(id);
+  }
+
+  public void addBitmapToDiskCache(String key, Bitmap bitmap) {
+    // Also add to disk cache
+    synchronized (mBitmapDiskCacheLock) {
+      if (mBitmapDiskCache != null && mBitmapDiskCache.getValue(key) == null) {
+        mBitmapDiskCache.put(key, bitmap);
+      }
+    }
+  }
+
+  public Bitmap getBitmapFromDiskCache(String key) {
+    synchronized (mBitmapDiskCacheLock) {
+      // Wait while disk cache is started from background thread
+      while (mDiskCacheStarting) {
+        try {
+          mBitmapDiskCacheLock.wait();
+        } catch (InterruptedException e) {}
+      }
+      if (mBitmapDiskCache != null) {
+        return mBitmapDiskCache.getValue(key);
+      }
+    }
+    return null;
+  }
+
+  // Creates a unique subdirectory of the designated app cache directory. Tries to use external
+  // but if not mounted, falls back on internal storage.
+  public static File getDiskCacheDir(Context context, String uniqueName) {
+    // Check if media is mounted or storage is built-in, if so, try and use external cache dir
+    // otherwise use internal cache dir
+    final String cachePath = context.getCacheDir().getPath();
+
+    return new File(cachePath + File.separator + uniqueName);
   }
 }

@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,7 +29,10 @@ public class WelcomeActivityFragment extends Fragment {
 
   private static final int ACCOUNT_SELECTION_REQUEST = 1;
   private static final String TAG = WelcomeActivityFragment.class.getSimpleName();
+  private static final long SPLASH_DELAY_MILLIS = 2000;
 
+  private Handler mHandler = new Handler();
+  
   public WelcomeActivityFragment() {
   }
 
@@ -41,14 +45,15 @@ public class WelcomeActivityFragment extends Fragment {
   @Override
   public void onStart() {
     super.onStart();
-    int userid = SharedPreferencesUtils.getInt(getActivity(), R.string.pref_current_user, R.string.pref_current_user_default);
+    int userid = SharedPreferencesUtils.getCurrentUser(getActivity());
     if (userid > 0) {
       Intent intent = new Intent(getActivity(), MainActivity.class);
       startActivity(intent);
       android.util.Log.v(MyApplication.logTag(this), "user id: " + userid);
+      getActivity().finish();
     } else {
       android.util.Log.v(MyApplication.logTag(this), "Asking for google account.");
-      Intent googlePicker = AccountPicker.newChooseAccountIntent(
+      final Intent googlePicker = AccountPicker.newChooseAccountIntent(
           null,
           null,
           new String[]{GoogleAuthUtil.GOOGLE_ACCOUNT_TYPE},
@@ -57,7 +62,12 @@ public class WelcomeActivityFragment extends Fragment {
           null,
           null,
           null);
-      startActivityForResult(googlePicker, ACCOUNT_SELECTION_REQUEST);
+      mHandler.postDelayed(new Runnable() {
+        @Override
+        public void run() {
+          startActivityForResult(googlePicker, ACCOUNT_SELECTION_REQUEST);
+        }
+      }, SPLASH_DELAY_MILLIS);
     }
   }
 
@@ -86,6 +96,7 @@ public class WelcomeActivityFragment extends Fragment {
           } catch (Exception e) {
             android.util.Log.e(MyApplication.logTag(WelcomeActivityFragment.this), "Exception thrown", e);
           }
+          getActivity().finish();
         }
       });
       myApp.addToRequestQueue(request);

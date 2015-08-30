@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.volley.Request;
@@ -118,17 +119,20 @@ public class FeedFragment extends Fragment {
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-      protected TextView mTextView;
+      protected TextView mTitleTextView;
+      protected TextView mSubtitleTextView;
+      protected ImageView mChipView;
       protected View mItemView;
 
       public ViewHolder(View itemView) {
         super(itemView);
         mItemView = itemView;
-        mTextView = (TextView) itemView.findViewById(R.id.feed_card_text);
+        mTitleTextView = (TextView) itemView.findViewById(R.id.title_text);
+        mSubtitleTextView = (TextView) itemView.findViewById(R.id.subtitle_text);
+        mChipView = (ImageView) itemView.findViewById(R.id.chip_view);
       }
 
       public void bind(final Game game) {
-        mTextView.setText(game.toString());
         mItemView.setOnClickListener(new View.OnClickListener() {
           @Override
           public void onClick(View v) {

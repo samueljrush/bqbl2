@@ -2,53 +2,11 @@
 <items version="2" >
 
     <item
-        jar="C:\Users\sam\AndroidStudioProjects\BQBLio\mobile\build\intermediates\exploded-aar\com.google.android.gms\play-services-appinvite\7.8.0\jars\classes.jar"
+        jar="C:\Users\sam\AndroidStudioProjects\BQBLio\mobile\build\intermediates\exploded-aar\com.android.support\appcompat-v7\22.2.1\jars\classes.jar"
         jumboMode="false"
         revision="22.0.1"
-        sha1="98137c4d12c50923f5809852b1ef4d1c4e162081">
-        <dex dex="C:\Users\sam\AndroidStudioProjects\BQBLio\mobile\build\intermediates\pre-dexed\debug\classes-c9706128221acaec74f4f7b1b4af3998f37b751e.jar" />
-    </item>
-    <item
-        jar="C:\Users\sam\AndroidStudioProjects\BQBLio\mobile\build\intermediates\exploded-aar\com.google.android.gms\play-services-plus\7.8.0\jars\classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="2491ae1b2a848af1f4f0c795f3117c1bd6a1989f">
-        <dex dex="C:\Users\sam\AndroidStudioProjects\BQBLio\mobile\build\intermediates\pre-dexed\debug\classes-6b870bf64a90da9f51aa959ece00bfa13b7ffe0e.jar" />
-    </item>
-    <item
-        jar="C:\Users\sam\AndroidStudioProjects\BQBLio\mobile\build\intermediates\exploded-aar\com.google.android.gms\play-services-drive\7.8.0\jars\classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="42a1ee578b62fd1bd28b3307a679dc9ba0791587">
-        <dex dex="C:\Users\sam\AndroidStudioProjects\BQBLio\mobile\build\intermediates\pre-dexed\debug\classes-b32ef45f4c3e8df2b122a80966e62489e54f51fc.jar" />
-    </item>
-    <item
-        jar="C:\Users\sam\AndroidStudioProjects\BQBLio\mobile\build\intermediates\exploded-aar\com.android.support\support-v4\22.2.1\jars\libs\internal_impl-22.2.1.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="c471eaaba13ff64f6e0383d1c30a9cdc9a97efeb">
-        <dex dex="C:\Users\sam\AndroidStudioProjects\BQBLio\mobile\build\intermediates\pre-dexed\debug\internal_impl-22.2.1-aa5b314b6c84e5c09fb7fa331ed9243f81db6a97.jar" />
-    </item>
-    <item
-        jar="C:\Users\sam\.gradle\caches\modules-2\files-2.1\com.google.auto.value\auto-value\1.1\f6951c141ea3e89c0f8b01da16834880a1ebf162\auto-value-1.1.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="f6951c141ea3e89c0f8b01da16834880a1ebf162">
-        <dex dex="C:\Users\sam\AndroidStudioProjects\BQBLio\mobile\build\intermediates\pre-dexed\debug\auto-value-1.1-5a8a63ca064b340191f35a0e4a1d58a6181d84e8.jar" />
-    </item>
-    <item
-        jar="C:\Users\sam\AndroidStudioProjects\BQBLio\mobile\build\intermediates\exploded-aar\com.google.android.gms\play-services-panorama\7.8.0\jars\classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="6e85edfc9b5346d216e50ccef1f8e825504144a3">
-        <dex dex="C:\Users\sam\AndroidStudioProjects\BQBLio\mobile\build\intermediates\pre-dexed\debug\classes-6fbda43848d8fae514d5e44d3b33d45636518ce1.jar" />
-    </item>
-    <item
-        jar="C:\Users\sam\AndroidStudioProjects\BQBLio\mobile\build\intermediates\exploded-aar\com.android.support\design\22.2.1\jars\classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="1821601ddbec5ff125653097812823388700af74">
-        <dex dex="C:\Users\sam\AndroidStudioProjects\BQBLio\mobile\build\intermediates\pre-dexed\debug\classes-1f87d3ca9090afc905a2f097be188dcacd8a858c.jar" />
+        sha1="4486e953d1f35f8ccab098b1dd67146366d5f731">
+        <dex dex="C:\Users\sam\AndroidStudioProjects\BQBLio\mobile\build\intermediates\pre-dexed\debug\classes-32d4557263e5e09ab814afe9e881061f639600f5.jar" />
     </item>
     <item
         jar="C:\Users\sam\AndroidStudioProjects\BQBLio\mobile\build\intermediates\exploded-aar\com.google.android.gms\play-services-maps\7.8.0\jars\classes.jar"
@@ -58,81 +16,18 @@
         <dex dex="C:\Users\sam\AndroidStudioProjects\BQBLio\mobile\build\intermediates\pre-dexed\debug\classes-eb0664f8e6f696c303cc3f6d32855f1e69da6631.jar" />
     </item>
     <item
-        jar="C:\Users\sam\AndroidStudioProjects\BQBLio\mobile\build\intermediates\exploded-aar\com.google.android.gms\play-services-ads\7.8.0\jars\classes.jar"
+        jar="C:\Users\sam\.gradle\caches\modules-2\files-2.1\javax.annotation\javax.annotation-api\1.2\479c1e06db31c432330183f5cae684163f186146\javax.annotation-api-1.2.jar"
         jumboMode="false"
         revision="22.0.1"
-        sha1="1ff30fa49c07a08c3035d7218a3efebf5680d522">
-        <dex dex="C:\Users\sam\AndroidStudioProjects\BQBLio\mobile\build\intermediates\pre-dexed\debug\classes-7cf086264c491618bc57a5f1e6db28c4b84424f6.jar" />
+        sha1="479c1e06db31c432330183f5cae684163f186146">
+        <dex dex="C:\Users\sam\AndroidStudioProjects\BQBLio\mobile\build\intermediates\pre-dexed\debug\javax.annotation-api-1.2-4efdc7806bef0e7c9866d4f314042e11ad602011.jar" />
     </item>
     <item
-        jar="C:\Users\sam\AndroidStudioProjects\BQBLio\mobile\build\intermediates\exploded-aar\com.google.android.gms\play-services-vision\7.8.0\jars\classes.jar"
+        jar="C:\Users\sam\AndroidStudioProjects\BQBLio\mobile\build\intermediates\exploded-aar\com.android.support\support-v4\22.2.1\jars\classes.jar"
         jumboMode="false"
         revision="22.0.1"
-        sha1="b99f0b78bbcb76b915bc6529a83b65d4d46990dd">
-        <dex dex="C:\Users\sam\AndroidStudioProjects\BQBLio\mobile\build\intermediates\pre-dexed\debug\classes-266a977d49a7b262e54e1acfd13dea3ddc967e86.jar" />
-    </item>
-    <item
-        jar="C:\Users\sam\AndroidStudioProjects\BQBLio\mobile\build\intermediates\exploded-aar\com.google.android.gms\play-services-appindexing\7.8.0\jars\classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="e23ea11124bb700eeddd4ab7aa848c615f493850">
-        <dex dex="C:\Users\sam\AndroidStudioProjects\BQBLio\mobile\build\intermediates\pre-dexed\debug\classes-df5578f3e7c819a73bdb45f3c82b3626c15f6f1d.jar" />
-    </item>
-    <item
-        jar="C:\Users\sam\AndroidStudioProjects\BQBLio\mobile\build\intermediates\exploded-aar\com.android.support\cardview-v7\22.2.1\jars\classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="e1fa5e1123997a55e3ed65b44892993ff4b58cfe">
-        <dex dex="C:\Users\sam\AndroidStudioProjects\BQBLio\mobile\build\intermediates\pre-dexed\debug\classes-728556b8e8f53e913f1ac5bd3a08228e0db9a833.jar" />
-    </item>
-    <item
-        jar="C:\Users\sam\AndroidStudioProjects\BQBLio\mobile\build\intermediates\exploded-aar\com.google.android.gms\play-services-fitness\7.8.0\jars\classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="77a9dcb5f8b1dba36aacaa9c150eb0942dbea158">
-        <dex dex="C:\Users\sam\AndroidStudioProjects\BQBLio\mobile\build\intermediates\pre-dexed\debug\classes-6791b4ae47d5975a2c25c87782a03ef9f6df2d36.jar" />
-    </item>
-    <item
-        jar="C:\Users\sam\AndroidStudioProjects\BQBLio\mobile\build\intermediates\exploded-aar\com.google.android.gms\play-services-games\7.8.0\jars\classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="2e24e5f1b11170163028277de63f709e42525db4">
-        <dex dex="C:\Users\sam\AndroidStudioProjects\BQBLio\mobile\build\intermediates\pre-dexed\debug\classes-def798fb07362b050f31adea1c8b0dadf3aed138.jar" />
-    </item>
-    <item
-        jar="C:\Users\sam\AndroidStudioProjects\BQBLio\mobile\build\intermediates\exploded-aar\com.google.android.gms\play-services-appstate\7.8.0\jars\classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="edea92852b40eee716e910af8dad9eeaa58fb0e1">
-        <dex dex="C:\Users\sam\AndroidStudioProjects\BQBLio\mobile\build\intermediates\pre-dexed\debug\classes-904923c54e39f962c2d26c66f8e8853c8476e5f6.jar" />
-    </item>
-    <item
-        jar="C:\Users\sam\AndroidStudioProjects\BQBLio\mobile\build\intermediates\exploded-aar\com.google.android.gms\play-services-wallet\7.8.0\jars\classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="c2ac04c5b232f6f0658ee4f1c13be09cd76406e2">
-        <dex dex="C:\Users\sam\AndroidStudioProjects\BQBLio\mobile\build\intermediates\pre-dexed\debug\classes-661d9d30f97724d93e34a88fbd66be604bcc91e7.jar" />
-    </item>
-    <item
-        jar="C:\Users\sam\AndroidStudioProjects\BQBLio\mobile\build\intermediates\exploded-aar\com.android.support\mediarouter-v7\22.2.0\jars\classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="dcf8c83c3dead00a6c4fe313e95f7aaca20dc641">
-        <dex dex="C:\Users\sam\AndroidStudioProjects\BQBLio\mobile\build\intermediates\pre-dexed\debug\classes-f403f4e8a90c01029af796ee0d2202467a838465.jar" />
-    </item>
-    <item
-        jar="C:\Users\sam\AndroidStudioProjects\BQBLio\mobile\build\intermediates\exploded-aar\com.android.support\mediarouter-v7\22.2.0\jars\libs\internal_impl-22.2.0.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="0632f06970823b7e3436f649bfa65b47035c91d0">
-        <dex dex="C:\Users\sam\AndroidStudioProjects\BQBLio\mobile\build\intermediates\pre-dexed\debug\internal_impl-22.2.0-73da0ee869185bf7db08ec330fc480e606555875.jar" />
-    </item>
-    <item
-        jar="C:\Users\sam\AndroidStudioProjects\BQBLio\mobile\build\intermediates\exploded-aar\com.google.android.gms\play-services-cast\7.8.0\jars\classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="130b32ed466fa0f63efd4c7d6250ccd2ed506790">
-        <dex dex="C:\Users\sam\AndroidStudioProjects\BQBLio\mobile\build\intermediates\pre-dexed\debug\classes-ecb24977acc0cbfec0e5a57831db2b4e220f399f.jar" />
+        sha1="f8efd0096475e0daf054267b61544e10dc776503">
+        <dex dex="C:\Users\sam\AndroidStudioProjects\BQBLio\mobile\build\intermediates\pre-dexed\debug\classes-f9028699610d5421cbd776644a7f3637bf4efe77.jar" />
     </item>
     <item
         jar="C:\Users\sam\AndroidStudioProjects\BQBLio\mobile\build\intermediates\exploded-aar\com.google.android.gms\play-services-location\7.8.0\jars\classes.jar"
@@ -145,43 +40,15 @@
         jar="C:\Users\sam\AndroidStudioProjects\BQBLio\mobile\build\intermediates\exploded-aar\BQBLio\volley\unspecified\jars\classes.jar"
         jumboMode="false"
         revision="22.0.1"
-        sha1="6c4bd83ef596df0cd475804cfe8a23eafef08fde">
+        sha1="3c56f3ace599b23b02435238c2d1d2e6e6e3bc1c">
         <dex dex="C:\Users\sam\AndroidStudioProjects\BQBLio\mobile\build\intermediates\pre-dexed\debug\classes-e0640477fea6be4fb9aa3463d623f67532a0615f.jar" />
     </item>
     <item
-        jar="C:\Users\sam\AndroidStudioProjects\BQBLio\mobile\build\intermediates\exploded-aar\com.google.android.gms\play-services-analytics\7.8.0\jars\classes.jar"
+        jar="C:\Users\sam\AndroidStudioProjects\BQBLio\mobile\build\intermediates\exploded-aar\com.pkmmte.view\circularimageview\1.1\jars\classes.jar"
         jumboMode="false"
         revision="22.0.1"
-        sha1="0124ce31248c0e8acfa2b28283c6d1a4d76e73d2">
-        <dex dex="C:\Users\sam\AndroidStudioProjects\BQBLio\mobile\build\intermediates\pre-dexed\debug\classes-db173d44d152d45ed62d7959943e8ad393108eb1.jar" />
-    </item>
-    <item
-        jar="C:\Users\sam\AndroidStudioProjects\BQBLio\mobile\build\intermediates\exploded-aar\com.google.android.gms\play-services-identity\7.8.0\jars\classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="d11330ea68c0d964d30d5caed1f27e6b1488b189">
-        <dex dex="C:\Users\sam\AndroidStudioProjects\BQBLio\mobile\build\intermediates\pre-dexed\debug\classes-3970190c0c01c4852b56841ced99b736c05fa254.jar" />
-    </item>
-    <item
-        jar="C:\Users\sam\AndroidStudioProjects\BQBLio\mobile\build\intermediates\exploded-aar\com.google.android.gms\play-services-safetynet\7.8.0\jars\classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="166e458ee3b5fb5fcff0f936df3f3a788e6c54f3">
-        <dex dex="C:\Users\sam\AndroidStudioProjects\BQBLio\mobile\build\intermediates\pre-dexed\debug\classes-cd714db222d6371e76d6c7f6284065c45aeb51f8.jar" />
-    </item>
-    <item
-        jar="C:\Users\sam\AndroidStudioProjects\BQBLio\mobile\build\intermediates\exploded-aar\com.android.support\appcompat-v7\22.2.1\jars\classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="4486e953d1f35f8ccab098b1dd67146366d5f731">
-        <dex dex="C:\Users\sam\AndroidStudioProjects\BQBLio\mobile\build\intermediates\pre-dexed\debug\classes-32d4557263e5e09ab814afe9e881061f639600f5.jar" />
-    </item>
-    <item
-        jar="C:\Users\sam\AndroidStudioProjects\BQBLio\mobile\build\intermediates\exploded-aar\com.google.android.gms\play-services-nearby\7.8.0\jars\classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="adebe28e0c0c05d34a3bfd76f3275bf4d8ff87b6">
-        <dex dex="C:\Users\sam\AndroidStudioProjects\BQBLio\mobile\build\intermediates\pre-dexed\debug\classes-779b7f547c52ed35d6aca960794406e1033e6d1d.jar" />
+        sha1="c341a7ad32bc2eef9dcfab239262b77ac60788cc">
+        <dex dex="C:\Users\sam\AndroidStudioProjects\BQBLio\mobile\build\intermediates\pre-dexed\debug\classes-3bc6282a8253dade29a4f8401875076addda3874.jar" />
     </item>
     <item
         jar="C:\Users\sam\AndroidStudioProjects\BQBLio\mobile\build\intermediates\exploded-aar\com.android.support\recyclerview-v7\22.2.1\jars\classes.jar"
@@ -191,11 +58,25 @@
         <dex dex="C:\Users\sam\AndroidStudioProjects\BQBLio\mobile\build\intermediates\pre-dexed\debug\classes-7e014506f5528ca8729cfdad33e5e15586090c13.jar" />
     </item>
     <item
-        jar="C:\Users\sam\AndroidStudioProjects\BQBLio\mobile\build\intermediates\exploded-aar\com.google.android.gms\play-services-wearable\7.8.0\jars\classes.jar"
+        jar="C:\Users\sam\AndroidStudioProjects\BQBLio\mobile\build\intermediates\exploded-aar\com.google.android.gms\play-services-base\7.8.0\jars\classes.jar"
         jumboMode="false"
         revision="22.0.1"
-        sha1="c5cafb324568d954780abb858c25db7ce675ab3c">
-        <dex dex="C:\Users\sam\AndroidStudioProjects\BQBLio\mobile\build\intermediates\pre-dexed\debug\classes-ae56f222f56ca91b509ef174a56ac2bc4fe4c1cd.jar" />
+        sha1="c0c912d58c9468b1f9d9769c8975afdf2c85d681">
+        <dex dex="C:\Users\sam\AndroidStudioProjects\BQBLio\mobile\build\intermediates\pre-dexed\debug\classes-3616fadf5c23e234a6397f5b748b711a539bc32f.jar" />
+    </item>
+    <item
+        jar="C:\Users\sam\AndroidStudioProjects\BQBLio\mobile\build\intermediates\exploded-aar\com.android.support\design\22.2.1\jars\classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="1821601ddbec5ff125653097812823388700af74">
+        <dex dex="C:\Users\sam\AndroidStudioProjects\BQBLio\mobile\build\intermediates\pre-dexed\debug\classes-1f87d3ca9090afc905a2f097be188dcacd8a858c.jar" />
+    </item>
+    <item
+        jar="C:\Users\sam\AndroidStudioProjects\BQBLio\mobile\build\intermediates\exploded-aar\com.android.support\support-v4\22.2.1\jars\libs\internal_impl-22.2.1.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="c471eaaba13ff64f6e0383d1c30a9cdc9a97efeb">
+        <dex dex="C:\Users\sam\AndroidStudioProjects\BQBLio\mobile\build\intermediates\pre-dexed\debug\internal_impl-22.2.1-aa5b314b6c84e5c09fb7fa331ed9243f81db6a97.jar" />
     </item>
     <item
         jar="C:\Users\sam\AppData\Local\Android\sdk\extras\android\m2repository\com\android\support\support-annotations\22.2.1\support-annotations-22.2.1.jar"
@@ -205,32 +86,18 @@
         <dex dex="C:\Users\sam\AndroidStudioProjects\BQBLio\mobile\build\intermediates\pre-dexed\debug\support-annotations-22.2.1-b8fd20033692a387a5f71408971e96c1cd3829d8.jar" />
     </item>
     <item
-        jar="C:\Users\sam\AndroidStudioProjects\BQBLio\mobile\build\intermediates\exploded-aar\com.google.android.gms\play-services-gcm\7.8.0\jars\classes.jar"
+        jar="C:\Users\sam\.gradle\caches\modules-2\files-2.1\com.google.auto.value\auto-value\1.1\f6951c141ea3e89c0f8b01da16834880a1ebf162\auto-value-1.1.jar"
         jumboMode="false"
         revision="22.0.1"
-        sha1="c756d14e99d39471e99013a1e8fd2f3813ed42bf">
-        <dex dex="C:\Users\sam\AndroidStudioProjects\BQBLio\mobile\build\intermediates\pre-dexed\debug\classes-cf92126a93c7cf061fcff2f189ba9dd62c0ac18a.jar" />
+        sha1="f6951c141ea3e89c0f8b01da16834880a1ebf162">
+        <dex dex="C:\Users\sam\AndroidStudioProjects\BQBLio\mobile\build\intermediates\pre-dexed\debug\auto-value-1.1-5a8a63ca064b340191f35a0e4a1d58a6181d84e8.jar" />
     </item>
     <item
-        jar="C:\Users\sam\AndroidStudioProjects\BQBLio\mobile\build\intermediates\exploded-aar\com.google.android.gms\play-services-base\7.8.0\jars\classes.jar"
+        jar="C:\Users\sam\AndroidStudioProjects\BQBLio\mobile\build\intermediates\exploded-aar\com.android.support\cardview-v7\22.2.1\jars\classes.jar"
         jumboMode="false"
         revision="22.0.1"
-        sha1="c0c912d58c9468b1f9d9769c8975afdf2c85d681">
-        <dex dex="C:\Users\sam\AndroidStudioProjects\BQBLio\mobile\build\intermediates\pre-dexed\debug\classes-3616fadf5c23e234a6397f5b748b711a539bc32f.jar" />
-    </item>
-    <item
-        jar="C:\Users\sam\AndroidStudioProjects\BQBLio\mobile\build\intermediates\exploded-aar\com.android.support\support-v4\22.2.1\jars\classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="f8efd0096475e0daf054267b61544e10dc776503">
-        <dex dex="C:\Users\sam\AndroidStudioProjects\BQBLio\mobile\build\intermediates\pre-dexed\debug\classes-f9028699610d5421cbd776644a7f3637bf4efe77.jar" />
-    </item>
-    <item
-        jar="C:\Users\sam\.gradle\caches\modules-2\files-2.1\javax.annotation\javax.annotation-api\1.2\479c1e06db31c432330183f5cae684163f186146\javax.annotation-api-1.2.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="479c1e06db31c432330183f5cae684163f186146">
-        <dex dex="C:\Users\sam\AndroidStudioProjects\BQBLio\mobile\build\intermediates\pre-dexed\debug\javax.annotation-api-1.2-4efdc7806bef0e7c9866d4f314042e11ad602011.jar" />
+        sha1="e1fa5e1123997a55e3ed65b44892993ff4b58cfe">
+        <dex dex="C:\Users\sam\AndroidStudioProjects\BQBLio\mobile\build\intermediates\pre-dexed\debug\classes-728556b8e8f53e913f1ac5bd3a08228e0db9a833.jar" />
     </item>
 
 </items>

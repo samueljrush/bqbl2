@@ -65,7 +65,7 @@ public class MyApplication extends Application {
     // set the default tag if tag is empty
     req.setTag(TextUtils.isEmpty(tag) ? TAG : tag);
     getRequestQueue().add(req);
-    Log.d(logTag(this), "Making volley request with tag: " + tag);
+    //Log.d(logTag(this), "Making volley request with tag: " + tag);
   }
 
   public <T> void addToRequestQueue(Request<T> req) {
