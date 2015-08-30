@@ -1,7 +1,9 @@
 package io.bqbl.utils;
 
 import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
 
 import com.android.volley.Request;
@@ -38,18 +40,41 @@ public final class WebUtils {
   };
 
   public static void setImageRemoteUri(final ImageView imageView, final String url) {
+    getBitmapRemoteUri(imageView, url, new Listener<Bitmap>() {
+      @Override
+      public void onResult(Bitmap bitmap) {
+        imageView.setImageBitmap(bitmap);
+      }
+    });
+  }
+
+  public static void setBackgroundRemoteUri(final View view, final String url) {
+    getBitmapRemoteUri(view, url, new Listener<Bitmap>() {
+      @Override
+      public void onResult(Bitmap bitmap) {
+        view.setBackground(new BitmapDrawable(view.getResources(), bitmap));
+      }
+    });
+  }
+
+  private static void getBitmapRemoteUri(final View view, final String url, final Listener<Bitmap> bitmapListener) {
     Bitmap cachedInstance = CacheManager.getInstance().getBitmapFromDiskCache(url);
     if (cachedInstance != null) {
-      imageView.setImageBitmap(cachedInstance);
+      bitmapListener.onResult(cachedInstance);
     }
+
+    ImageView.ScaleType scaleType = (view instanceof ImageView)
+        ? ((ImageView) view).getScaleType()
+        : ImageView.ScaleType.CENTER;
+
     ImageRequest request = new ImageRequest(url,
         new Response.Listener<Bitmap>() {
           @Override
           public void onResponse(Bitmap bitmap) {
-            imageView.setImageBitmap(bitmap);
+            bitmapListener.onResult(bitmap);
             CacheManager.getInstance().addBitmapToDiskCache(url, bitmap);
           }
-        }, 0, 0, imageView.getScaleType(), null,
+        }, 0, 0, scaleType, null,
         new Response.ErrorListener() {
           public void onErrorResponse(VolleyError error) {
             //imageView.setImageResource(R.drawable.image_load_error);
@@ -57,4 +82,6 @@ public final class WebUtils {
         });
     MyApplication.getInstance().addToRequestQueue(request);
   }
+
+
 }

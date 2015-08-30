@@ -6,4 +6,11 @@
 
     <item type="color" name="material_gray_background">#EEEEEE</item>
 
+    <color name="divider_color">#88000000</color>
+    <color name="badge_win">#FF9CCC65</color>
+    <color name="badge_loss">#FFE57373</color>
+    <color name="badge_gold">#FFFBC02D</color>
+    <color name="badge_silver">#FFBDBDBD</color>
+    <color name="badge_bronze">#FFE19346</color>
+    <color name="badge_tie">#FFE0E0E0</color>
 </resources>

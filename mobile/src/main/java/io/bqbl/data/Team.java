@@ -6,9 +6,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
+
+import io.bqbl.utils.Holder;
 
 @AutoValue
 public abstract class Team {
@@ -17,7 +18,7 @@ public abstract class Team {
   public static final String JSON_KEY_SCORE = "score";
   public static final String JSON_KEY_USERS = "users";
 
-  public static Team create(int gameId, int teamId, int rank, boolean tie, String score, Collection<Integer> users) {
+  public static Team create(int gameId, int teamId, int rank, boolean tie, String score, List<Integer> users, Holder<ResultType> resultTypeHolder) {
     return new AutoValue_Team.Builder()
         .gameId(gameId)
         .teamId(teamId)
@@ -25,6 +26,7 @@ public abstract class Team {
         .tie(tie)
         .score(score)
         .users(users)
+        .resultTypeHolder(resultTypeHolder)
         .build();
   }
 
@@ -70,7 +72,8 @@ public abstract class Team {
   public abstract int rank();
   public abstract boolean tie();
   public abstract String score();
-  public abstract Collection<Integer> users();
+  public abstract List<Integer> users();
+  public abstract Holder<ResultType> resultTypeHolder();
 
   public abstract Builder toBuilder();
 
@@ -81,8 +84,18 @@ public abstract class Team {
     public abstract Builder rank(int rank);
     public abstract Builder tie(boolean tie);
     public abstract Builder score(String score);
-    public abstract Builder users(Collection<Integer> users);
+    public abstract Builder users(List<Integer> users);
+    public abstract Builder resultTypeHolder(Holder<ResultType> resultTypeHolder);
     public abstract Team build();
   }
 
+  public enum ResultType {
+    WIN,
+    LOSS,
+    TIE,
+    GOLD,
+    SILVER,
+    BRONZE,
+    RANK
+  }
 }

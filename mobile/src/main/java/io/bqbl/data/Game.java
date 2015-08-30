@@ -1,6 +1,7 @@
 package io.bqbl.data;
 
 import android.util.Log;
+import android.util.Pair;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -10,7 +11,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -19,6 +22,7 @@ import java.util.Map;
 import io.bqbl.utils.Listener;
 import io.bqbl.utils.URLs;
 import io.bqbl.utils.WebUtils;
+import io.bqbl.data.Team.ResultType;
 
 import static io.bqbl.MyApplication.logTag;
 
@@ -32,10 +36,18 @@ public abstract class Game {
   public static final String JSON_KEY_VENUE_ID = "venue_id";
   public static final String JSON_KEY_DATE = "date";
   public static final String JSON_KEY_TEAMS = "teams";
+  public static final String JSON_KEY_WOOHOOS = "woohoos";
 
   protected Map<Integer, Team> userToTeam = new HashMap<>();
 
-  public static Game create(int gameId, int sportId, int creator, String placeId, String date, Collection<Team> teams) {
+  public static Game create(int gameId, int sportId, int creator, String placeId, String date, List<Team> teams, List<Integer> woohoos) {
+    Collections.sort(teams, new Comparator<Team>() {
+      @Override
+      public int compare(Team lhs, Team rhs) {
+        return lhs.rank() - rhs.rank();
+      }
+    });
+
     Game game = new AutoValue_Game.Builder()
         .id(gameId)
         .sportId(sportId)
@@ -43,6 +55,7 @@ public abstract class Game {
         .placeId(placeId)
         .date(date)
         .teams(teams)
+        .woohoos(woohoos)
         .build();
 
     for (Team team : teams) {
@@ -56,17 +69,24 @@ public abstract class Game {
 
   public static Game fromJSON(int gameId, JSONObject json) {
     List<Team> teams = new LinkedList<>();
+    List<Integer> woohoos = new LinkedList<>();
     try {
       JSONArray teamsArray = json.getJSONArray(JSON_KEY_TEAMS);
       for (int teamId = 0; teamId < teamsArray.length(); teamId++) {
         teams.add(Team.fromJSON(gameId, teamId, teamsArray.getJSONObject(teamId)));
+      }
+      setResultTypes(teams);
+      JSONArray woohoosArray = json.getJSONArray(JSON_KEY_WOOHOOS);
+      for (int i = 0; i < woohoosArray.length(); i++) {
+        woohoos.add(Integer.valueOf(woohoosArray.getString(i)));
       }
       return create(gameId,
           json.getInt(JSON_KEY_SPORT_ID),
           json.getInt(JSON_KEY_CREATOR),
           json.getString(JSON_KEY_VENUE_ID),
           json.getString(JSON_KEY_DATE),
-          teams);
+          teams,
+          woohoos);
     } catch (Exception e) {
       Log.e(logTag(Game.class.getSimpleName()), "", e);
     }
@@ -76,19 +96,53 @@ public abstract class Game {
   public JSONObject toJSON() {
     JSONObject game = new JSONObject();
     JSONArray teams = new JSONArray();
+    JSONArray woohoos = new JSONArray();
     for (Team team : teams()) {
       teams.put(team.toJSON());
+    }
+    for (Integer woohoo : woohoos()) {
+      woohoos.put(woohoo);
     }
     try {
       game.put(JSON_KEY_SPORT_ID, sportId())
           .put(JSON_KEY_CREATOR, creator())
           .put(JSON_KEY_VENUE_ID, placeId())
           .put(JSON_KEY_DATE, date())
-          .put(JSON_KEY_TEAMS, teams);
+          .put(JSON_KEY_TEAMS, teams)
+          .put(JSON_KEY_WOOHOOS, woohoos);
     } catch (JSONException e) {
       return null;
     }
     return game;
+  }
+
+  private static void setResultTypes(List<Team> teams) {
+    if (teams.get(0).rank() == teams.get(teams.size()).rank()) {
+      for (Team team : teams) {
+        team.resultTypeHolder().value = ResultType.TIE;
+      }
+    } else if (teams.size() == 2) {
+      teams.get(0).resultTypeHolder().value = ResultType.WIN;
+      teams.get(1).resultTypeHolder().value = ResultType.LOSS;
+    } else {
+      for (Team team : teams) {
+        ResultType resultType;
+        switch (team.rank()) {
+          case 1:
+            resultType = ResultType.GOLD;
+            break;
+          case 2:
+            resultType = ResultType.SILVER;
+            break;
+          case 3:
+            resultType = ResultType.BRONZE;
+            break;
+          default:
+            resultType = ResultType.RANK;
+        }
+        team.resultTypeHolder().value = resultType;
+      }
+    }
   }
 
   public static Request requestGame(final int gameId, final Listener<Game> listener) {
@@ -131,7 +185,8 @@ public abstract class Game {
   public abstract int creator();
   public abstract String placeId();
   public abstract String date();
-  public abstract Collection<Team> teams();
+  public abstract List<Team> teams();
+  public abstract List<Integer> woohoos();
 
   public abstract Builder toBuilder();
 
@@ -142,7 +197,8 @@ public abstract class Game {
     public abstract Builder creator(int id);
     public abstract Builder placeId(String placeId);
     public abstract Builder date(String date);
-    public abstract Builder teams(Collection<Team> teams);
+    public abstract Builder teams(List<Team> teams);
+    public abstract Builder woohoos(List<Integer> woohoos);
     public abstract Game build();
   }
 }

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             android:layout_width="48dp"
+             android:layout_height="48dp">
+    <TextView
+        android:id="@+id/result_badge"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:layout_width="8dp"
+        android:layout_height="8dp"
+        android:layout_gravity="bottom|end"
+        android:elevation="2dp"
+        android:padding="4dp"/>
+
+</FrameLayout>
