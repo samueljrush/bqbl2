@@ -9,4 +9,14 @@
     <string name="title_activity_friends">FriendsActivity</string>
     <string name="title_activity_game">GameActivity</string>
     <string name="title_activity_place">PlaceActivity</string>
+    <string name="title_activity_main">MainActivity</string>
+
+    <string name="nav_item_feed">News Feed</string>
+    <string name="nav_item_friends">My Friends</string>
+    <string name="nav_item_places">Places</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_example">Example action</string>
 </resources>

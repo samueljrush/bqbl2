@@ -28,7 +28,7 @@ public class MyApplication extends Application {
     Thread.setDefaultUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
       @Override
       public void uncaughtException(Thread thread, Throwable ex) {
-        Log.e(getTag(this), "Uncaught Exception: ", ex);
+        Log.e(logTag(this), "Uncaught Exception: ", ex);
         defaultUncaughtExceptionHandler.uncaughtException(thread, ex);
       }
     });
@@ -65,7 +65,7 @@ public class MyApplication extends Application {
     // set the default tag if tag is empty
     req.setTag(TextUtils.isEmpty(tag) ? TAG : tag);
     getRequestQueue().add(req);
-    Log.d(getTag(this), "Making volley request with tag: " + tag);
+    Log.d(logTag(this), "Making volley request with tag: " + tag);
   }
 
   public <T> void addToRequestQueue(Request<T> req) {
@@ -78,11 +78,11 @@ public class MyApplication extends Application {
     }
   }
 
-  public static String getTag(Object source) {
+  public static String logTag(Object source) {
     return TAG_PREFIX + source.getClass().getSimpleName();
   }
 
-  public static String getTag(String tag) {
+  public static String logTag(String tag) {
     return TAG_PREFIX + tag;
   }
 }

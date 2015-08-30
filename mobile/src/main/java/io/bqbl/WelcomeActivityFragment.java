@@ -43,12 +43,11 @@ public class WelcomeActivityFragment extends Fragment {
     super.onStart();
     int userid = SharedPreferencesUtils.getInt(getActivity(), R.string.pref_current_user, R.string.pref_current_user_default);
     if (userid > 0) {
-      // Intent intent = new Intent(getActivity(), FeedActivity.class);
-      Intent intent = new Intent(getActivity(), FriendsActivity.class);
+      Intent intent = new Intent(getActivity(), MainActivity.class);
       startActivity(intent);
-      android.util.Log.v(MyApplication.getTag(this), "user id: " + userid);
-
+      android.util.Log.v(MyApplication.logTag(this), "user id: " + userid);
     } else {
+      android.util.Log.v(MyApplication.logTag(this), "Asking for google account.");
       Intent googlePicker = AccountPicker.newChooseAccountIntent(
           null,
           null,
@@ -64,8 +63,9 @@ public class WelcomeActivityFragment extends Fragment {
 
   @Override
   public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    android.util.Log.v(MyApplication.logTag(this), "onActivityResult");
     if (requestCode == ACCOUNT_SELECTION_REQUEST && resultCode == Activity.RESULT_OK) {
-      Log.d(MyApplication.getTag(this), "onActivityResult");
+      Log.d(MyApplication.logTag(this), "onActivityResult");
       final String accountName = data.getStringExtra(AccountManager.KEY_ACCOUNT_NAME);
       final MyApplication myApp = (MyApplication) getActivity().getApplicationContext();
       Request request = WebUtils.getRequest("http://bqbl.io/io/json/userlookup.php?email=" + accountName, new Response.Listener<JSONObject>() {
@@ -73,10 +73,10 @@ public class WelcomeActivityFragment extends Fragment {
         public void onResponse(JSONObject response) {
           try {
             int userid = response.getInt("user_id");
-            android.util.Log.v(MyApplication.getTag(WelcomeActivityFragment.this), String.format("retrieved email: %s, id: %d", accountName, userid));
+            android.util.Log.v(MyApplication.logTag(WelcomeActivityFragment.this), String.format("retrieved email: %s, id: %d", accountName, userid));
             if (userid > 0) {
               SharedPreferencesUtils.setCurrentUser(myApp, userid);
-              Intent intent = new Intent(getActivity(), FeedActivity.class);
+              Intent intent = new Intent(getActivity(), MainActivity.class);
               startActivity(intent);
             } else {
               Intent intent = new Intent(getActivity(), CreateAccountActivity.class);
@@ -84,7 +84,7 @@ public class WelcomeActivityFragment extends Fragment {
               startActivity(intent);
             }
           } catch (Exception e) {
-            android.util.Log.e(MyApplication.getTag(WelcomeActivityFragment.this), "Exception thrown", e);
+            android.util.Log.e(MyApplication.logTag(WelcomeActivityFragment.this), "Exception thrown", e);
           }
         }
       });

@@ -2,6 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="io.bqbl" >
 
+    <uses-sdk
+        android:minSdkVersion="14"
+        android:targetSdkVersion="22" />
+
     <meta-data
         android:name="com.google.android.geo.API_KEY"
         android:value="AIzaSyAtiSsHTCqkTZmJ4_rXQL2H8jktI1sqHAQ" />
@@ -13,16 +17,25 @@
     <uses-permission android:name="android.permission.READ_PROFILE" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
 
+    <android:uses-permission
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        android:maxSdkVersion="18" />
+    <android:uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <android:uses-permission
+        android:name="android.permission.READ_EXTERNAL_STORAGE"
+        android:maxSdkVersion="18" />
+
     <application
         android:name=".MyApplication"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/appicon"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
             android:name=".WelcomeActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme" >
+            android:theme="@style/AppTheme"
+            android:noHistory="false" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -36,28 +49,17 @@
             android:windowSoftInputMode="adjustResize|stateVisible" >
         </activity>
         <activity
-            android:name=".FeedActivity"
-            android:label="@string/title_activity_feed" >
-        </activity>
-        <activity
-            android:name=".ProfileActivity"
-            android:label="@string/title_activity_profile" >
-        </activity>
-        <activity
             android:name=".AccountSettingsActivity"
             android:label="@string/title_activity_account_settings" >
-        </activity>
-        <activity
-            android:name=".FriendsActivity"
-            android:label="@string/title_activity_friends" >
         </activity>
         <activity
             android:name=".GameActivity"
             android:label="@string/title_activity_game" >
         </activity>
         <activity
-            android:name=".PlaceActivity"
-            android:label="@string/title_activity_place" >
+            android:name=".MainActivity"
+            android:label="@string/title_activity_main"
+            android:theme="@style/AppCompatTheme">
         </activity>
     </application>
 

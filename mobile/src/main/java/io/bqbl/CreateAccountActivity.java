@@ -70,7 +70,7 @@ public class CreateAccountActivity extends Activity {
               int userid = response.getInt("user_id");
               if (userid > 0) {
                 SharedPreferencesUtils.setCurrentUser(myApp, userid);
-                Intent intent = new Intent(CreateAccountActivity.this, FeedActivity.class);
+                Intent intent = new Intent(CreateAccountActivity.this, FeedFragment.class);
                 startActivity(intent);
               } else {
                 // TODO: handle

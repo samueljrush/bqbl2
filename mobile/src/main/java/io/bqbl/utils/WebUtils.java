@@ -29,7 +29,7 @@ public final class WebUtils {
   private static final Response.ErrorListener DEFAULT_ERROR_LISTENER = new Response.ErrorListener() {
     @Override
     public void onErrorResponse(VolleyError error) {
-      Log.e(MyApplication.getTag(WebUtils.class.getSimpleName()), "Volley error encountered", error);
+      Log.e(MyApplication.logTag(WebUtils.class.getSimpleName()), "Volley error encountered", error);
     }
   };
 }

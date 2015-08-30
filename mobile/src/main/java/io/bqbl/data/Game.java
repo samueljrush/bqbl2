@@ -20,7 +20,7 @@ import io.bqbl.utils.Listener;
 import io.bqbl.utils.URLs;
 import io.bqbl.utils.WebUtils;
 
-import static io.bqbl.MyApplication.getTag;
+import static io.bqbl.MyApplication.logTag;
 
 /**
  * Created by sam on 7/26/2015.
@@ -68,7 +68,7 @@ public abstract class Game {
           json.getString(JSON_KEY_DATE),
           teams);
     } catch (Exception e) {
-      Log.e(getTag(Game.class.getSimpleName()), "", e);
+      Log.e(logTag(Game.class.getSimpleName()), "", e);
     }
     return null;
   }

@@ -27,7 +27,7 @@ public final class PlaceManager {
         .addOnConnectionFailedListener(new GoogleApiClient.OnConnectionFailedListener() {
           @Override
           public void onConnectionFailed(ConnectionResult connectionResult) {
-            Log.e(MyApplication.getTag(PlaceManager.class.getSimpleName()), connectionResult.toString());
+            Log.e(MyApplication.logTag(PlaceManager.class.getSimpleName()), connectionResult.toString());
           }
         })
         .build();
