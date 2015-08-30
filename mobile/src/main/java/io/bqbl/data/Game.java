@@ -32,10 +32,11 @@ public abstract class Game {
   public static final String JSON_KEY_VENUE_ID = "venue_id";
   public static final String JSON_KEY_DATE = "date";
   public static final String JSON_KEY_TEAMS = "teams";
+  public static final String JSON_KEY_WOOHOOS = "woohoos";
 
   protected Map<Integer, Team> userToTeam = new HashMap<>();
 
-  public static Game create(int gameId, int sportId, int creator, String placeId, String date, Collection<Team> teams) {
+  public static Game create(int gameId, int sportId, int creator, String placeId, String date, Collection<Team> teams, List<Integer> woohoos) {
     Game game = new AutoValue_Game.Builder()
         .id(gameId)
         .sportId(sportId)
@@ -43,6 +44,7 @@ public abstract class Game {
         .placeId(placeId)
         .date(date)
         .teams(teams)
+        .woohoos(woohoos)
         .build();
 
     for (Team team : teams) {
@@ -56,17 +58,23 @@ public abstract class Game {
 
   public static Game fromJSON(int gameId, JSONObject json) {
     List<Team> teams = new LinkedList<>();
+    List<Integer> woohoos = new LinkedList<>();
     try {
       JSONArray teamsArray = json.getJSONArray(JSON_KEY_TEAMS);
       for (int teamId = 0; teamId < teamsArray.length(); teamId++) {
         teams.add(Team.fromJSON(gameId, teamId, teamsArray.getJSONObject(teamId)));
+      }
+      JSONArray woohoosArray = json.getJSONArray(JSON_KEY_WOOHOOS);
+      for (int i = 0; i < woohoosArray.length(); i++) {
+        woohoos.add(Integer.valueOf(woohoosArray.getString(i)));
       }
       return create(gameId,
           json.getInt(JSON_KEY_SPORT_ID),
           json.getInt(JSON_KEY_CREATOR),
           json.getString(JSON_KEY_VENUE_ID),
           json.getString(JSON_KEY_DATE),
-          teams);
+          teams,
+          woohoos);
     } catch (Exception e) {
       Log.e(logTag(Game.class.getSimpleName()), "", e);
     }
@@ -76,15 +84,20 @@ public abstract class Game {
   public JSONObject toJSON() {
     JSONObject game = new JSONObject();
     JSONArray teams = new JSONArray();
+    JSONArray woohoos = new JSONArray();
     for (Team team : teams()) {
       teams.put(team.toJSON());
+    }
+    for (Integer woohoo : woohoos()) {
+      woohoos.put(woohoo);
     }
     try {
       game.put(JSON_KEY_SPORT_ID, sportId())
           .put(JSON_KEY_CREATOR, creator())
           .put(JSON_KEY_VENUE_ID, placeId())
           .put(JSON_KEY_DATE, date())
-          .put(JSON_KEY_TEAMS, teams);
+          .put(JSON_KEY_TEAMS, teams)
+          .put(JSON_KEY_WOOHOOS, woohoos);
     } catch (JSONException e) {
       return null;
     }
@@ -132,6 +145,7 @@ public abstract class Game {
   public abstract String placeId();
   public abstract String date();
   public abstract Collection<Team> teams();
+  public abstract List<Integer> woohoos();
 
   public abstract Builder toBuilder();
 
@@ -143,6 +157,7 @@ public abstract class Game {
     public abstract Builder placeId(String placeId);
     public abstract Builder date(String date);
     public abstract Builder teams(Collection<Team> teams);
+    public abstract Builder woohoos(List<Integer> woohoos);
     public abstract Game build();
   }
 }
