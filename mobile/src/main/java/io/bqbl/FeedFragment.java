@@ -13,12 +13,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.places.Place;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -30,9 +33,11 @@ import java.util.LinkedList;
 import java.util.List;
 
 import io.bqbl.data.Game;
+import io.bqbl.data.PlaceManager;
 import io.bqbl.data.Sports;
 import io.bqbl.data.Sports.Sport;
 import io.bqbl.data.Team;
+import io.bqbl.data.User;
 import io.bqbl.utils.Listener;
 import io.bqbl.utils.SharedPreferencesUtils;
 import io.bqbl.utils.URLs;
@@ -46,12 +51,36 @@ public class FeedFragment extends Fragment {
   private int mUserId;
   private MyApplication mApp;
   private final GameAdapter mGameAdapter = new GameAdapter(Collections.<Integer>emptyList());
+  private GoogleApiClient mGoogleApiClient;
 
   @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     mApp = (MyApplication) getActivity().getApplicationContext();
     mUserId = SharedPreferencesUtils.getCurrentUser(getActivity());
+    mGoogleApiClient = PlaceManager.getGoogleApiClient(getActivity(), new GoogleApiClient.ConnectionCallbacks() {
+      @Override
+      public void onConnected(Bundle bundle) {
+
+      }
+
+      @Override
+      public void onConnectionSuspended(int i) {
+
+      }
+    });
+    mGoogleApiClient.connect();
+  }
+
+  @Override
+  public void onStart() {
+    super.onStart();
+  }
+
+  @Override
+  public void onStop() {
+    super.onStop();
+    mGoogleApiClient.disconnect();
   }
 
   @Override
@@ -129,11 +158,13 @@ public class FeedFragment extends Fragment {
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
+      protected View mItemView;
       protected TextView mTitleTextView;
       protected TextView mSubtitleTextView;
       protected ImageView mChipView;
       protected GridView mGridView;
-      protected View mItemView;
+      protected Button mWoohooButton;
+      protected Button mCommentButton;
 
       public ViewHolder(View itemView) {
         super(itemView);
@@ -143,20 +174,30 @@ public class FeedFragment extends Fragment {
         mGridView = (GridView) itemView.findViewById(R.id.user_grid);
         mChipView = (ImageView) itemView.findViewById(R.id.chip_view);
         mChipView.setBackground(new ShapeDrawable(new OvalShape()));
+        mWoohooButton = (Button) itemView.findViewById(android.R.id.button1);
+        mCommentButton = (Button) itemView.findViewById(android.R.id.button2);
+        mCommentButton.setText(itemView.getContext().getString(R.string.comment_button_text));
+        mWoohooButton.setText(itemView.getContext().getString(R.string.woohoo_button_text));
       }
 
       public void bind(final Game game) {
-        Sport sport = Sports.getSport(game.sportId());
-        try {
-          Team team0 = game.teams().get(0);
-          Team team1 = game.teams().get(1);
-          int user0 = team0.users().get(0);
-          int user1 = team1.users().get(0);
+        final Sport sport = Sports.getSport(game.sportId());
+        Team team0 = game.teams().get(0);
+        int user0 = team0.users().get(0);
+        User.requestUser(user0, true, new Listener<User>() {
+          @Override
+          public void onResult(User user) {
+            Log.d(logTag(this), String.format("Game %d showing user %s", game.id(), user));
+            mTitleTextView.setText(String.format("%s %s crushed it!", user.first(), user.last()));
+          }
+        });
 
-          mTitleTextView.setText(String.format("%d beat %d at %s", user0, user1, sport.name()));
-        } catch (IndexOutOfBoundsException e) {
-          mTitleTextView.setText(game.toString());
-        }
+        PlaceManager.getPlace(game.placeId(), mGoogleApiClient, new Listener<Place>() {
+          @Override
+          public void onResult(Place place) {
+            mSubtitleTextView.setText(String.format("Played %s at %s on %s", sport.name(), place.getName(), game.date()));
+          }
+        });
 
         ((ShapeDrawable) mChipView.getBackground()).getPaint().setColor(sport.color());
         mChipView.setImageResource(sport.iconResource());
@@ -180,8 +221,6 @@ public class FeedFragment extends Fragment {
             //startActivity(intent, null);
           }
         });
-
-
       }
     }
 
@@ -215,21 +254,23 @@ public class FeedFragment extends Fragment {
             badgeColor = getActivity().getResources().getColor(R.color.badge_loss);
             break;
           case GOLD:
-            badgeText = "G";
+            badgeText = "1";
             badgeColor = getActivity().getResources().getColor(R.color.badge_gold);
             break;
           case SILVER:
-            badgeText = "S";
+            badgeText = "2";
             badgeColor = getActivity().getResources().getColor(R.color.badge_silver);
             break;
           case BRONZE:
-            badgeText = "B";
+            badgeText = "3";
             badgeColor = getActivity().getResources().getColor(R.color.badge_bronze);
+            break;
+          case RANK:
+            badgeText = String.valueOf(team.rank());
+            badgeColor = getActivity().getResources().getColor(R.color.badge_loss);
             break;
           case TIE:
             badgeText = "T";
-          case RANK:
-            badgeText = String.valueOf(team.rank());
           default: // drop-down
             badgeColor = getActivity().getResources().getColor(R.color.badge_tie);
             break;

@@ -97,6 +97,8 @@ public final class CacheManager {
   }
 
   public void addBitmapToDiskCache(String key, Bitmap bitmap) {
+    mBitmapMemCache.put(key, bitmap);
+
     // Also add to disk cache
     synchronized (mBitmapDiskCacheLock) {
       if (mBitmapDiskCache != null && mBitmapDiskCache.getValue(key) == null) {
@@ -106,6 +108,11 @@ public final class CacheManager {
   }
 
   public Bitmap getBitmapFromDiskCache(String key) {
+    Bitmap bitmap = mBitmapMemCache.get(key);
+    if (bitmap != null) {
+      return bitmap;
+    }
+    
     synchronized (mBitmapDiskCacheLock) {
       // Wait while disk cache is started from background thread
       while (mDiskCacheStarting) {

@@ -1,14 +1,15 @@
 package io.bqbl;
 
 import android.app.Fragment;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.volley.Request;
@@ -114,36 +115,69 @@ public class FriendsFragment extends Fragment {
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-      holder.bind(mFriends.get(position));
+      holder.bind(mFriends, position);
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-      protected TextView mTextView;
       protected View mItemView;
+      private final TextView mTitleTextView;
+      private final TextView mSubtitleTextView;
+      private ImageView mChipView;
+      private ImageView mDeleteButton;
 
       public ViewHolder(View itemView) {
         super(itemView);
         mItemView = itemView;
-        mTextView = (TextView) itemView.findViewById(R.id.friends_card_text);
+        mTitleTextView = (TextView) itemView.findViewById(R.id.title_text);
+        mSubtitleTextView = (TextView) itemView.findViewById(R.id.subtitle_text);
+        mChipView = (ImageView) itemView.findViewById(R.id.chip_view);
+        mDeleteButton = (ImageView) itemView.findViewById(R.id.delete_button);
       }
 
-      public void bind(JSONObject friend) {
+      public void bind(final List<JSONObject> friends, final int position) {
+        JSONObject friend = friends.get(position);
         Log.d(MyApplication.logTag(FriendsFragment.this), friend.toString());
         try {
-          mTextView.setText(String.format("%s %s (%d-%d-%d)",
+          mTitleTextView.setText(String.format("%s %s",
               friend.getString(KEY_FIRST_NAME),
-              friend.getString(KEY_LAST_NAME),
+              friend.getString(KEY_LAST_NAME)));
+          mSubtitleTextView.setText(String.format("(%d-%d-%d)",
               friend.getInt(KEY_WINS),
               friend.getInt(KEY_LOSSES),
               friend.getInt(KEY_TIES)));
+          WebUtils.setImageRemoteUri(mChipView, URLs.getUserPhotoUrl(friend.getInt(KEY_FRIEND_ID)));
         } catch (JSONException e) {
           Log.e(MyApplication.logTag(FriendsFragment.this), "", e);
         }
         mItemView.setOnClickListener(new View.OnClickListener() {
           @Override
           public void onClick(View v) {
-            Intent intent = new Intent(getActivity(), ProfileFragment.class);
-            startActivity(intent, null);
+            //Intent intent = new Intent(getActivity(), ProfileFragment.class);
+            //startActivity(intent, null);
+          }
+        });
+
+        mDeleteButton.setOnTouchListener(new View.OnTouchListener() {
+          @Override
+          public boolean onTouch(View v, MotionEvent event) {
+            switch (event.getAction()) {
+              case MotionEvent.ACTION_DOWN:
+                ((ImageView) v).setColorFilter(0x00FFFFFF);
+                break;
+              case MotionEvent.ACTION_UP:
+                ((ImageView) v).setColorFilter(0x44FFFFFF);
+              default:
+            }
+            return false;
+          }
+        });
+
+        mDeleteButton.setOnClickListener(new View.OnClickListener() {
+          @Override
+          public void onClick(View v) {
+            friends.remove(position);
+            notifyItemRemoved(position);
+            notifyItemRangeChanged(position, friends.size());
           }
         });
       }

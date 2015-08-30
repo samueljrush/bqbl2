@@ -44,6 +44,7 @@ public abstract class Team {
           .tie(json.getInt(JSON_KEY_TIE) == 1)
           .score(json.getString(JSON_KEY_SCORE))
           .users(users)
+          .resultTypeHolder(new Holder<>(ResultType.RANK))
           .build();
     } catch (Exception e) {
       return null;

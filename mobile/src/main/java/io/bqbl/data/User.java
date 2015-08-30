@@ -7,6 +7,7 @@ import com.google.auto.value.AutoValue;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import io.bqbl.MyApplication;
 import io.bqbl.utils.Listener;
 import io.bqbl.utils.URLs;
 import io.bqbl.utils.WebUtils;
@@ -61,15 +62,20 @@ public abstract class User {
   public String getPhotoUri() {
     return String.format(URLs.USER_PHOTO_FORMAT, id());
   }
-  
+
+  @Deprecated
   public static Request requestUser(final int userId, final Listener<User> listener) {
+    return requestUser(userId, false, listener);
+  }
+
+  public static Request requestUser(final int userId, boolean commitRequest, final Listener<User> listener) {
     User cached = CacheManager.getInstance().getUser(userId);
     if (cached != null) {
       listener.onResult(cached);
       return null;
     }
 
-    return WebUtils.getRequest(URLs.SETTINGS_PHP + "?userid=" + userId, new Response.Listener<JSONObject>() {
+    Request request = WebUtils.getRequest(URLs.SETTINGS_PHP + "?userid=" + userId, new Response.Listener<JSONObject>() {
       @Override
       public void onResponse(JSONObject response) {
         User user = User.fromJSON(response);
@@ -77,6 +83,12 @@ public abstract class User {
         listener.onResult(user);
       }
     });
+
+    if (commitRequest) {
+      MyApplication.getInstance().addToRequestQueue(request, "Fetch user" + userId);
+    }
+
+    return request;
   }
 
   public abstract int id();

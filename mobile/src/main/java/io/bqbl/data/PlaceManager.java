@@ -10,8 +10,9 @@ import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.PlaceBuffer;
 import com.google.android.gms.location.places.Places;
 
-import io.bqbl.MyApplication;
 import io.bqbl.utils.Listener;
+
+import static io.bqbl.MyApplication.logTag;
 
 /**
  * Created by sam on 8/2/2015.
@@ -27,13 +28,14 @@ public final class PlaceManager {
         .addOnConnectionFailedListener(new GoogleApiClient.OnConnectionFailedListener() {
           @Override
           public void onConnectionFailed(ConnectionResult connectionResult) {
-            Log.e(MyApplication.logTag(PlaceManager.class.getSimpleName()), connectionResult.toString());
+            Log.e(logTag(PlaceManager.class.getSimpleName()), connectionResult.toString());
           }
         })
         .build();
   }
 
   public static void getPlace(final String placeId, GoogleApiClient googleApiClient, final Listener<Place> listener) {
+    Log.d(logTag("PlaceManager"), "Getting place: " + placeId);
     Place cached = CacheManager.getInstance().getPlace(placeId);
     if (cached != null) {
       listener.onResult(cached);
@@ -45,6 +47,7 @@ public final class PlaceManager {
         .setResultCallback(new ResultCallback<PlaceBuffer>() {
           @Override
           public void onResult(PlaceBuffer places) {
+            Log.d(logTag("PlaceManager"), "Place status: " + places.getStatus());
             if (places.getStatus().isSuccess()) {
               final Place place = places.get(0);
               CacheManager.getInstance().addPlace(place);

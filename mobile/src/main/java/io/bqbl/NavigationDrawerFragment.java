@@ -52,7 +52,7 @@ public class NavigationDrawerFragment extends Fragment {
    * expands it. This shared preference tracks this.
    */
   private static final String PREF_USER_LEARNED_DRAWER = "navigation_drawer_learned";
-  private static final int DEFAULT_NAV_ITEM = 1;  // Feed
+  private static final int DEFAULT_NAV_ITEM = 2;  // Feed
 
   /**
    * A pointer to the current callbacks instance (the Activity).

@@ -6,10 +6,13 @@
         android:id="@+id/result_badge"
         android:gravity="center"
         android:textStyle="bold"
-        android:layout_width="8dp"
-        android:layout_height="8dp"
+        android:textSize="12sp"
+        android:textColor="#FF000000"
+        android:fontFamily="sans-serif-black"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
         android:layout_gravity="bottom|end"
         android:elevation="2dp"
-        android:padding="4dp"/>
+        android:layout_margin="4dp"/>
 
 </FrameLayout>

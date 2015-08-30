@@ -13,4 +13,5 @@
     <color name="badge_silver">#FFBDBDBD</color>
     <color name="badge_bronze">#FFE19346</color>
     <color name="badge_tie">#FFE0E0E0</color>
+    <color name="white_button_pressed">#55000000</color>
 </resources>

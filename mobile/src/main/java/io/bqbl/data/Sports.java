@@ -15,7 +15,7 @@ public final class Sports {
   private static final Map<Integer, Sport> sports = new HashMap<>();
 
   static {
-    addSport(Sport.create(1, "Basketball", 1, 0xFFF4511E, R.drawable.ic_place_black_24dp));
+    addSport(Sport.create(1, "Basketball", 1, 0xFFF4511E, R.drawable.ic_basketball));
   }
 
   public static Sport getSport(int id) {

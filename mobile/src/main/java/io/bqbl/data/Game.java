@@ -52,6 +52,11 @@ public abstract class Game {
     Collections.sort(teams, new Comparator<Team>() {
       @Override
       public int compare(Team lhs, Team rhs) {
+        if (lhs == null) {
+          return -1;
+        } if (rhs == null) {
+          return 1;
+        }
         return lhs.rank() - rhs.rank();
       }
     });
@@ -116,7 +121,8 @@ public abstract class Game {
   }
 
   private static void setResultTypes(List<Team> teams) {
-    if (teams.get(0).rank() == teams.get(teams.size()).rank()) {
+    if (teams.get(0).rank()
+        == teams.get(teams.size() - 1).rank()) {
       for (Team team : teams) {
         team.resultTypeHolder().value = ResultType.TIE;
       }

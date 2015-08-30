@@ -1,7 +1,5 @@
 package io.bqbl.utils;
 
-import android.net.Uri;
-
 /**
  * Created by sam on 7/25/2015.
  */
