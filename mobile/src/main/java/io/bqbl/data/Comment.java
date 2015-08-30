@@ -6,9 +6,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.LinkedList;
-import java.util.List;
-
 @AutoValue
 public abstract class Comment {
   public static final String JSON_KEY_USERID = "userid";
@@ -16,7 +13,7 @@ public abstract class Comment {
   public static final String JSON_KEY_DATE = "date";
 
   public static Comment create(int gameId, int userId, String text, String date) {
-    return new AutoValue_Team.Builder()
+    return new AutoValue_Comment.Builder()
         .gameId(gameId)
         .userId(userId)
         .text(text)
@@ -24,7 +21,7 @@ public abstract class Comment {
         .build();
   }
 
-  public static Team fromJSON(int gameId, JSONObject json) {
+  public static Comment fromJSON(int gameId, JSONObject json) {
     try {
       return new AutoValue_Comment.Builder()
           .gameId(gameId)
@@ -62,7 +59,7 @@ public abstract class Comment {
     public abstract Builder userId(int id);
     public abstract Builder text(String text);
     public abstract Builder date(String date);
-    public abstract Team build();
+    public abstract Comment build();
   }
 
 }
