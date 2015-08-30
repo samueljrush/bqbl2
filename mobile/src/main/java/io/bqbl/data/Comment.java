@@ -6,42 +6,31 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 
 @AutoValue
-public abstract class Team {
-  public static final String JSON_KEY_RANK = "rank";
-  public static final String JSON_KEY_TIE = "tie";
-  public static final String JSON_KEY_SCORE = "score";
-  public static final String JSON_KEY_USERS = "users";
+public abstract class Comment {
+  public static final String JSON_KEY_USERID = "userid";
+  public static final String JSON_KEY_TEXT = "text";
+  public static final String JSON_KEY_DATE = "date";
 
-  public static Team create(int gameId, int teamId, int rank, boolean tie, String score, Collection<Integer> users) {
+  public static Comment create(int gameId, int userId, String text, String date) {
     return new AutoValue_Team.Builder()
         .gameId(gameId)
-        .teamId(teamId)
-        .rank(rank)
-        .tie(tie)
-        .score(score)
-        .users(users)
+        .userId(userId)
+        .text(text)
+        .date(date)
         .build();
   }
 
-  public static Team fromJSON(int gameId, int teamId, JSONObject json) {
-    List<Integer> users = new LinkedList<>();
+  public static Team fromJSON(int gameId, JSONObject json) {
     try {
-      JSONArray usersArray = json.getJSONArray(JSON_KEY_USERS);
-      for (int i = 0; i < usersArray.length(); i++) {
-        users.add(Integer.valueOf(usersArray.getString(i)));
-      }
-      return new AutoValue_Team.Builder()
+      return new AutoValue_Comment.Builder()
           .gameId(gameId)
-          .teamId(teamId)
-          .rank(json.getInt(JSON_KEY_RANK))
-          .tie(json.getInt(JSON_KEY_TIE) == 1)
-          .score(json.getString(JSON_KEY_SCORE))
-          .users(users)
+          .userId(json.getInt(JSON_KEY_USERID)
+          .text(json.getString(JSON_KEY_TEXT))
+          .date(json.getString(JSON_KEY_DATE)),
           .build();
     } catch (Exception e) {
       return null;
@@ -49,39 +38,30 @@ public abstract class Team {
   }
 
   public JSONObject toJSON() {
-    JSONObject teamJSON = new JSONObject();
-    JSONArray usersJSON = new JSONArray();
-    for (int userId : users()) {
-      usersJSON.put(userId);
-    }
+    JSONObject commentJSON = new JSONObject();
     try {
-      teamJSON.put(JSON_KEY_RANK, rank())
-          .put(JSON_KEY_TIE, tie() ? 1 : 0)
-          .put(JSON_KEY_SCORE, score())
-          .put(JSON_KEY_USERS, usersJSON);
+      commentJSON.put(JSON_KEY_USERID, userId())
+          .put(JSON_KEY_TEXT, text())
+          .put(JSON_KEY_DATE, date());
     } catch (JSONException e) {
       return null;
     }
-    return teamJSON;
+    return commentJSON;
   }
 
   public abstract int gameId();
-  public abstract int teamId();
-  public abstract int rank();
-  public abstract boolean tie();
-  public abstract String score();
-  public abstract Collection<Integer> users();
+  public abstract int userId();
+  public abstract String text();
+  public abstract String date();
 
   public abstract Builder toBuilder();
 
   @AutoValue.Builder
   abstract static class Builder {
     public abstract Builder gameId(int id);
-    public abstract Builder teamId(int id);
-    public abstract Builder rank(int rank);
-    public abstract Builder tie(boolean tie);
-    public abstract Builder score(String score);
-    public abstract Builder users(Collection<Integer> users);
+    public abstract Builder userId(int id);
+    public abstract Builder text(String text);
+    public abstract Builder date(String date);
     public abstract Team build();
   }
 
