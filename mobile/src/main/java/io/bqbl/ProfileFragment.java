@@ -23,11 +23,11 @@ import java.util.List;
 
 import io.bqbl.data.Game;
 import io.bqbl.utils.Listener;
-import io.bqbl.utils.SharedPreferencesUtils;
 import io.bqbl.utils.URLs;
 import io.bqbl.utils.WebUtils;
 
 public class ProfileFragment extends Fragment {
+  public static final String EXTRA_USER_ID = "user_id";
 
   private int mUserId;
   private MyApplication mApp;
@@ -37,7 +37,7 @@ public class ProfileFragment extends Fragment {
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     mApp = (MyApplication) getActivity().getApplicationContext();
-    mUserId = SharedPreferencesUtils.getCurrentUser(getActivity());
+    mUserId = getActivity().getIntent().getIntExtra(EXTRA_USER_ID, -1);
   }
 
   @Override

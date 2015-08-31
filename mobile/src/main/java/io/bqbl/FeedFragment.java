@@ -2,6 +2,7 @@ package io.bqbl;
 
 import android.app.Fragment;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.OvalShape;
 import android.os.Bundle;
@@ -233,7 +234,7 @@ public class FeedFragment extends Fragment {
 
       public View getView(int position, View convertView, ViewGroup parent) {
         Pair<Integer, Team> userPair = getItem(position);
-        int userId = userPair.first;
+        final int userId = userPair.first;
         Team team = userPair.second;
         View newView = convertView;
         if (newView == null) {
@@ -279,6 +280,14 @@ public class FeedFragment extends Fragment {
         badgeTextView.setText(badgeText);
         ((ShapeDrawable) badgeTextView.getBackground()).getPaint().setColor(badgeColor);
 
+        newView.setOnClickListener(new View.OnClickListener() {
+          @Override
+          public void onClick(View v) {
+            Intent intent = new Intent(getActivity(), ProfileActivity.class);
+            intent.putExtra(ProfileFragment.EXTRA_USER_ID, userId);
+            startActivity(intent, null);
+          }
+        });
         return newView;
       }
     }

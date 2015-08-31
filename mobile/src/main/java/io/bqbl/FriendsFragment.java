@@ -1,6 +1,7 @@
 package io.bqbl;
 
 import android.app.Fragment;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -137,7 +138,9 @@ public class FriendsFragment extends Fragment {
       public void bind(final List<JSONObject> friends, final int position) {
         JSONObject friend = friends.get(position);
         Log.d(MyApplication.logTag(FriendsFragment.this), friend.toString());
+        int friendId = -1;
         try {
+          friendId = friend.getInt(KEY_FRIEND_ID);
           mTitleTextView.setText(String.format("%s %s",
               friend.getString(KEY_FIRST_NAME),
               friend.getString(KEY_LAST_NAME)));
@@ -145,15 +148,18 @@ public class FriendsFragment extends Fragment {
               friend.getInt(KEY_WINS),
               friend.getInt(KEY_LOSSES),
               friend.getInt(KEY_TIES)));
-          WebUtils.setImageRemoteUri(mChipView, URLs.getUserPhotoUrl(friend.getInt(KEY_FRIEND_ID)));
+          WebUtils.setImageRemoteUri(mChipView, URLs.getUserPhotoUrl(friendId));
         } catch (JSONException e) {
           Log.e(MyApplication.logTag(FriendsFragment.this), "", e);
         }
+
+        final int finalFriendId = friendId;
         mItemView.setOnClickListener(new View.OnClickListener() {
           @Override
           public void onClick(View v) {
-            //Intent intent = new Intent(getActivity(), ProfileFragment.class);
-            //startActivity(intent, null);
+            Intent intent = new Intent(getActivity(), ProfileActivity.class);
+            intent.putExtra(ProfileFragment.EXTRA_USER_ID, finalFriendId);
+            startActivity(intent, null);
           }
         });
 
