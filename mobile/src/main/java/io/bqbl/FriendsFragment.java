@@ -1,7 +1,6 @@
 package io.bqbl;
 
 import android.app.Fragment;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -24,6 +23,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import io.bqbl.data.User;
+import io.bqbl.utils.Listener;
 import io.bqbl.utils.SharedPreferencesUtils;
 import io.bqbl.utils.URLs;
 import io.bqbl.utils.WebUtils;
@@ -37,13 +38,11 @@ public class FriendsFragment extends Fragment {
   private static final String KEY_LOSSES = "losses";
   private static final String KEY_TIES = "ties";
   private int mUserId;
-  private MyApplication mApp;
   private final Adapter mAdapter = new Adapter(Collections.<JSONObject>emptyList());
 
   @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    mApp = (MyApplication) getActivity().getApplicationContext();
     mUserId = SharedPreferencesUtils.getCurrentUser(getActivity());
   }
 
@@ -72,7 +71,7 @@ public class FriendsFragment extends Fragment {
       }
     });
 
-    mApp.addToRequestQueue(request);
+    MyApplication.getInstance().addToRequestQueue(request);
   }
 
   @Override
@@ -157,9 +156,12 @@ public class FriendsFragment extends Fragment {
         mItemView.setOnClickListener(new View.OnClickListener() {
           @Override
           public void onClick(View v) {
-            Intent intent = new Intent(getActivity(), ProfileActivity.class);
-            intent.putExtra(ProfileFragment.EXTRA_USER_ID, finalFriendId);
-            startActivity(intent, null);
+            User.requestUser(finalFriendId, true, new Listener<User>() {
+              @Override
+              public void onResult(User user) {
+                ProfileActivity.startActivity(getActivity(), user);
+              }
+            });
           }
         });
 

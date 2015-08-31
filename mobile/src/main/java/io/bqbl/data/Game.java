@@ -10,14 +10,15 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import io.bqbl.MyApplication;
 import io.bqbl.data.Team.ResultType;
 import io.bqbl.utils.Listener;
 import io.bqbl.utils.URLs;
@@ -39,7 +40,7 @@ public abstract class Game {
 
   protected Map<Integer, Team> userToTeam = new HashMap<>();
 
-  public static Game create(int gameId, int sportId, int creator, String placeId, String date, List<Team> teams, List<Integer> woohoos) {
+  public static Game create(int gameId, int sportId, int creator, String placeId, Date date, List<Team> teams, List<Integer> woohoos) {
     Game game = new AutoValue_Game.Builder()
         .id(gameId)
         .sportId(sportId)
@@ -88,7 +89,7 @@ public abstract class Game {
           json.getInt(JSON_KEY_SPORT_ID),
           json.getInt(JSON_KEY_CREATOR),
           json.getString(JSON_KEY_VENUE_ID),
-          json.getString(JSON_KEY_DATE),
+          new Date(json.getLong(JSON_KEY_DATE)),
           teams,
           woohoos);
     } catch (Exception e) {
@@ -111,7 +112,7 @@ public abstract class Game {
       game.put(JSON_KEY_SPORT_ID, sportId())
           .put(JSON_KEY_CREATOR, creator())
           .put(JSON_KEY_VENUE_ID, placeId())
-          .put(JSON_KEY_DATE, date())
+          .put(JSON_KEY_DATE, date().getTime())
           .put(JSON_KEY_TEAMS, teams)
           .put(JSON_KEY_WOOHOOS, woohoos);
     } catch (JSONException e) {
@@ -150,14 +151,19 @@ public abstract class Game {
     }
   }
 
+  @Deprecated
   public static Request requestGame(final int gameId, final Listener<Game> listener) {
+    return requestGame(gameId, false, listener);
+  }
+
+  public static Request requestGame(final int gameId, boolean shouldCommit, final Listener<Game> listener) {
     Game cached = CacheManager.getInstance().getGame(gameId);
     if (cached != null) {
       listener.onResult(cached);
       return null;
     }
 
-    return WebUtils.getRequest(URLs.GAME_PHP + "?gameid=" + gameId, new Response.Listener<JSONObject>() {
+    Request request = WebUtils.getRequest(URLs.GAME_PHP + "?gameid=" + gameId, new Response.Listener<JSONObject>() {
       @Override
       public void onResponse(JSONObject response) {
         Game game = Game.fromJSON(gameId, response);
@@ -165,6 +171,12 @@ public abstract class Game {
         listener.onResult(game);
       }
     });
+
+    if (shouldCommit) {
+      MyApplication.getInstance().addToRequestQueue(request, "Requesting game " + gameId);
+    }
+
+    return request;
   }
 
   public int rank(int userId) {
@@ -189,7 +201,7 @@ public abstract class Game {
   public abstract int sportId();
   public abstract int creator();
   public abstract String placeId();
-  public abstract String date();
+  public abstract Date date();
   public abstract List<Team> teams();
   public abstract List<Integer> woohoos();
 
@@ -201,7 +213,7 @@ public abstract class Game {
     public abstract Builder sportId(int id);
     public abstract Builder creator(int id);
     public abstract Builder placeId(String placeId);
-    public abstract Builder date(String date);
+    public abstract Builder date(Date date);
     public abstract Builder teams(List<Team> teams);
     public abstract Builder woohoos(List<Integer> woohoos);
     public abstract Game build();

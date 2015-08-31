@@ -7,8 +7,6 @@ import android.util.Log;
 import android.util.LruCache;
 import android.util.Pair;
 
-import com.google.android.gms.location.places.Place;
-
 import java.io.File;
 
 import io.bqbl.BuildConfig;
@@ -89,7 +87,7 @@ public final class CacheManager {
   }
 
   public void addPlace(Place place) {
-    mPlaces.put(place.getId(), place);
+    mPlaces.put(place.id(), place);
   }
 
   public Place getPlace(String id) {
@@ -112,7 +110,7 @@ public final class CacheManager {
     if (bitmap != null) {
       return bitmap;
     }
-    
+
     synchronized (mBitmapDiskCacheLock) {
       // Wait while disk cache is started from background thread
       while (mDiskCacheStarting) {

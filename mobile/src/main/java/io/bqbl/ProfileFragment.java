@@ -8,7 +8,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -21,23 +20,21 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import io.bqbl.data.Game;
-import io.bqbl.utils.Listener;
+import io.bqbl.utils.GameAdapter;
 import io.bqbl.utils.URLs;
 import io.bqbl.utils.WebUtils;
 
 public class ProfileFragment extends Fragment {
-  public static final String EXTRA_USER_ID = "user_id";
 
   private int mUserId;
-  private MyApplication mApp;
-  private final GameAdapter mGameAdapter = new GameAdapter(Collections.<Integer>emptyList());
+  private GameAdapter mGameAdapter;
+
 
   @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    mApp = (MyApplication) getActivity().getApplicationContext();
-    mUserId = getActivity().getIntent().getIntExtra(EXTRA_USER_ID, -1);
+    mUserId = getActivity().getIntent().getIntExtra(ProfileActivity.EXTRA_USER_ID, -1);
+    mGameAdapter = new GameAdapter(getActivity(), Collections.<Integer>emptyList());
   }
 
   @Override
@@ -79,69 +76,6 @@ public class ProfileFragment extends Fragment {
       }
     });
 
-    mApp.addToRequestQueue(request);
-  }
-
-  private class GameAdapter extends RecyclerView.Adapter<GameAdapter.ViewHolder> {
-    private List<Integer> mGameIds;
-
-    public GameAdapter(List<Integer> gameIds) {
-      mGameIds = gameIds;
-      setHasStableIds(true);
-    }
-
-    public void setGameIds(List<Integer> gameIds) {
-      mGameIds = gameIds;
-      notifyDataSetChanged();
-    }
-
-    @Override
-    public int getItemCount() {
-      return mGameIds.size();
-    }
-
-    @Override
-    public long getItemId(int position) {
-      return mGameIds.get(position);
-    }
-
-    @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-      View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.profile_game_card, parent, false);
-      return new ViewHolder(itemView);
-    }
-
-    @Override
-    public void onBindViewHolder(final ViewHolder holder, int position) {
-      mApp.addToRequestQueue(
-          Game.requestGame(mGameIds.get(position), new Listener<Game>() {
-            @Override
-            public void onResult(Game game) {
-              holder.bind(game);
-            }
-          }));
-    }
-
-    public class ViewHolder extends RecyclerView.ViewHolder {
-      protected TextView mTextView;
-      protected View mItemView;
-
-      public ViewHolder(View itemView) {
-        super(itemView);
-        mItemView = itemView;
-        mTextView = (TextView) itemView.findViewById(R.id.profile_game_card_text);
-      }
-
-      public void bind(Game game) {
-        mTextView.setText(game.toString());
-        int rank = game.rank(mUserId);
-        boolean tie = game.tie(mUserId);
-        if (rank == 1 && !tie) {
-          mItemView.setBackgroundColor(0x8800FF00);
-        } else if (rank != 1 && !tie){
-          mItemView.setBackgroundColor(0x88FF0000);
-        }
-      }
-    }
+    MyApplication.getInstance().addToRequestQueue(request);
   }
 }

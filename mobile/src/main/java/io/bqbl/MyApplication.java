@@ -1,6 +1,7 @@
 package io.bqbl;
 
 import android.app.Application;
+import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -8,12 +9,23 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.Volley;
+import com.google.android.gms.common.api.GoogleApiClient;
 
 public class MyApplication extends Application {
-
   public static final String TAG = MyApplication.class
       .getSimpleName();
   private static final String TAG_PREFIX = "BQBLio | ";
+  public static final GoogleApiClient.ConnectionCallbacks CONNECTION_CALLBACKS = new GoogleApiClient.ConnectionCallbacks() {
+    @Override
+    public void onConnected(Bundle bundle) {
+      Log.v(logTag("MyApplication"), "GoogleApiClient connected");
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+      Log.v(logTag("MyApplication"), "GoogleApiClient suspended");
+    }
+  };
 
   private RequestQueue mRequestQueue;
   private ImageLoader mImageLoader;

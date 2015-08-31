@@ -16,7 +16,7 @@
         android:paddingLeft="16dp"
         android:paddingRight="16dp"
         android:paddingTop="8dp"
-        android:textAppearance="@style/TextAppearance.AppCompat.Button"/>
+        android:textAppearance="@style/CardButtonStyle"/>
 
     <Button
         android:id="@android:id/button2"
@@ -30,5 +30,5 @@
         android:paddingLeft="16dp"
         android:paddingRight="16dp"
         android:paddingTop="8dp"
-        android:textAppearance="@style/TextAppearance.AppCompat.Button"/>
+        android:textAppearance="@style/CardButtonStyle"/>
 </LinearLayout>

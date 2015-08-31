@@ -1,25 +1,36 @@
 package io.bqbl;
 
-import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.TextView;
 
 import io.bqbl.data.Game;
-import io.bqbl.utils.Listener;
 
 
-public class GameActivity extends Activity {
+public class GameActivity extends AppCompatActivity {
 
   public static final String EXTRA_GAME_ID = "game_id";
 
   private int mGameId;
 
+  public static void startActivity(Context context, Game game) {
+    Intent intent = new Intent(context, GameActivity.class);
+    intent.putExtra(EXTRA_GAME_ID, game.id());
+    context.startActivity(intent, null);
+  }
+
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_game);
+    mGameId = getIntent().getExtras().getInt(EXTRA_GAME_ID, -1);
+
+    ActionBar actionBar = getSupportActionBar();
+    actionBar.setDisplayHomeAsUpEnabled(true);
   }
 
   @Override
@@ -41,19 +52,11 @@ public class GameActivity extends Activity {
       return true;
     }
 
-    return super.onOptionsItemSelected(item);
-  }
-
-  @Override
-  public void onResume() {
-    mGameId = getIntent().getExtras().getInt(EXTRA_GAME_ID, -1);
-    if (mGameId > -1) {
-      Game.requestGame(mGameId, new Listener<Game>() {
-        @Override
-        public void onResult(Game game) {
-          ((TextView) findViewById(R.id.game_textview)).setText(game.toString());
-        }
-      });
+    if (id == android.R.id.home) {
+      finish();
+      return true;
     }
+
+    return super.onOptionsItemSelected(item);
   }
 }

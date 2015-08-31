@@ -23,6 +23,7 @@ public abstract class User {
   public static final String JSON_KEY_PENIS_SIZE = "penis_size";
   public static final String JSON_KEY_EMAIL = "email";
   private static final String JSON_KEY_USERID = "userid";
+  public static final String FULL_NAME_FORMAT_STRING = "%s %s";
 
   public static User create(int id, String email, String first, String last, String phone, double penis) {
     return new AutoValue_User.Builder().id(id).email(email).first(first).last(last).phone(phone).penis(penis).build();
@@ -89,6 +90,10 @@ public abstract class User {
     }
 
     return request;
+  }
+
+  public String name() {
+    return String.format(FULL_NAME_FORMAT_STRING, first(), last());
   }
 
   public abstract int id();

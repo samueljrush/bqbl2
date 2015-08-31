@@ -12,6 +12,7 @@ public final class URLs {
   public static final String PROFILE_PHP = BQBLIO_JSON_URL + "/profile.php";
   public static final String USER_PHOTO_FORMAT = BQBLIO_URL + "/img/profile_%d.png";
   public static final String FRIENDS_PHP = BQBLIO_JSON_URL + "/friends.php";
+  public static final String PLACE_PHP = BQBLIO_JSON_URL + "/place.php";
 
   private URLs() {}
 
