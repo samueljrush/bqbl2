@@ -37,10 +37,11 @@ public abstract class Game {
   public static final String JSON_KEY_DATE = "date";
   public static final String JSON_KEY_TEAMS = "teams";
   public static final String JSON_KEY_WOOHOOS = "woohoos";
+  public static final String JSON_KEY_COMMENTS = "comments";
 
   protected Map<Integer, Team> userToTeam = new HashMap<>();
 
-  public static Game create(int gameId, int sportId, int creator, String placeId, Date date, List<Team> teams, List<Integer> woohoos) {
+  public static Game create(int gameId, int sportId, int creator, String placeId, Date date, List<Team> teams, List<Integer> woohoos, List<Comment> comments) {
     Game game = new AutoValue_Game.Builder()
         .id(gameId)
         .sportId(sportId)
@@ -49,13 +50,15 @@ public abstract class Game {
         .date(date)
         .teams(teams)
         .woohoos(woohoos)
+        .comments(comments)
         .build();
     Collections.sort(teams, new Comparator<Team>() {
       @Override
       public int compare(Team lhs, Team rhs) {
         if (lhs == null) {
           return -1;
-        } if (rhs == null) {
+        }
+        if (rhs == null) {
           return 1;
         }
         return lhs.rank() - rhs.rank();
@@ -64,7 +67,7 @@ public abstract class Game {
     setResultTypes(teams);
 
     for (Team team : teams) {
-      for(Integer userId : team.users()) {
+      for (Integer userId : team.users()) {
         game.userToTeam.put(userId, team);
       }
     }
@@ -76,6 +79,8 @@ public abstract class Game {
   public static Game fromJSON(int gameId, JSONObject json) {
     List<Team> teams = new LinkedList<>();
     List<Integer> woohoos = new LinkedList<>();
+    List<Comment> comments = new LinkedList<>();
+
     try {
       JSONArray teamsArray = json.getJSONArray(JSON_KEY_TEAMS);
       for (int teamId = 0; teamId < teamsArray.length(); teamId++) {
@@ -85,13 +90,18 @@ public abstract class Game {
       for (int i = 0; i < woohoosArray.length(); i++) {
         woohoos.add(Integer.valueOf(woohoosArray.getString(i)));
       }
+      JSONArray commentsArray = json.getJSONArray(JSON_KEY_COMMENTS);
+      for (int i = 0; i < commentsArray.length(); i++) {
+        comments.add(Comment.fromJSON(gameId, commentsArray.getJSONObject(i)));
+      }
       return create(gameId,
           json.getInt(JSON_KEY_SPORT_ID),
           json.getInt(JSON_KEY_CREATOR),
           json.getString(JSON_KEY_VENUE_ID),
           new Date(json.getLong(JSON_KEY_DATE)),
           teams,
-          woohoos);
+          woohoos,
+          comments);
     } catch (Exception e) {
       Log.e(logTag(Game.class.getSimpleName()), "", e);
     }
@@ -102,11 +112,15 @@ public abstract class Game {
     JSONObject game = new JSONObject();
     JSONArray teams = new JSONArray();
     JSONArray woohoos = new JSONArray();
+    JSONArray comments = new JSONArray();
     for (Team team : teams()) {
       teams.put(team.toJSON());
     }
     for (Integer woohoo : woohoos()) {
       woohoos.put(woohoo);
+    }
+    for (Comment comment : comments()) {
+      comments.put(comment.toJSON());
     }
     try {
       game.put(JSON_KEY_SPORT_ID, sportId())
@@ -114,7 +128,8 @@ public abstract class Game {
           .put(JSON_KEY_VENUE_ID, placeId())
           .put(JSON_KEY_DATE, date().getTime())
           .put(JSON_KEY_TEAMS, teams)
-          .put(JSON_KEY_WOOHOOS, woohoos);
+          .put(JSON_KEY_WOOHOOS, woohoos)
+          .put(JSON_KEY_COMMENTS, comments);
     } catch (JSONException e) {
       return null;
     }
@@ -198,24 +213,41 @@ public abstract class Game {
   }
 
   public abstract int id();
+
   public abstract int sportId();
+
   public abstract int creator();
+
   public abstract String placeId();
+
   public abstract Date date();
+
   public abstract List<Team> teams();
+
   public abstract List<Integer> woohoos();
+
+  public abstract List<Comment> comments();
 
   public abstract Builder toBuilder();
 
   @AutoValue.Builder
   abstract static class Builder {
     public abstract Builder id(int id);
+
     public abstract Builder sportId(int id);
+
     public abstract Builder creator(int id);
+
     public abstract Builder placeId(String placeId);
+
     public abstract Builder date(Date date);
+
     public abstract Builder teams(List<Team> teams);
+
     public abstract Builder woohoos(List<Integer> woohoos);
+
+    public abstract Builder comments(List<Comment> comments);
+
     public abstract Game build();
   }
 }

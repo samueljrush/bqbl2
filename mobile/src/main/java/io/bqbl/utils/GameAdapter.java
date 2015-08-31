@@ -79,6 +79,7 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.ViewHolder> {
     protected TextView mSubtitleTextView;
     protected ImageView mChipView;
     protected GridView mGridView;
+    protected TextView mWoohoosAndCommentsTextView;
     protected Button mWoohooButton;
     protected Button mCommentButton;
 
@@ -91,6 +92,7 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.ViewHolder> {
       mGridView = (GridView) itemView.findViewById(R.id.user_grid);
       mChipView = (ImageView) itemView.findViewById(R.id.chip_view);
       mChipView.setBackground(new ShapeDrawable(new OvalShape()));
+      mWoohoosAndCommentsTextView = (TextView) itemView.findViewById(R.id.woohoos_and_comments);
       mWoohooButton = (Button) itemView.findViewById(android.R.id.button1);
       mCommentButton = (Button) itemView.findViewById(android.R.id.button2);
       mCommentButton.setText(itemView.getContext().getString(R.string.comment_button_text));
@@ -131,6 +133,31 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.ViewHolder> {
         }
       }
 
+      int numWoohoos = game.woohoos().size();
+      int numComments = game.comments().size();
+      StringBuilder sb = new StringBuilder();
+      if (numWoohoos > 0) {
+        sb.append(numWoohoos);
+        sb.append(" Woohoo");
+        if (numWoohoos > 1) {
+          sb.append("s");
+        }
+      }
+      if (numComments > 0) {
+        if (sb.length() != 0) {
+          sb.append("  ");
+        }
+        sb.append(numComments);
+        sb.append(" Comment");
+        if (numComments > 1) {
+          sb.append("s");
+        }
+      }
+      if (sb.length() > 0) {
+        mWoohoosAndCommentsTextView.setText(sb);
+      } else {
+        mWoohoosAndCommentsTextView.setVisibility(View.GONE);
+      }
 
       mGridView.setAdapter(new UserGridAdapter(userResults));
 

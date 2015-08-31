@@ -29,7 +29,7 @@ public class ProfileActivity extends AppCompatActivity {
 
     ActionBar actionBar = getSupportActionBar();
     actionBar.setDisplayHomeAsUpEnabled(true);
-    actionBar.setTitle(getIntent().getStringExtra(EXTRA_USER_NAME));
+    //actionBar.setTitle(getIntent().getStringExtra(EXTRA_USER_NAME));
 
     //mToolbar = (Toolbar) findViewById(R.id.main_toolbar);
     //android.util.Log.d(logTag("DEBUGLOG"), "toolbar null: " + (mToolbar == null));
