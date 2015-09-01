@@ -136,4 +136,21 @@ public class MainActivity extends AppCompatActivity
 
     return super.onOptionsItemSelected(item);
   }
+
+  void getDeviceToken() {
+      new AsyncTask() {
+            @Override
+            protected String doInBackground(void... params) {
+                GoogleCloudMessaging gcm =
+                    GoogleCloudMessaging.getInstance(getApplicationContext());
+
+                String deviceToken = gcm.register("783799732849");
+                Log.i("GCM", "Device token : " + deviceToken);
+
+                // update user profile document
+
+                return null;
+            }
+        }.execute(null, null, null);
+  }
 }
