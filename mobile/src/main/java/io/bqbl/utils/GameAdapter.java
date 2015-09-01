@@ -96,8 +96,10 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.ViewHolder> {
       mChipView.setBackground(new ShapeDrawable(new OvalShape()));
       mWoohoosAndCommentsTextView = (TextView) itemView.findViewById(R.id.woohoos_and_comments);
       mWoohooButton = (Button) itemView.findViewById(android.R.id.button1);
-      mCommentButton = (Button) itemView.findViewById(android.R.id.button2);
+      mWoohooButton = (Button) itemView.findViewById(android.R.id.button2);
+      mCommentButton = (Button) itemView.findViewById(android.R.id.button3);
       mCommentButton.setText(itemView.getContext().getString(R.string.comment_button_text));
+      mBoohooButton.setText(itemView.getContext().getString(R.string.boohoo_button_text));
       mWoohooButton.setText(itemView.getContext().getString(R.string.woohoo_button_text));
       mGridView.setGravity(Gravity.CENTER_HORIZONTAL);
     }
