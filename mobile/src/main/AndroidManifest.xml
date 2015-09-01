@@ -95,7 +95,13 @@
                 <category android:name="io.bqbl"/>
             </intent-filter>
         </receiver>
-        <service android:name=".gcm.GcmMessageHandler"/>
+        <service
+            android:name=".gcm.MyGcmListenerService"
+            android:exported="false" >
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+            </intent-filter>
+        </service>
     </application>
 
 </manifest>
