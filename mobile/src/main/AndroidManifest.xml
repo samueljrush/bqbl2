@@ -88,11 +88,12 @@
         </activity>
 
         <receiver
-            android:name=".gcm.GcmBroadcastReceiver"
+            android:name="com.google.android.gms.gcm.GcmReceiver"
+            android:exported="true"
             android:permission="com.google.android.c2dm.permission.SEND">
             <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.RECEIVE"/>
-                <category android:name="io.bqbl"/>
+                <category android:name="io.bqbl.gcm"/>
             </intent-filter>
         </receiver>
         <service
