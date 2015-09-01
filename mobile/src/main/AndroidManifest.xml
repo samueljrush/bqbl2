@@ -98,9 +98,7 @@
                 <category android:name="io.bqbl" />
             </intent-filter>
         </receiver>
-        <service
-            android:name=".GcmMessageHandler"
-        </service>
+        <service android:name=".GcmMessageHandler" />
     </application>
 
 </manifest>
