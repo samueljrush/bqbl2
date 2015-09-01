@@ -15,5 +15,6 @@
     <color name="badge_tie">#FFE0E0E0</color>
     <color name="white_button_pressed">#55000000</color>
     <color name="woohoo_yes_color">#42A5F5</color>
+    <color name="boohoo_yes_color">#DB4437</color>
     <color name="woohoo_no_color">#000</color>
 </resources>
