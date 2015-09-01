@@ -21,6 +21,7 @@ import java.text.SimpleDateFormat;
 import java.util.LinkedList;
 import java.util.List;
 
+import io.bqbl.MyApplication;
 import io.bqbl.ProfileActivity;
 import io.bqbl.R;
 import io.bqbl.data.Game;
@@ -161,6 +162,10 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.ViewHolder> {
         mWoohoosAndCommentsTextView.setVisibility(View.GONE);
       }
 
+      int woohooColor = game.woohoos().contains(MyApplication.getCurrentUser())
+          ? mItemView.getContext().getResources().getColor(R.color.woohoo_yes_color)
+          : mItemView.getContext().getResources().getColor(R.color.woohoo_no_color);
+      mWoohooButton.setTextColor(woohooColor);
       mGridView.setAdapter(new UserGridAdapter(userResults));
 
       mItemView.setOnClickListener(new View.OnClickListener() {

@@ -1,6 +1,8 @@
 package io.bqbl;
 
 import android.app.Application;
+import android.content.Context;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -10,6 +12,11 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.Volley;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.gcm.GoogleCloudMessaging;
+
+import io.bqbl.utils.SharedPreferencesUtils;
+import io.bqbl.utils.URLs;
+import io.bqbl.utils.WebUtils;
 
 public class MyApplication extends Application {
   public static final String TAG = MyApplication.class
@@ -26,6 +33,7 @@ public class MyApplication extends Application {
       Log.v(logTag("MyApplication"), "GoogleApiClient suspended");
     }
   };
+  private static int sCurrentUser = -1;
 
   private RequestQueue mRequestQueue;
   private ImageLoader mImageLoader;
@@ -33,6 +41,20 @@ public class MyApplication extends Application {
   private static MyApplication mInstance;
 
   private static Thread.UncaughtExceptionHandler defaultUncaughtExceptionHandler = Thread.getDefaultUncaughtExceptionHandler();
+
+  public static int getCurrentUser(Context context) {
+    if (sCurrentUser > 0) {
+      return sCurrentUser;
+    }
+    sCurrentUser = SharedPreferencesUtils.getInt(context, R.string.pref_current_user, R.string.pref_current_user_default);
+    return sCurrentUser;
+  }
+
+  public static boolean setCurrentUser(Context context, int user) {
+    sCurrentUser = user;
+    getInstance().getDeviceToken();
+    return SharedPreferencesUtils.putInt(context, R.string.pref_current_user, user);
+  }
 
   @Override
   public void onCreate() {
@@ -44,6 +66,7 @@ public class MyApplication extends Application {
         defaultUncaughtExceptionHandler.uncaughtException(thread, ex);
       }
     });
+    getDeviceToken();
     mInstance = this;
   }
 
@@ -96,5 +119,29 @@ public class MyApplication extends Application {
 
   public static String logTag(String tag) {
     return TAG_PREFIX + tag;
+  }
+
+  public static int getCurrentUser() {
+    return getCurrentUser(getInstance());
+  }
+
+  public void getDeviceToken() {
+    new AsyncTask<Void, Void, String>() {
+      @Override
+      protected String doInBackground(Void... params) {
+        GoogleCloudMessaging gcm =
+            GoogleCloudMessaging.getInstance(getApplicationContext());
+        try {
+          String deviceToken = gcm.register("783799732849");
+          addToRequestQueue(WebUtils.getRequest(URLs.getSetGcmFormatUrl(getCurrentUser(), deviceToken) , null), "Sending GCM token");
+          Log.i(logTag("GCM"), "Device token : " + deviceToken);
+          // update user profile document
+        } catch (Exception e) {
+          Log.e(logTag(this), "Error getting token", e);
+        }
+
+        return null;
+      }
+    }.execute((Void) null);
   }
 }

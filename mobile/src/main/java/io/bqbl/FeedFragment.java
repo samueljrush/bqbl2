@@ -21,7 +21,6 @@ import java.util.Collections;
 import java.util.List;
 
 import io.bqbl.utils.GameAdapter;
-import io.bqbl.utils.SharedPreferencesUtils;
 import io.bqbl.utils.URLs;
 import io.bqbl.utils.WebUtils;
 
@@ -35,7 +34,7 @@ public class FeedFragment extends Fragment {
   @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    mUserId = SharedPreferencesUtils.getCurrentUser(getActivity());
+    mUserId = MyApplication.getCurrentUser(getActivity());
   }
 
   @Override

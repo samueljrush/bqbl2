@@ -18,7 +18,6 @@ import com.google.android.gms.common.AccountPicker;
 
 import org.json.JSONObject;
 
-import io.bqbl.utils.SharedPreferencesUtils;
 import io.bqbl.utils.WebUtils;
 
 
@@ -45,7 +44,7 @@ public class WelcomeActivityFragment extends Fragment {
   @Override
   public void onStart() {
     super.onStart();
-    int userid = SharedPreferencesUtils.getCurrentUser(getActivity());
+    int userid = MyApplication.getCurrentUser(getActivity());
     if (userid > 0) {
       Intent intent = new Intent(getActivity(), MainActivity.class);
       startActivity(intent);
@@ -85,7 +84,7 @@ public class WelcomeActivityFragment extends Fragment {
             int userid = response.getInt("user_id");
             android.util.Log.v(MyApplication.logTag(WelcomeActivityFragment.this), String.format("retrieved email: %s, id: %d", accountName, userid));
             if (userid > 0) {
-              SharedPreferencesUtils.setCurrentUser(myApp, userid);
+              MyApplication.setCurrentUser(myApp, userid);
               Intent intent = new Intent(getActivity(), MainActivity.class);
               startActivity(intent);
             } else {

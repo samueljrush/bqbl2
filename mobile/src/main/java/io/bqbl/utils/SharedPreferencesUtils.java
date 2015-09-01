@@ -14,14 +14,6 @@ public final class SharedPreferencesUtils {
   private SharedPreferencesUtils() {
   }
 
-  public static int getCurrentUser(Context context) {
-    return getInt(context, R.string.pref_current_user, R.string.pref_current_user_default);
-  }
-
-  public static boolean setCurrentUser(Context context, int user) {
-    return putInt(context, R.string.pref_current_user, user);
-  }
-
   public static boolean putInt(Context context, int keyResource, int value) {
     SharedPreferences.Editor editor = getSharedPreferences(context).edit();
     editor.putInt(context.getString(keyResource), value);

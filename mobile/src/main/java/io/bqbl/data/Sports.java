@@ -16,10 +16,13 @@ public final class Sports {
 
   static {
     addSport(Sport.create(1, "Basketball", 1, 0xFFF4511E, R.drawable.ic_basketball));
+    addSport(Sport.create(31, "Beer Pong", 1, 0xFFF4511E, R.drawable.ic_basketball));
+    addSport(Sport.create(100, "Fantasy Draft", 1, 0xFFF4511E, R.drawable.ic_basketball));
   }
 
   public static Sport getSport(int id) {
-    return sports.get(1);
+    Sport sport = sports.get(id);
+    return (sport == null) ? sports.get(1) : sport;
   }
 
   private static void addSport(Sport sport) {

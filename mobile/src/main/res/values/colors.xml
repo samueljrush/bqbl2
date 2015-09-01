@@ -14,4 +14,6 @@
     <color name="badge_bronze">#FFE19346</color>
     <color name="badge_tie">#FFE0E0E0</color>
     <color name="white_button_pressed">#55000000</color>
+    <color name="woohoo_yes_color">#42A5F5</color>
+    <color name="woohoo_no_color">#000</color>
 </resources>

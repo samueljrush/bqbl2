@@ -25,7 +25,6 @@ import java.util.List;
 
 import io.bqbl.data.User;
 import io.bqbl.utils.Listener;
-import io.bqbl.utils.SharedPreferencesUtils;
 import io.bqbl.utils.URLs;
 import io.bqbl.utils.WebUtils;
 
@@ -43,7 +42,7 @@ public class FriendsFragment extends Fragment {
   @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    mUserId = SharedPreferencesUtils.getCurrentUser(getActivity());
+    mUserId = MyApplication.getCurrentUser(getActivity());
   }
 
   public void onResume() {

@@ -29,7 +29,6 @@ import android.widget.Toast;
 
 import io.bqbl.data.User;
 import io.bqbl.utils.Listener;
-import io.bqbl.utils.SharedPreferencesUtils;
 import io.bqbl.utils.URLs;
 import io.bqbl.utils.WebUtils;
 
@@ -291,7 +290,7 @@ public class NavigationDrawerFragment extends Fragment {
         final TextView emailTextView = (TextView) view.findViewById(R.id.email_text);
         final TextView nameTextView = (TextView) view.findViewById(R.id.name_text);
 
-        int userId = SharedPreferencesUtils.getCurrentUser(getActivity());
+        int userId = MyApplication.getCurrentUser(getActivity());
         String userPhotoUri = URLs.getUserPhotoUrl(userId);
         WebUtils.setImageRemoteUri(userImageView, userPhotoUri);
         Log.d(logTag(this), "Requesting user...");

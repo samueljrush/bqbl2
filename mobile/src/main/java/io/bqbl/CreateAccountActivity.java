@@ -16,7 +16,6 @@ import com.android.volley.Response;
 import org.json.JSONObject;
 
 import io.bqbl.data.User;
-import io.bqbl.utils.SharedPreferencesUtils;
 import io.bqbl.utils.WebUtils;
 
 
@@ -69,7 +68,7 @@ public class CreateAccountActivity extends Activity {
             try {
               int userid = response.getInt("user_id");
               if (userid > 0) {
-                SharedPreferencesUtils.setCurrentUser(myApp, userid);
+                MyApplication.setCurrentUser(myApp, userid);
                 Intent intent = new Intent(CreateAccountActivity.this, FeedFragment.class);
                 startActivity(intent);
               } else {
