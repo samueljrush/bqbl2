@@ -83,6 +83,7 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.ViewHolder> {
     protected GridView mGridView;
     protected TextView mWoohoosAndCommentsTextView;
     protected Button mWoohooButton;
+    protected Button mBoohooButton;
     protected Button mCommentButton;
 
     public ViewHolder(View itemView) {
@@ -96,7 +97,7 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.ViewHolder> {
       mChipView.setBackground(new ShapeDrawable(new OvalShape()));
       mWoohoosAndCommentsTextView = (TextView) itemView.findViewById(R.id.woohoos_and_comments);
       mWoohooButton = (Button) itemView.findViewById(android.R.id.button1);
-      mWoohooButton = (Button) itemView.findViewById(android.R.id.button2);
+      mBoohooButton = (Button) itemView.findViewById(android.R.id.button2);
       mCommentButton = (Button) itemView.findViewById(android.R.id.button3);
       mCommentButton.setText(itemView.getContext().getString(R.string.comment_button_text));
       mBoohooButton.setText(itemView.getContext().getString(R.string.boohoo_button_text));
@@ -139,12 +140,23 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.ViewHolder> {
       }
 
       int numWoohoos = game.woohoos().size();
+      int numBoohoos = game.boohoos().size();
       int numComments = game.comments().size();
       StringBuilder sb = new StringBuilder();
       if (numWoohoos > 0) {
         sb.append(numWoohoos);
         sb.append(" Woohoo");
         if (numWoohoos > 1) {
+          sb.append("s");
+        }
+      }
+      if (numBoohoos > 0) {
+        if (sb.length() != 0) {
+          sb.append("  ");
+        }
+        sb.append(numBoohoos);
+        sb.append(" Boohoo");
+        if (numBoohoos > 1) {
           sb.append("s");
         }
       }
@@ -168,6 +180,10 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.ViewHolder> {
           ? mItemView.getContext().getResources().getColor(R.color.woohoo_yes_color)
           : mItemView.getContext().getResources().getColor(R.color.woohoo_no_color);
       mWoohooButton.setTextColor(woohooColor);
+      int boohooColor = game.boohoos().contains(MyApplication.getCurrentUser())
+          ? mItemView.getContext().getResources().getColor(R.color.boohoo_yes_color)
+          : mItemView.getContext().getResources().getColor(R.color.woohoo_no_color);
+      mBoohooButton.setTextColor(boohooColor);
       mGridView.setAdapter(new UserGridAdapter(userResults));
 
       mItemView.setOnClickListener(new View.OnClickListener() {
