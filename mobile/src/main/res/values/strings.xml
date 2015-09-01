@@ -21,5 +21,6 @@
     <string name="action_example">Example action</string>
     <string name="comment_button_text">Comment</string>
     <string name="woohoo_button_text">Woohoo!</string>
+    <string name="woohoo_button_text">Boohoo!</string>
     <string name="title_activity_maps">Map</string>
 </resources>
