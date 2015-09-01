@@ -91,27 +91,15 @@
         </activity>
 
         <receiver
-            android:name="com.google.android.gms.gcm.GcmReceiver"
-            android:exported="true"
+            android:name=".GcmBroadcastReceiver"
             android:permission="com.google.android.c2dm.permission.SEND" >
             <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
-                <category android:name="io.bqbl.gcm" />
+                <category android:name="io.bqbl" />
             </intent-filter>
         </receiver>
         <service
-            android:name="io.bqbl.MyGcmListenerService"
-            android:exported="false" >
-            <intent-filter>
-                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
-            </intent-filter>
-        </service>
-        <service
-            android:name="io.bqbl.MyInstanceIDListenerService"
-            android:exported="false">
-            <intent-filter>
-                <action android:name="com.google.android.gms.iid.InstanceID" />
-            </intent-filter>
+            android:name=".GcmMessageHandler"
         </service>
     </application>
 
