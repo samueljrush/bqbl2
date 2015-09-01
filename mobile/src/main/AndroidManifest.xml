@@ -78,7 +78,7 @@
         <activity
             android:name=".ProfileActivity"
             android:label="@string/title_activity_profile"
-            android:theme="@style/AppCompatTheme.DarkActionBar">
+            android:theme="@style/AppCompatTheme">
         </activity>
 
         <activity

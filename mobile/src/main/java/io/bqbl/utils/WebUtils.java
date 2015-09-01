@@ -82,6 +82,4 @@ public final class WebUtils {
         });
     MyApplication.getInstance().addToRequestQueue(request);
   }
-
-
 }

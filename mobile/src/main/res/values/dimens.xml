@@ -7,4 +7,7 @@
          https://developer.android.com/design/patterns/navigation-drawer.html -->
     <dimen name="navigation_drawer_width">240dp</dimen>
     <dimen name="sport_icon_width">36dp</dimen>
+    <dimen name="counter_corner_radius">2dp</dimen>
+    <dimen name="counter_height">64dp</dimen>
+    <dimen name="counter_half_height">32dp</dimen>
 </resources>

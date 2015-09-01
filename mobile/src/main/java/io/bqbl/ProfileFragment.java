@@ -49,6 +49,12 @@ public class ProfileFragment extends Fragment {
   private List<GameInfo> mGameInfos;
   private ImageView mFilteredSportView;
   private Sport mFilteredSport;
+  private int mTotalWins = -1;
+  private int mTotalLosses = -1;
+  private int mTotalTies = -1;
+  private boolean mAnimatingWins = false;
+  private boolean mAnimatingLosses = false;
+  private boolean mAnimatingTies = false;
 
 
   @Override
@@ -165,12 +171,47 @@ public class ProfileFragment extends Fragment {
     String streakString = String.format("%s-%d", RESULT_TO_LETTER.get(streak.first), streak.second);
     String last10String = String.format("%d-%d-%d", winsLast10, lossesLast10, tiesLast10);
 
-    ((TextView) getView().findViewById(R.id.wins_text)).setText(String.valueOf(totalWins));
-    ((TextView) getView().findViewById(R.id.losses_text)).setText(String.valueOf(totalLosses));
-    ((TextView) getView().findViewById(R.id.ties_text)).setText(String.valueOf(totalTies));
     ((TextView) getView().findViewById(R.id.win_pct_text)).setText(String.valueOf(winPct));
     ((TextView) getView().findViewById(R.id.streak_text)).setText(streakString);
     ((TextView) getView().findViewById(R.id.last_10_text)).setText(last10String);
+
+    final View winsCounter = getView().findViewById(R.id.wins_counter);
+    final View lossesCounter = getView().findViewById(R.id.losses_counter);
+    final View tiesCounter = getView().findViewById(R.id.ties_counter);
+    if (mTotalWins >= 0 && !mAnimatingWins) {
+      mAnimatingWins = true;
+      winsCounter.animate().rotationXBy(360 * (totalWins - mTotalWins)).setDuration(300).withEndAction(new Runnable() {
+        @Override
+        public void run() {
+          mAnimatingWins = false;
+          winsCounter.setRotationX(0);
+        }
+      }).start();
+    }
+    if (mTotalLosses >= 0 && !mAnimatingLosses) {
+      lossesCounter.animate().rotationXBy(360 * (totalLosses - mTotalLosses)).setDuration(500).withEndAction(new Runnable() {
+        @Override
+        public void run() {
+          mAnimatingLosses = false;
+          lossesCounter.setRotationX(0);
+        }
+      }).start();
+    }
+    if (mTotalTies >= 0 && !mAnimatingTies) {
+      tiesCounter.animate().rotationXBy(360 * (totalTies - mTotalTies)).setDuration(500).withEndAction(new Runnable() {
+        @Override
+        public void run() {
+          mAnimatingTies = false;
+          tiesCounter.setRotationX(0);
+        }
+      }).start();
+    }
+    ((TextView) winsCounter.findViewById(android.R.id.text1)).setText(String.valueOf(totalWins));
+    ((TextView) lossesCounter.findViewById(android.R.id.text1)).setText(String.valueOf(totalLosses));
+    ((TextView) tiesCounter.findViewById(android.R.id.text1)).setText(String.valueOf(totalTies));
+    mTotalWins = totalWins;
+    mTotalLosses = totalLosses;
+    mTotalTies = totalTies;
 
     List<Integer> gameIdList = getGameIds(gameInfos);
     mGameAdapter.setGameIds(gameIdList);

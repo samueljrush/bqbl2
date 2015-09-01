@@ -66,7 +66,6 @@ public class MyApplication extends Application {
         defaultUncaughtExceptionHandler.uncaughtException(thread, ex);
       }
     });
-    getDeviceToken();
     mInstance = this;
   }
 

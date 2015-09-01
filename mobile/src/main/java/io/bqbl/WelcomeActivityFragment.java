@@ -20,6 +20,8 @@ import org.json.JSONObject;
 
 import io.bqbl.utils.WebUtils;
 
+import static io.bqbl.MyApplication.logTag;
+
 
 /**
  * A placeholder fragment containing a simple view.
@@ -44,14 +46,16 @@ public class WelcomeActivityFragment extends Fragment {
   @Override
   public void onStart() {
     super.onStart();
+    Log.d(logTag(this), "Getting user id...");
     int userid = MyApplication.getCurrentUser(getActivity());
+    Log.d(logTag(this), "Got user id");
     if (userid > 0) {
       Intent intent = new Intent(getActivity(), MainActivity.class);
       startActivity(intent);
-      android.util.Log.v(MyApplication.logTag(this), "user id: " + userid);
+      android.util.Log.v(logTag(this), "user id: " + userid);
       getActivity().finish();
     } else {
-      android.util.Log.v(MyApplication.logTag(this), "Asking for google account.");
+      android.util.Log.v(logTag(this), "Asking for google account.");
       final Intent googlePicker = AccountPicker.newChooseAccountIntent(
           null,
           null,
@@ -72,9 +76,9 @@ public class WelcomeActivityFragment extends Fragment {
 
   @Override
   public void onActivityResult(int requestCode, int resultCode, Intent data) {
-    android.util.Log.v(MyApplication.logTag(this), "onActivityResult");
+    android.util.Log.v(logTag(this), "onActivityResult");
     if (requestCode == ACCOUNT_SELECTION_REQUEST && resultCode == Activity.RESULT_OK) {
-      Log.d(MyApplication.logTag(this), "onActivityResult");
+      Log.d(logTag(this), "onActivityResult");
       final String accountName = data.getStringExtra(AccountManager.KEY_ACCOUNT_NAME);
       final MyApplication myApp = (MyApplication) getActivity().getApplicationContext();
       Request request = WebUtils.getRequest("http://bqbl.io/io/json/userlookup.php?email=" + accountName, new Response.Listener<JSONObject>() {
@@ -82,7 +86,7 @@ public class WelcomeActivityFragment extends Fragment {
         public void onResponse(JSONObject response) {
           try {
             int userid = response.getInt("user_id");
-            android.util.Log.v(MyApplication.logTag(WelcomeActivityFragment.this), String.format("retrieved email: %s, id: %d", accountName, userid));
+            android.util.Log.v(logTag(WelcomeActivityFragment.this), String.format("retrieved email: %s, id: %d", accountName, userid));
             if (userid > 0) {
               MyApplication.setCurrentUser(myApp, userid);
               Intent intent = new Intent(getActivity(), MainActivity.class);
@@ -93,7 +97,7 @@ public class WelcomeActivityFragment extends Fragment {
               startActivity(intent);
             }
           } catch (Exception e) {
-            android.util.Log.e(MyApplication.logTag(WelcomeActivityFragment.this), "Exception thrown", e);
+            android.util.Log.e(logTag(WelcomeActivityFragment.this), "Exception thrown", e);
           }
           getActivity().finish();
         }
