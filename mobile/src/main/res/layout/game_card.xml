@@ -16,18 +16,19 @@
 
         <include layout="@layout/card_chip_title"/>
 
-        <io.bqbl.utils.DisplayAllGridView
+        <io.bqbl.utils.ReasonableGridView
             android:id="@+id/user_grid"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:columnWidth="48dp"
             android:gravity="center"
+            android:layout_gravity="center_horizontal"
             android:horizontalSpacing="8dp"
-            android:numColumns="auto_fit"
+            android:numColumns="1"
             android:paddingLeft="16dp"
             android:paddingRight="16dp"
             android:paddingBottom="16dp"
-            android:stretchMode="spacingWidth"
+            android:stretchMode="none"
             android:verticalSpacing="16dp"/>
 
         <TextView

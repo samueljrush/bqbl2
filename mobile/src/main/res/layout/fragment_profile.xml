@@ -48,7 +48,7 @@
                 android:paddingRight="8dp"/>
         </LinearLayout>
 
-        <GridView
+        <io.bqbl.utils.ReasonableGridView
             android:id="@+id/sport_list"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

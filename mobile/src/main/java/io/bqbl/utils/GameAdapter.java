@@ -7,6 +7,7 @@ import android.graphics.drawable.shapes.OvalShape;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.util.Pair;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -97,6 +98,7 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.ViewHolder> {
       mCommentButton = (Button) itemView.findViewById(android.R.id.button2);
       mCommentButton.setText(itemView.getContext().getString(R.string.comment_button_text));
       mWoohooButton.setText(itemView.getContext().getString(R.string.woohoo_button_text));
+      mGridView.setGravity(Gravity.CENTER_HORIZONTAL);
     }
 
     public void bind(final Game game) {
