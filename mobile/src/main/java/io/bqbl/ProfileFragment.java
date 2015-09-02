@@ -3,8 +3,10 @@ package io.bqbl;
 import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.util.Pair;
 import android.view.LayoutInflater;
@@ -67,7 +69,10 @@ public class ProfileFragment extends Fragment {
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container,
                            Bundle savedInstanceState) {
-    return inflater.inflate(R.layout.fragment_profile, container, false);
+    View view = inflater.inflate(R.layout.fragment_profile, container, false);
+    Toolbar toolbar = (Toolbar) view.findViewById(R.id.my_toolbar);
+    ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
+    return view;
   }
 
   public void onResume() {
@@ -83,7 +88,9 @@ public class ProfileFragment extends Fragment {
     User.requestUser(mUserId, true, new Listener<User>() {
       @Override
       public void onResult(User user) {
-        ((TextView) getView().findViewById(R.id.name_title)).setText(user.name());
+        ((TextView) getView().findViewById(R.id.toolbar_title)).setText(user.name());
+        //CollapsingToolbarLayout ctl = (CollapsingToolbarLayout) getView().findViewById(R.id.collapsing_toolbar_layout);
+        //ctl.setTitle(user.name());
       }
     });
 
@@ -171,9 +178,20 @@ public class ProfileFragment extends Fragment {
     String streakString = String.format("%s-%d", RESULT_TO_LETTER.get(streak.first), streak.second);
     String last10String = String.format("%d-%d-%d", winsLast10, lossesLast10, tiesLast10);
 
-    ((TextView) getView().findViewById(R.id.win_pct_text)).setText(String.valueOf(winPct));
-    ((TextView) getView().findViewById(R.id.streak_text)).setText(streakString);
-    ((TextView) getView().findViewById(R.id.last_10_text)).setText(last10String);
+    View winPctView = getView().findViewById(R.id.win_pct);
+    View streakView = getView().findViewById(R.id.streak);
+    View last10View = getView().findViewById(R.id.last_10);
+    View numGamesView = getView().findViewById(R.id.num_games);
+
+    ((TextView) winPctView.findViewById(android.R.id.text1)).setText("Win %");
+    ((TextView) winPctView.findViewById(android.R.id.text2)).setText(String.valueOf(winPct));
+    ((TextView) streakView.findViewById(android.R.id.text1)).setText("Streak");
+    ((TextView) streakView.findViewById(android.R.id.text2)).setText(streakString);
+    ((TextView) last10View.findViewById(android.R.id.text1)).setText("Last 10");
+    ((TextView) last10View.findViewById(android.R.id.text2)).setText(last10String);
+    ((TextView) numGamesView.findViewById(android.R.id.text1)).setText("Games");
+    ((TextView) winPctView.findViewById(android.R.id.text2)).setText(String.valueOf(gameInfos.size()));
+
 
     final View winsCounter = getView().findViewById(R.id.wins_counter);
     final View lossesCounter = getView().findViewById(R.id.losses_counter);
@@ -215,11 +233,6 @@ public class ProfileFragment extends Fragment {
 
     List<Integer> gameIdList = getGameIds(gameInfos);
     mGameAdapter.setGameIds(gameIdList);
-
-    ((TextView) getView().findViewById(R.id.game_count))
-        .setText(String.format("Games: %d", gameIdList.size()));
-    ((TextView) getView().findViewById(R.id.place_count))
-        .setText(String.format("Places: %d", getPlaceCount(gameInfos)));
   }
 
   private List<GameInfo> gamesForSport(int sportId) {

@@ -2,7 +2,7 @@ package io.bqbl;
 
 import android.app.Application;
 import android.content.Context;
-import android.os.AsyncTask;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -12,11 +12,9 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.Volley;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.gcm.GoogleCloudMessaging;
 
+import io.bqbl.gcm.RegistrationIntentService;
 import io.bqbl.utils.SharedPreferencesUtils;
-import io.bqbl.utils.URLs;
-import io.bqbl.utils.WebUtils;
 
 public class MyApplication extends Application {
   public static final String TAG = MyApplication.class
@@ -52,7 +50,6 @@ public class MyApplication extends Application {
 
   public static boolean setCurrentUser(Context context, int user) {
     sCurrentUser = user;
-    getInstance().getDeviceToken();
     return SharedPreferencesUtils.putInt(context, R.string.pref_current_user, user);
   }
 
@@ -66,6 +63,9 @@ public class MyApplication extends Application {
         defaultUncaughtExceptionHandler.uncaughtException(thread, ex);
       }
     });
+
+    Intent intent = new Intent(this, RegistrationIntentService.class);
+    Log.d(logTag(this), "Starting service: " + startService(intent));
     mInstance = this;
   }
 
@@ -122,25 +122,5 @@ public class MyApplication extends Application {
 
   public static int getCurrentUser() {
     return getCurrentUser(getInstance());
-  }
-
-  public void getDeviceToken() {
-    new AsyncTask<Void, Void, String>() {
-      @Override
-      protected String doInBackground(Void... params) {
-        GoogleCloudMessaging gcm =
-            GoogleCloudMessaging.getInstance(getApplicationContext());
-        try {
-          String deviceToken = gcm.register("783799732849");
-          addToRequestQueue(WebUtils.getRequest(URLs.getSetGcmFormatUrl(getCurrentUser(), deviceToken) , null), "Sending GCM token");
-          Log.i(logTag("GCM"), "Device token : " + deviceToken);
-          // update user profile document
-        } catch (Exception e) {
-          Log.e(logTag(this), "Error getting token", e);
-        }
-
-        return null;
-      }
-    }.execute((Void) null);
   }
 }

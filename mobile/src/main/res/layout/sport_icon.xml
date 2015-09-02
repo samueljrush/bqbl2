@@ -5,5 +5,5 @@
     <ImageView
         android:id="@android:id/icon"
         android:layout_width="@dimen/sport_icon_width"
-        android:layout_height="@dimen/sport_icon_width"/>
+        android:layout_height="48dp"/>
 </FrameLayout>

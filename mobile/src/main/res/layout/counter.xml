@@ -1,36 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="48dp"
-                android:layout_height="@dimen/counter_height"
-                android:layout_marginLeft="8dp"
-                android:layout_marginRight="8dp">
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+                                    android:layout_width="@dimen/counter_width"
+                                    android:layout_height="@dimen/counter_height"
+                                    android:layout_marginLeft="8dp"
+                                    android:layout_marginRight="8dp"
+                                    android:elevation="2dp">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_gravity="center"
-        android:orientation="vertical">
+        >
 
-        <View
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight=".5"
-            android:elevation="3dp"
-            android:background="@drawable/counter_top"
-            android:backgroundTint="#FFDDDDDD"/>
+            android:layout_gravity="center"
+            android:orientation="vertical">
 
-        <View
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight=".5"
+                android:background="@drawable/counter_top"
+                android:backgroundTint="#FFDDDDDD"
+                android:elevation="3dp"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight=".5"
+                android:background="@drawable/counter_bottom"/>
+        </LinearLayout>
+
+        <TextView
+            android:id="@android:id/text1"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight=".5"
-            android:background="@drawable/counter_bottom"/>
-    </LinearLayout>
-
-    <TextView
-        android:id="@android:id/text1"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:padding="16dp"
-        android:textSize="24dp"/>
-</RelativeLayout>
+            android:gravity="center"
+            android:textSize="24dp"/>
+    </RelativeLayout>
+</android.support.v7.widget.CardView>

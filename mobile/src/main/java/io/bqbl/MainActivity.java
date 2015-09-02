@@ -8,11 +8,8 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-
-import static io.bqbl.MyApplication.logTag;
 
 
 public class MainActivity extends AppCompatActivity
@@ -42,14 +39,12 @@ public class MainActivity extends AppCompatActivity
     mTitle = getTitle();
 
     mToolbar = (Toolbar) findViewById(R.id.main_toolbar);
-    android.util.Log.d(logTag("DEBUGLOG"), "toolbar null: " + (mToolbar == null));
     setSupportActionBar(mToolbar);
     mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
     // Set up the drawer.
     mNavigationDrawerFragment.setUp(
         R.id.navigation_drawer,
         mDrawerLayout);
-    Log.d(logTag(this), "Main Activity Created");
   }
 
   @Override

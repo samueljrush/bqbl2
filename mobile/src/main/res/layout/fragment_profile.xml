@@ -1,199 +1,143 @@
-<android.support.design.widget.CoordinatorLayout
-    android:id="@+id/main_content"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fitsSystemWindows="true">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
 
-    <android.support.design.widget.AppBarLayout
-        android:id="@+id/appbar"
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/my_toolbar"
+        xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fitsSystemWindows="true"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
-
-        <android.support.design.widget.CollapsingToolbarLayout
-            android:id="@+id/collapsing_toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:fitsSystemWindows="true"
-            app:contentScrim="?attr/colorPrimary"
-            app:expandedTitleMarginEnd="64dp"
-            app:expandedTitleMarginStart="48dp"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed">
-
-            <android.support.v7.widget.Toolbar
-                android:id="@+id/toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
-
-        </android.support.design.widget.CollapsingToolbarLayout>
-    </android.support.design.widget.AppBarLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#AAAAAA"
-        android:gravity="center"
-        android:orientation="vertical">
-
-        <com.pkmmte.view.CircularImageView
-            android:id="@+id/profile_pic"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:layout_gravity="center|top"
-            android:layout_marginTop="16dp"/>
+        android:background="@color/primary"
+        android:elevation="4dp"
+        android:fitsSystemWindows="false"
+        android:paddingRight="8dp"
+        app:layout_collapseMode="pin">
 
         <TextView
-            android:id="@+id/name_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:id="@+id/toolbar_title"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_marginRight="8dp"
+            android:gravity="center"
             android:textColor="@android:color/black"
-            android:textSize="20dp"
-            android:textStyle="bold"/>
+            android:textSize="26sp"/>
+    </android.support.v7.widget.Toolbar>
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/game_count"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingLeft="8dp"
-                android:paddingRight="8dp"/>
-
-            <TextView
-                android:id="@+id/place_count"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingLeft="8dp"
-                android:paddingRight="8dp"/>
-        </LinearLayout>
-
-        <io.bqbl.utils.ReasonableGridView
-            android:id="@+id/sport_list"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:columnWidth="@dimen/sport_icon_width"
-            android:gravity="center_horizontal"
-            android:horizontalSpacing="8dp"
-            android:numColumns="auto_fit"
-            android:paddingBottom="16dp"
-            android:paddingLeft="16dp"
-            android:paddingRight="16dp"
-            android:stretchMode="none"
-            android:verticalSpacing="16dp"/>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="horizontal">
-
-            <include
-                android:id="@+id/wins_counter"
-                layout="@layout/counter"/>
-
-            <include
-                android:id="@+id/losses_counter"
-                layout="@layout/counter"/>
-
-            <include
-                android:id="@+id/ties_counter"
-                layout="@layout/counter"/>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="horizontal">
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:orientation="vertical"
-                android:padding="16dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Win %"/>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1px"
-                    android:background="@android:color/black"/>
-
-                <TextView
-                    android:id="@+id/win_pct_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:orientation="vertical"
-                android:padding="16dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Streak"/>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1px"
-                    android:background="@android:color/black"/>
-
-                <TextView
-                    android:id="@+id/streak_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:orientation="vertical"
-                android:padding="16dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Last 10"/>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1px"
-                    android:background="@android:color/black"/>
-
-                <TextView
-                    android:id="@+id/last_10_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-            </LinearLayout>
-        </LinearLayout>
-    </LinearLayout>
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/profile_recycler"
+    <android.support.design.widget.CoordinatorLayout
+        android:id="@+id/main_content"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/material_gray_background"
-        android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:paddingRight="@dimen/activity_horizontal_margin"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        />
-</android.support.design.widget.CoordinatorLayout>
+        android:fitsSystemWindows="false">
+
+        <android.support.design.widget.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fitsSystemWindows="false">
+
+            <android.support.design.widget.CollapsingToolbarLayout
+                android:id="@+id/collapsing_toolbar_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fitsSystemWindows="false"
+                android:background="@color/material_gray_background"
+                app:expandedTitleMarginStart="104dp"
+                app:layout_scrollFlags="scroll|exitUntilCollapsed">
+                <!--
+                -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fitsSystemWindows="false"
+                    android:orientation="vertical"
+                    >
+
+                    <com.pkmmte.view.CircularImageView
+                        android:id="@+id/profile_pic"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:elevation="2dp"
+                        android:layout_gravity="center"
+                        android:layout_marginBottom="8dp"
+                        android:layout_marginTop="8dp"
+                        android:scaleType="centerCrop"/>
+
+
+                    <io.bqbl.utils.ReasonableGridView
+                        android:id="@+id/sport_list"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:columnWidth="@dimen/sport_icon_width"
+                        android:gravity="center_horizontal"
+                        android:horizontalSpacing="8dp"
+                        android:clipToPadding="false"
+                        android:numColumns="auto_fit"
+                        android:paddingLeft="16dp"
+                        android:paddingRight="16dp"
+                        android:stretchMode="none"
+                        android:verticalSpacing="8dp"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        android:clipToPadding="false"
+                        android:padding="16dp">
+
+                        <include
+                            android:id="@+id/wins_counter"
+                            layout="@layout/counter"/>
+
+                        <include
+                            android:id="@+id/losses_counter"
+                            layout="@layout/counter"/>
+
+                        <include
+                            android:id="@+id/ties_counter"
+                            layout="@layout/counter"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <include
+                            android:id="@+id/num_games"
+                            layout="@layout/attribute_divider_value" />
+
+                        <include
+                            android:id="@+id/win_pct"
+                            layout="@layout/attribute_divider_value" />
+
+                        <include
+                            android:id="@+id/streak"
+                            layout="@layout/attribute_divider_value" />
+
+                        <include
+                            android:id="@+id/last_10"
+                            layout="@layout/attribute_divider_value" />
+                    </LinearLayout>
+
+
+                </LinearLayout>
+            </android.support.design.widget.CollapsingToolbarLayout>
+        </android.support.design.widget.AppBarLayout>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/profile_recycler"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/material_gray_background"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:paddingRight="@dimen/activity_horizontal_margin"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            />
+    </android.support.design.widget.CoordinatorLayout>
+</LinearLayout>
