@@ -49,6 +49,8 @@ public class MyApplication extends Application {
   }
 
   public static boolean setCurrentUser(Context context, int user) {
+    Intent intent = new Intent(getInstance(), RegistrationIntentService.class);
+    Log.d(logTag(getInstance()), "Starting service: " + getInstance().startService(intent));
     sCurrentUser = user;
     return SharedPreferencesUtils.putInt(context, R.string.pref_current_user, user);
   }
@@ -64,8 +66,6 @@ public class MyApplication extends Application {
       }
     });
 
-    Intent intent = new Intent(this, RegistrationIntentService.class);
-    Log.d(logTag(this), "Starting service: " + startService(intent));
     mInstance = this;
   }
 

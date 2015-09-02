@@ -60,7 +60,7 @@ public class CreateAccountActivity extends Activity {
 
         final MyApplication myApp = (MyApplication) getApplicationContext();
 
-        Request request = WebUtils.postRequest("http://bqbl.io/io/json/createaccount.php", post, new Response.Listener<JSONObject>() {
+        Request request = WebUtils.postJsonRequest("http://bqbl.io/io/json/createaccount.php", post, new Response.Listener<JSONObject>() {
           @Override
           public void onResponse(JSONObject response) {
             Log.e(TAG, "onResponse!");

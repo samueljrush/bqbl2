@@ -54,7 +54,7 @@ public class FriendsFragment extends Fragment {
     linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
     recyclerView.setLayoutManager(linearLayoutManager);
     recyclerView.setAdapter(mAdapter);
-    Request request = WebUtils.getRequest(URLs.FRIENDS_PHP + "?userid=" + mUserId, new Response.Listener<JSONObject>() {
+    Request request = WebUtils.getJsonRequest(URLs.FRIENDS_PHP + "?userid=" + mUserId, new Response.Listener<JSONObject>() {
       @Override
       public void onResponse(JSONObject response) {
         try {

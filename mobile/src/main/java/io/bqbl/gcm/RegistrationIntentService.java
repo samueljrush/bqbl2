@@ -7,9 +7,12 @@ import android.preference.PreferenceManager;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
+import com.android.volley.Response;
 import com.google.android.gms.gcm.GcmPubSub;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.google.android.gms.iid.InstanceID;
+
+import org.json.JSONObject;
 
 import java.io.IOException;
 
@@ -85,7 +88,12 @@ public class RegistrationIntentService extends IntentService {
    */
   private void sendRegistrationToServer(String token) {
     MyApplication app = MyApplication.getInstance();
-    app.addToRequestQueue(WebUtils.getRequest(URLs.getSetGcmFormatUrl(app.getCurrentUser(), token), null), "Sending GCM token");
+    app.addToRequestQueue(WebUtils.getJsonRequest(URLs.getSetGcmFormatUrl(app.getCurrentUser(), token), new Response.Listener<JSONObject>() {
+      @Override
+      public void onResponse(JSONObject response) {
+
+      }
+    }), "Sending GCM token");
   }
 
   /**

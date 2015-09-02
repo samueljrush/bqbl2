@@ -14,7 +14,7 @@ public final class URLs {
   public static final String FRIENDS_PHP = BQBLIO_JSON_URL + "/friends.php";
   public static final String PLACE_PHP = BQBLIO_JSON_URL + "/place.php";
   private static final String SET_GCM_FORMAT = BQBLIO_JSON_URL + "/setgcm.php?user=%d&token=%s";
-
+  private static final String ADD_OOHOO_FORMAT = BQBLIO_JSON_URL + "/woohoo.php?user_id=%d&game_id=%d&value=%d";
   private URLs() {}
 
   public static final String getUserPhotoUrl(int userId) {
@@ -23,5 +23,9 @@ public final class URLs {
 
   public static final String getSetGcmFormatUrl(int userId, String token) {
     return String.format(SET_GCM_FORMAT, userId, token);
+  }
+
+  public static final String getSetOohooUrl(int userId, int gameId, int value) {
+    return String.format(ADD_OOHOO_FORMAT, userId, gameId, value);
   }
 }

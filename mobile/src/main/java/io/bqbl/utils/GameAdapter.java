@@ -17,6 +17,11 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+
+import org.json.JSONObject;
+
 import java.text.SimpleDateFormat;
 import java.util.LinkedList;
 import java.util.List;
@@ -175,15 +180,6 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.ViewHolder> {
       } else {
         mWoohoosAndCommentsTextView.setVisibility(View.GONE);
       }
-
-      int woohooColor = game.woohoos().contains(MyApplication.getCurrentUser())
-          ? mItemView.getContext().getResources().getColor(R.color.woohoo_yes_color)
-          : mItemView.getContext().getResources().getColor(R.color.woohoo_no_color);
-      mWoohooButton.setTextColor(woohooColor);
-      int boohooColor = game.boohoos().contains(MyApplication.getCurrentUser())
-          ? mItemView.getContext().getResources().getColor(R.color.boohoo_yes_color)
-          : mItemView.getContext().getResources().getColor(R.color.woohoo_no_color);
-      mBoohooButton.setTextColor(boohooColor);
       mGridView.setAdapter(new UserGridAdapter(userResults));
 
       mItemView.setOnClickListener(new View.OnClickListener() {
@@ -194,6 +190,69 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.ViewHolder> {
           //startActivity(intent, null);
         }
       });
+
+      updateWoohooButton(game.woohoos().contains(MyApplication.getCurrentUser()));
+      mWoohooButton.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+          final int userId = MyApplication.getCurrentUser();
+          final boolean hasWoohoo = game.woohoos().contains(userId);
+          String url = URLs.getSetOohooUrl(userId, game.id(), hasWoohoo ? 0 : 1);
+          Log.d(logTag("DEBUGLOG"), url);
+          Request request = WebUtils.getJsonRequest(url, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+              if (hasWoohoo) {
+                game.woohoos().remove(Integer.valueOf(userId));
+              } else {
+                game.woohoos().add(userId);
+                game.boohoos().remove(Integer.valueOf(userId));
+                updateBoohooButton(false);
+              }
+              updateWoohooButton(!hasWoohoo);
+            }
+          });
+          MyApplication.getInstance().addToRequestQueue(request, "Sending Woohoo!");
+        }
+      });
+
+      updateBoohooButton(game.boohoos().contains(MyApplication.getCurrentUser()));
+      mBoohooButton.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+          final int userId = MyApplication.getCurrentUser();
+          final boolean hasBoohoo = game.boohoos().contains(MyApplication.getCurrentUser());
+          String url = URLs.getSetOohooUrl(userId, game.id(), hasBoohoo ? 0 : -1);
+          Request request = WebUtils.getJsonRequest(url, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+              if (hasBoohoo) {
+                game.boohoos().remove(Integer.valueOf(userId));
+              } else {
+                game.boohoos().add(userId);
+                game.woohoos().remove(Integer.valueOf(userId));
+                updateWoohooButton(false);
+              }
+              updateBoohooButton(!hasBoohoo);
+            }
+          });
+          MyApplication.getInstance().addToRequestQueue(request, "Sending Boohoo!");
+        }
+      });
+    }
+    
+    private void updateWoohooButton(boolean hasWoohoo) {
+      int woohooColor = hasWoohoo
+          ? mItemView.getContext().getResources().getColor(R.color.woohoo_yes_color)
+          : mItemView.getContext().getResources().getColor(R.color.woohoo_no_color);
+      mWoohooButton.setTextColor(woohooColor);
+    }
+
+    private void updateBoohooButton(boolean hasBoohoo) {
+      int boohooColor = hasBoohoo
+          ? mItemView.getContext().getResources().getColor(R.color.boohoo_yes_color)
+          : mItemView.getContext().getResources().getColor(R.color.woohoo_no_color);
+      mBoohooButton.setTextColor(boohooColor);
     }
   }
 

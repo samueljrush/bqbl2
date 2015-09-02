@@ -96,7 +96,7 @@ public class ProfileFragment extends Fragment {
 
     WebUtils.setImageRemoteUri((ImageView) getView().findViewById(R.id.profile_pic), URLs.getUserPhotoUrl(mUserId));
 
-    Request request = WebUtils.getRequest(URLs.PROFILE_PHP + "?userid=" + mUserId, new Response.Listener<JSONObject>() {
+    Request request = WebUtils.getJsonRequest(URLs.PROFILE_PHP + "?userid=" + mUserId, new Response.Listener<JSONObject>() {
       @Override
       public void onResponse(JSONObject response) {
         try {

@@ -29,7 +29,6 @@ import android.widget.TextView;
 import io.bqbl.data.User;
 import io.bqbl.utils.Listener;
 import io.bqbl.utils.URLs;
-import io.bqbl.utils.WebUtils;
 
 import static io.bqbl.MyApplication.logTag;
 
@@ -284,18 +283,18 @@ public class NavigationDrawerFragment extends Fragment {
         final TextView emailTextView = (TextView) view.findViewById(R.id.email_text);
         final TextView nameTextView = (TextView) view.findViewById(R.id.name_text);
 
-        int userId = MyApplication.getCurrentUser(getActivity());
+        int userId = 1;//MyApplication.getCurrentUser(getActivity());
         String userPhotoUri = URLs.getUserPhotoUrl(userId);
-        WebUtils.setImageRemoteUri(userImageView, userPhotoUri);
+        //WebUtils.setImageRemoteUri(userImageView, userPhotoUri);
         Log.d(logTag(this), "Requesting user...");
-        MyApplication.getInstance().addToRequestQueue(User.requestUser(userId, new Listener<User>() {
+        /*MyApplication.getInstance().addToRequestQueue(User.requestUser(userId, new Listener<User>() {
           @Override
           public void onResult(User user) {
             Log.d(logTag(this), "User: " + user.toString());
             emailTextView.setText(user.email());
             nameTextView.setText(user.first() + " " + user.last());
           }
-        }));
+        }));*/
         return view;
       } else {
         int listPosition = position - 1;

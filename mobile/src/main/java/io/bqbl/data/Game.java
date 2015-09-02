@@ -43,17 +43,7 @@ public abstract class Game {
   protected Map<Integer, Team> userToTeam = new HashMap<>();
 
   public static Game create(int gameId, int sportId, int creator, String placeId, Date date, List<Team> teams, List<Integer> woohoos, List<Integer> boohoos, List<Comment> comments) {
-    Game game = new AutoValue_Game.Builder()
-        .id(gameId)
-        .sportId(sportId)
-        .creator(creator)
-        .placeId(placeId)
-        .date(date)
-        .teams(teams)
-        .woohoos(woohoos)
-        .boohoos(boohoos)
-        .comments(comments)
-        .build();
+    Game game = new AutoValue_Game(gameId, sportId, creator, placeId, date, teams, woohoos, boohoos, comments);
     Collections.sort(teams, new Comparator<Team>() {
       @Override
       public int compare(Team lhs, Team rhs) {
@@ -191,7 +181,7 @@ public abstract class Game {
       return null;
     }
 
-    Request request = WebUtils.getRequest(URLs.GAME_PHP + "?gameid=" + gameId, new Response.Listener<JSONObject>() {
+    Request request = WebUtils.getJsonRequest(URLs.GAME_PHP + "?gameid=" + gameId, new Response.Listener<JSONObject>() {
       @Override
       public void onResponse(JSONObject response) {
         Game game = Game.fromJSON(gameId, response);
@@ -242,29 +232,4 @@ public abstract class Game {
   public abstract List<Integer> boohoos();
 
   public abstract List<Comment> comments();
-
-  public abstract Builder toBuilder();
-
-  @AutoValue.Builder
-  abstract static class Builder {
-    public abstract Builder id(int id);
-
-    public abstract Builder sportId(int id);
-
-    public abstract Builder creator(int id);
-
-    public abstract Builder placeId(String placeId);
-
-    public abstract Builder date(Date date);
-
-    public abstract Builder teams(List<Team> teams);
-
-    public abstract Builder woohoos(List<Integer> woohoos);
-
-    public abstract Builder boohoos(List<Integer> boohoos);
-
-    public abstract Builder comments(List<Comment> comments);
-
-    public abstract Game build();
-  }
 }

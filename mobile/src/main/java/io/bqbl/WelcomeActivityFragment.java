@@ -81,7 +81,7 @@ public class WelcomeActivityFragment extends Fragment {
       Log.d(logTag(this), "onActivityResult");
       final String accountName = data.getStringExtra(AccountManager.KEY_ACCOUNT_NAME);
       final MyApplication myApp = (MyApplication) getActivity().getApplicationContext();
-      Request request = WebUtils.getRequest("http://bqbl.io/io/json/userlookup.php?email=" + accountName, new Response.Listener<JSONObject>() {
+      Request request = WebUtils.getJsonRequest("http://bqbl.io/io/json/userlookup.php?email=" + accountName, new Response.Listener<JSONObject>() {
         @Override
         public void onResponse(JSONObject response) {
           try {

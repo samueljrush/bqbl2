@@ -4,7 +4,9 @@
             xmlns:card_view="http://schemas.android.com/apk/res-auto"
             android:layout_width="48dp"
             android:layout_height="48dp"
-            card_view:cardCornerRadius="2dp">
+            android:elevation="1dp"
+            android:background="@drawable/defaultprofile"
+            card_view:cardCornerRadius="8dp">
     <TextView
         android:id="@+id/result_badge"
         android:gravity="center"

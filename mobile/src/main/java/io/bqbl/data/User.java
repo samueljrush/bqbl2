@@ -76,7 +76,7 @@ public abstract class User {
       return null;
     }
 
-    Request request = WebUtils.getRequest(URLs.SETTINGS_PHP + "?userid=" + userId, new Response.Listener<JSONObject>() {
+    Request request = WebUtils.getJsonRequest(URLs.SETTINGS_PHP + "?userid=" + userId, new Response.Listener<JSONObject>() {
       @Override
       public void onResponse(JSONObject response) {
         User user = User.fromJSON(response);

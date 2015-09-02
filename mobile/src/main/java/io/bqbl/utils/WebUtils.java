@@ -24,20 +24,22 @@ public final class WebUtils {
 
   public static final String TAG = WebUtils.class.getSimpleName();
 
-  public static Request<JSONObject> postRequest(String url, JSONObject post, Response.Listener<JSONObject> listener) {
-    return new JsonObjectRequest(Request.Method.POST, url, post, listener, DEFAULT_ERROR_LISTENER);
+  public static Request<JSONObject> postJsonRequest(String url, JSONObject post, Response.Listener<JSONObject> listener) {
+    return new JsonObjectRequest(Request.Method.POST, url, post, listener, defaultErrorListener(url));
   }
 
-  public static Request<JSONObject> getRequest(String url, Response.Listener<JSONObject> listener) {
-    return new JsonObjectRequest(Request.Method.GET, url, null, listener, DEFAULT_ERROR_LISTENER);
+  public static Request<JSONObject> getJsonRequest(String url, Response.Listener<JSONObject> listener) {
+    return new JsonObjectRequest(Request.Method.GET, url, null, listener, defaultErrorListener(url));
   }
 
-  private static final Response.ErrorListener DEFAULT_ERROR_LISTENER = new Response.ErrorListener() {
-    @Override
-    public void onErrorResponse(VolleyError error) {
-      Log.e(MyApplication.logTag(WebUtils.class.getSimpleName()), "Volley error encountered", error);
-    }
-  };
+  private static Response.ErrorListener defaultErrorListener(final String url) {
+    return new Response.ErrorListener() {
+      @Override
+      public void onErrorResponse(VolleyError error) {
+        Log.e(MyApplication.logTag(WebUtils.class.getSimpleName()), "Volley error encountered for url " + url, error);
+      }
+    };
+  }
 
   public static void setImageRemoteUri(final ImageView imageView, final String url) {
     getBitmapRemoteUri(imageView, url, new Listener<Bitmap>() {

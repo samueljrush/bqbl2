@@ -58,7 +58,7 @@ public class FeedFragment extends Fragment {
     linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
     recyclerView.setLayoutManager(linearLayoutManager);
     recyclerView.setAdapter(mGameAdapter);
-    Request request = WebUtils.getRequest(URLs.FEED_PHP + "?userid=" + mUserId, new Response.Listener<JSONObject>() {
+    Request request = WebUtils.getJsonRequest(URLs.FEED_PHP + "?userid=" + mUserId, new Response.Listener<JSONObject>() {
       @Override
       public void onResponse(JSONObject response) {
         try {

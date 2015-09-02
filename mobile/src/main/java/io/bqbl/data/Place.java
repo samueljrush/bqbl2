@@ -56,7 +56,7 @@ public abstract class Place {
       return null;
     }
 
-    Request request = WebUtils.getRequest(URLs.PLACE_PHP + "?id=" + placeId, new Response.Listener<JSONObject>() {
+    Request request = WebUtils.getJsonRequest(URLs.PLACE_PHP + "?id=" + placeId, new Response.Listener<JSONObject>() {
       @Override
       public void onResponse(JSONObject response) {
         Place place = Place.fromJSON(placeId, response);
