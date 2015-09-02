@@ -37,11 +37,12 @@ public abstract class Game {
   public static final String JSON_KEY_DATE = "date";
   public static final String JSON_KEY_TEAMS = "teams";
   public static final String JSON_KEY_WOOHOOS = "woohoos";
+  public static final String JSON_KEY_BOOHOOS = "boohoos";
   public static final String JSON_KEY_COMMENTS = "comments";
 
   protected Map<Integer, Team> userToTeam = new HashMap<>();
 
-  public static Game create(int gameId, int sportId, int creator, String placeId, Date date, List<Team> teams, List<Integer> woohoos, List<Comment> comments) {
+  public static Game create(int gameId, int sportId, int creator, String placeId, Date date, List<Team> teams, List<Integer> woohoos, List<Integer> boohoos, List<Comment> comments) {
     Game game = new AutoValue_Game.Builder()
         .id(gameId)
         .sportId(sportId)
@@ -50,6 +51,7 @@ public abstract class Game {
         .date(date)
         .teams(teams)
         .woohoos(woohoos)
+        .boohoos(boohoos)
         .comments(comments)
         .build();
     Collections.sort(teams, new Comparator<Team>() {
@@ -79,6 +81,7 @@ public abstract class Game {
   public static Game fromJSON(int gameId, JSONObject json) {
     List<Team> teams = new LinkedList<>();
     List<Integer> woohoos = new LinkedList<>();
+    List<Integer> boohoos = new LinkedList<>();
     List<Comment> comments = new LinkedList<>();
 
     try {
@@ -89,6 +92,10 @@ public abstract class Game {
       JSONArray woohoosArray = json.getJSONArray(JSON_KEY_WOOHOOS);
       for (int i = 0; i < woohoosArray.length(); i++) {
         woohoos.add(Integer.valueOf(woohoosArray.getString(i)));
+      }
+      JSONArray boohoosArray = json.getJSONArray(JSON_KEY_BOOHOOS);
+      for (int i = 0; i < boohoosArray.length(); i++) {
+        boohoos.add(Integer.valueOf(boohoosArray.getString(i)));
       }
       JSONArray commentsArray = json.getJSONArray(JSON_KEY_COMMENTS);
       for (int i = 0; i < commentsArray.length(); i++) {
@@ -101,6 +108,7 @@ public abstract class Game {
           new Date(json.getLong(JSON_KEY_DATE)),
           teams,
           woohoos,
+          boohoos,
           comments);
     } catch (Exception e) {
       Log.e(logTag(Game.class.getSimpleName()), "", e);
@@ -112,12 +120,16 @@ public abstract class Game {
     JSONObject game = new JSONObject();
     JSONArray teams = new JSONArray();
     JSONArray woohoos = new JSONArray();
+    JSONArray boohoos = new JSONArray();
     JSONArray comments = new JSONArray();
     for (Team team : teams()) {
       teams.put(team.toJSON());
     }
     for (Integer woohoo : woohoos()) {
       woohoos.put(woohoo);
+    }
+    for (Integer boohoo : boohoos()) {
+      boohoos.put(boohoo);
     }
     for (Comment comment : comments()) {
       comments.put(comment.toJSON());
@@ -129,6 +141,7 @@ public abstract class Game {
           .put(JSON_KEY_DATE, date().getTime())
           .put(JSON_KEY_TEAMS, teams)
           .put(JSON_KEY_WOOHOOS, woohoos)
+          .put(JSON_KEY_BOOHOOS, boohoos)
           .put(JSON_KEY_COMMENTS, comments);
     } catch (JSONException e) {
       return null;
@@ -226,6 +239,8 @@ public abstract class Game {
 
   public abstract List<Integer> woohoos();
 
+  public abstract List<Integer> boohoos();
+
   public abstract List<Comment> comments();
 
   public abstract Builder toBuilder();
@@ -245,6 +260,8 @@ public abstract class Game {
     public abstract Builder teams(List<Team> teams);
 
     public abstract Builder woohoos(List<Integer> woohoos);
+
+    public abstract Builder boohoos(List<Integer> boohoos);
 
     public abstract Builder comments(List<Comment> comments);
 
