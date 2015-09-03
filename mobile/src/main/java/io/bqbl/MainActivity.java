@@ -3,6 +3,7 @@ package io.bqbl;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
@@ -64,10 +65,9 @@ public class MainActivity extends AppCompatActivity
         newFragment = mFriendsFragment;
         break;
       case 3:
-        if (mPlacesFragment == null) {
-          mPlacesFragment = new FeedFragment();
-        }
-        newFragment = mPlacesFragment;
+        Intent intent = new Intent(this, PlacePickerActivity.class);
+        startActivity(intent);
+        newFragment = null;
         break;
       case 1:
       default:

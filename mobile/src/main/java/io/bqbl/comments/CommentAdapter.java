@@ -84,7 +84,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
     }
   }
 
-  private static String getDateString(Date date) {
+  public static String getDateString(Date date) {
     return String.format("%s at %s", DATE_FORMAT.format(date), TIME_FORMAT.format(date));
   }
 }

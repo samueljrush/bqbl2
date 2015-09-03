@@ -23,14 +23,14 @@ public abstract class Place {
   public static final String JSON_KEY_ICON_URL = "icon_url";
   public static final String JSON_KEY_PHOTO_URL = "photo_url";
 
-  public static Place create(String id, String name, double lat, double lng, String iconUrl, String photoUrl) {
+  public static Place create(String id, String name, double lat, double lng, String iconUrl, String photoReference) {
     return new AutoValue_Place.Builder()
         .id(id)
         .name(name)
         .lat(lat)
         .lng(lng)
         .iconUrl(iconUrl)
-        .photoUrl(photoUrl)
+        .photoReference(photoReference)
         .build();
   }
 
@@ -42,7 +42,7 @@ public abstract class Place {
           .lat(json.getDouble(JSON_KEY_LAT))
           .lng(json.getDouble(JSON_KEY_LNG))
           .iconUrl(json.getString(JSON_KEY_ICON_URL))
-          .photoUrl(json.getString(JSON_KEY_PHOTO_URL))
+          .photoReference(json.getString(JSON_KEY_PHOTO_URL))
           .build();
     } catch (JSONException e) {
       return null;
@@ -77,7 +77,7 @@ public abstract class Place {
   public abstract double lat();
   public abstract double lng();
   public abstract String iconUrl();
-  public abstract String photoUrl();
+  public abstract String photoReference();
   public abstract Builder toBuilder();
 
   @AutoValue.Builder
@@ -87,7 +87,7 @@ public abstract class Place {
     public abstract Builder lat(double lat);
     public abstract Builder lng(double lng);
     public abstract Builder iconUrl(String iconUrl);
-    public abstract Builder photoUrl(String photoUrl);
+    public abstract Builder photoReference(String photoReference);
     public abstract Place build();
   }
 }

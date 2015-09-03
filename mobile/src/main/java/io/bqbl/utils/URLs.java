@@ -19,8 +19,10 @@ public final class URLs {
   public static final String USER_PHOTO_FORMAT = BQBLIO_URL + "/img/profile_%d.png";
   public static final String FRIENDS_PHP = BQBLIO_JSON_URL + "/friends.php";
   public static final String PLACE_PHP = BQBLIO_JSON_URL + "/place.php";
+  public static final String PLACE_HISTORY_PHP = BQBLIO_JSON_URL + "/place_history.php";
   public static final String ADD_COMMENT_PHP = BQBLIO_JSON_URL + "/comment.php";
 
+  private static final String GET_PLACES_PHOTO_FORMAT = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=%d&photoreference=%s&key=%s";
   private static final String ADD_FRIEND_FORMAT = BQBLIO_JSON_URL + "/addfriend.php?user=%d&friend=%d&add=%d";
   private static final String SET_GCM_FORMAT = BQBLIO_JSON_URL + "/setgcm.php?user=%d&token=%s";
   private static final String ADD_OOHOO_FORMAT = BQBLIO_JSON_URL + "/woohoo.php?user_id=%d&game_id=%d&value=%d";
@@ -36,6 +38,10 @@ public final class URLs {
 
   public static final String getSetOohooUrl(int userId, int gameId, int value) {
     return String.format(ADD_OOHOO_FORMAT, userId, gameId, value);
+  }
+
+  public static final String getPlacesPhotoUrl(String placeId, int maxWidth) {
+    return String.format(GET_PLACES_PHOTO_FORMAT, maxWidth, placeId, "AIzaSyCw5bedHSqM2oXe52EubQSZ_V567Yds4oY");
   }
 
   public static String getAddFriendUrl(int userId, boolean isAddOperation) {

@@ -39,6 +39,7 @@ import io.bqbl.comments.CommentActivity;
 import io.bqbl.comments.CommentAdapter;
 import io.bqbl.data.Comment;
 import io.bqbl.data.Game;
+import io.bqbl.data.Place;
 import io.bqbl.data.Sports;
 import io.bqbl.data.Team;
 import io.bqbl.data.User;
@@ -112,6 +113,22 @@ public class GameFragment extends Fragment {
           }
         };
 
+        view.findViewById(R.id.place_icon).setOnClickListener(new View.OnClickListener() {
+          @Override
+          public void onClick(View v) {
+            PlaceActivity.startActivity(getActivity(), game.placeId());
+          }
+        });
+
+        final TextView dateView = (TextView) view.findViewById(R.id.date_text);
+        dateView.setText(CommentAdapter.getDateString(game.date()));
+        final TextView placeNameView = (TextView) view.findViewById(R.id.place_name);
+        Place.requestPlace(game.placeId(), true, new Listener<Place>() {
+          @Override
+          public void onResult(Place place) {
+            placeNameView.setText(place.name());
+          }
+        });
         int numWoohoos = game.woohoos().size();
         int numBoohoos = game.boohoos().size();
         int numComments = game.comments().size();
