@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <item type="color" name="primary">#FFD700</item>
-    <item type="color" name="primary_dark">#e5c100</item>
+    <item type="color" name="primary">#FFC400</item>
+    <item type="color" name="primary_dark">#EF6C00</item>
     <item type="color" name="accent">#F4511E</item>
 
     <item type="color" name="material_gray_background">#EEEEEE</item>

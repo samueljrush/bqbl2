@@ -26,6 +26,7 @@ import java.text.SimpleDateFormat;
 import java.util.LinkedList;
 import java.util.List;
 
+import io.bqbl.GameActivity;
 import io.bqbl.MyApplication;
 import io.bqbl.ProfileActivity;
 import io.bqbl.R;
@@ -39,7 +40,7 @@ import io.bqbl.data.User;
 import static io.bqbl.MyApplication.logTag;
 
 public class GameAdapter extends RecyclerView.Adapter<GameAdapter.ViewHolder> {
-  private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("MMM dd");
+  public static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("MMM dd");
   private final Activity mActivity;
   private List<Integer> mGameIds;
 
@@ -249,6 +250,13 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.ViewHolder> {
       };
       mCommentButton.setOnClickListener(commentClickListner);
       mWoohoosAndCommentsTextView.setOnClickListener(commentClickListner);
+
+      mItemView.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+          GameActivity.startActivity(mActivity, game);
+        }
+      });
     }
 
     private void updateWoohooButton(boolean hasWoohoo) {

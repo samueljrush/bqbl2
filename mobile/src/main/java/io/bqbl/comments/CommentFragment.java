@@ -55,125 +55,135 @@ public class CommentFragment extends Fragment {
   public View onCreateView(LayoutInflater inflater, ViewGroup container,
                            Bundle savedInstanceState) {
     final View view = inflater.inflate(R.layout.fragment_comment, container, false);
-    final TextView textView = (TextView) view.findViewById(R.id.num_oohoos);
-    final EditText editText = (EditText) view.findViewById(R.id.new_comment);
     mRecyclerView = (RecyclerView) view.findViewById(R.id.comment_recycler);
 
-    final int commentId = getActivity().getIntent().getIntExtra(CommentActivity.EXTRA_COMMENT_ID, -1);
     Game.requestGame(mGameId, true, new Listener<Game>() {
       @Override
       public void onResult(final Game game) {
-        mCommentAdapter.setData(game.comments());
-        textView.setText(String.format("%d people Oohoo'd this", game.boohoos().size() + game.woohoos().size()));
-
         final int userId = MyApplication.getCurrentUser();
-        final ImageView woohooButton = (ImageView) view.findViewById(R.id.woohoo_button);
-        final ImageView boohooButton = (ImageView) view.findViewById(R.id.boohoo_button);
-        updateOohooButton(woohooButton, game.woohoos().contains(userId));
-        updateOohooButton(boohooButton, game.boohoos().contains(userId));
-
-        woohooButton.setOnClickListener(new View.OnClickListener() {
-          @Override
-          public void onClick(View v) {
-            final boolean hasWoohoo = game.woohoos().contains(userId);
-            String url = URLs.getSetOohooUrl(userId, game.id(), hasWoohoo ? 0 : 1);
-            Log.d(logTag("DEBUGLOG"), url);
-            updateOohooButton(boohooButton, false);
-            updateOohooButton(woohooButton, !hasWoohoo);
-            if (hasWoohoo) {
-              game.woohoos().remove(Integer.valueOf(userId));
-            } else {
-              game.woohoos().add(userId);
-              game.boohoos().remove(Integer.valueOf(userId));
-            }
-
-            Request request = WebUtils.getJsonRequest(url, new Response.Listener<JSONObject>() {
-              @Override
-              public void onResponse(JSONObject response) {
-              }
-            });
-            MyApplication.getInstance().addToRequestQueue(request, "Sending Woohoo!");
-          }
-        });
-
-        boohooButton.setOnClickListener(new View.OnClickListener() {
-          @Override
-          public void onClick(View v) {
-            final boolean hasBoohoo = game.boohoos().contains(userId);
-            String url = URLs.getSetOohooUrl(userId, game.id(), hasBoohoo ? 0 : 1);
-            Log.d(logTag("DEBUGLOG"), url);
-            updateOohooButton(woohooButton, false);
-            updateOohooButton(boohooButton, !hasBoohoo);
-            if (hasBoohoo) {
-              game.boohoos().remove(Integer.valueOf(userId));
-            } else {
-              game.boohoos().add(userId);
-              game.woohoos().remove(Integer.valueOf(userId));
-            }
-            Request request = WebUtils.getJsonRequest(url, new Response.Listener<JSONObject>() {
-              @Override
-              public void onResponse(JSONObject response) {
-              }
-            });
-            MyApplication.getInstance().addToRequestQueue(request, "Sending Boohoo!");
-          }
-        });
-
-        editText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-          @Override
-          public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-            if (actionId == EditorInfo.IME_ACTION_SEND || actionId == EditorInfo.IME_ACTION_DONE) {
-              final Comment comment = Comment.create(-1, mGameId, getCurrentUser(), v.getText().toString(), new Date(System.currentTimeMillis()));
-              Log.d(logTag(this), "Comment json: " + comment.toJSON());
-              try {
-                final JSONObject requestJson = new JSONObject();
-                MyApplication.getInstance().addToRequestQueue(
-                    WebUtils.postJsonRequest(URLs.ADD_COMMENT_PHP, comment.toJSON(), new Response.Listener<JSONObject>() {
-                      @Override
-                      public void onResponse(JSONObject response) {
-                        try {
-                          Date date = new Date(response.getLong(Comment.JSON_KEY_DATE) * 1000);
-                          int id = response.getInt(Comment.JSON_KEY_COMMENT_ID);
-                          game.comments().add(Comment.create(id, comment.gameId(), comment.userId(), comment.text(), date));
-                          int numComments = game.comments().size();
-                          Log.d(logTag(this), "Adding comment to game..." + comment.toString());
-                          mCommentAdapter.notifyItemInserted(numComments - 1);
-                          mRecyclerView.scrollToPosition(numComments - 1);
-                          editText.setText(null);
-                          InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-                          imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
-                        } catch (Exception e) {
-                          Log.e(logTag(this), "JSONException adding comment", e);
-                        }
-                      }
-                    }), "Sending comment.");
-              } catch (Exception e) {
-
-              }
-              return true;
-            }
-            return false;
-          }
-        });
-
-        mRecyclerView.setHasFixedSize(false);
-        //     LinearLayoutManager linearLayoutManager = new org.solovyev.android.views.llm.LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
-        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        mRecyclerView.setLayoutManager(linearLayoutManager);
-        mRecyclerView.setAdapter(mCommentAdapter);
-        int i = 0;
-        for (Comment comment : game.comments()) {
-          if (comment.id() == commentId) {
-            mRecyclerView.scrollToPosition(i);
-            break;
-          }
-          i++;
-        }
+        setUpNavView(userId, game, view);
+        setUpCommentsView(userId, game, view);
       }
     });
 
-    Log.d(logTag("DEBUGLOG"), "onClick");
+    return view;
+  }
+
+  public void setUpCommentsView(final int userId, final Game game, final View view) {
+    final EditText editText = (EditText) view.findViewById(R.id.new_comment);
+
+    mCommentAdapter.setData(game.comments());
+
+
+    editText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+      @Override
+      public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+        if (actionId == EditorInfo.IME_ACTION_SEND || actionId == EditorInfo.IME_ACTION_DONE) {
+          final Comment comment = Comment.create(-1, mGameId, getCurrentUser(), v.getText().toString(), new Date(System.currentTimeMillis()));
+          Log.d(logTag(this), "Comment json: " + comment.toJSON());
+          try {
+            final JSONObject requestJson = new JSONObject();
+            MyApplication.getInstance().addToRequestQueue(
+                WebUtils.postJsonRequest(URLs.ADD_COMMENT_PHP, comment.toJSON(), new Response.Listener<JSONObject>() {
+                  @Override
+                  public void onResponse(JSONObject response) {
+                    try {
+                      Date date = new Date(response.getLong(Comment.JSON_KEY_DATE) * 1000);
+                      int id = response.getInt(Comment.JSON_KEY_COMMENT_ID);
+                      game.comments().add(Comment.create(id, comment.gameId(), comment.userId(), comment.text(), date));
+                      int numComments = game.comments().size();
+                      Log.d(logTag(this), "Adding comment to game..." + comment.toString());
+                      mCommentAdapter.notifyItemInserted(numComments - 1);
+                      mRecyclerView.scrollToPosition(numComments - 1);
+                      editText.setText(null);
+                      InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                      imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
+                    } catch (Exception e) {
+                      Log.e(logTag(this), "JSONException adding comment", e);
+                    }
+                  }
+                }), "Sending comment.");
+          } catch (Exception e) {
+
+          }
+          return true;
+        }
+        return false;
+      }
+    });
+
+    mRecyclerView.setHasFixedSize(false);
+    //     LinearLayoutManager linearLayoutManager = new org.solovyev.android.views.llm.LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
+    LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
+    linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+    mRecyclerView.setLayoutManager(linearLayoutManager);
+    mRecyclerView.setAdapter(mCommentAdapter);
+    int i = 0;
+    final int commentId = getActivity().getIntent().getIntExtra(CommentActivity.EXTRA_COMMENT_ID, -1);
+    for (Comment comment : game.comments()) {
+      if (comment.id() == commentId) {
+        mRecyclerView.scrollToPosition(i);
+        break;
+      }
+      i++;
+    }
+  }
+
+    public void setUpNavView(final int userId, final Game game, final View view) {
+    final TextView textView = (TextView) view.findViewById(R.id.num_oohoos);
+    textView.setText(String.format("%d people Oohoo'd this", game.boohoos().size() + game.woohoos().size()));
+    final ImageView woohooButton = (ImageView) view.findViewById(R.id.woohoo_button);
+    final ImageView boohooButton = (ImageView) view.findViewById(R.id.boohoo_button);
+    updateOohooButton(woohooButton, game.woohoos().contains(userId));
+    updateOohooButton(boohooButton, game.boohoos().contains(userId));
+
+    woohooButton.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        final boolean hasWoohoo = game.woohoos().contains(userId);
+        String url = URLs.getSetOohooUrl(userId, game.id(), hasWoohoo ? 0 : 1);
+        Log.d(logTag("DEBUGLOG"), url);
+        updateOohooButton(boohooButton, false);
+        updateOohooButton(woohooButton, !hasWoohoo);
+        if (hasWoohoo) {
+          game.woohoos().remove(Integer.valueOf(userId));
+        } else {
+          game.woohoos().add(userId);
+          game.boohoos().remove(Integer.valueOf(userId));
+        }
+
+        Request request = WebUtils.getJsonRequest(url, new Response.Listener<JSONObject>() {
+          @Override
+          public void onResponse(JSONObject response) {
+          }
+        });
+        MyApplication.getInstance().addToRequestQueue(request, "Sending Woohoo!");
+      }
+    });
+
+    boohooButton.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        final boolean hasBoohoo = game.boohoos().contains(userId);
+        String url = URLs.getSetOohooUrl(userId, game.id(), hasBoohoo ? 0 : 1);
+        Log.d(logTag("DEBUGLOG"), url);
+        updateOohooButton(woohooButton, false);
+        updateOohooButton(boohooButton, !hasBoohoo);
+        if (hasBoohoo) {
+          game.boohoos().remove(Integer.valueOf(userId));
+        } else {
+          game.boohoos().add(userId);
+          game.woohoos().remove(Integer.valueOf(userId));
+        }
+        Request request = WebUtils.getJsonRequest(url, new Response.Listener<JSONObject>() {
+          @Override
+          public void onResponse(JSONObject response) {
+          }
+        });
+        MyApplication.getInstance().addToRequestQueue(request, "Sending Boohoo!");
+      }
+    });
+
     view.findViewById(R.id.to_oohoos).setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
@@ -181,14 +191,11 @@ public class CommentFragment extends Fragment {
         ((CommentActivity) getActivity()).commentsToOohoos();
       }
     });
-    return view;
   }
 
   @Override
   public void onResume() {
     super.onResume();
-
-
   }
 
   private static void updateOohooButton(ImageView imageView, boolean positive) {

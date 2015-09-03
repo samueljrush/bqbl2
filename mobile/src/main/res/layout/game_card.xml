@@ -37,7 +37,7 @@
             android:background="@drawable/ripple_darkgrey"
             android:paddingStart="16dp"
             android:paddingBottom="4dp"
-            android:paddingTop="16dp"
+            android:padding="16dp"
             android:textSize="10dp"/>
 
         <View

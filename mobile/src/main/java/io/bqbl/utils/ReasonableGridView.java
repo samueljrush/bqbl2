@@ -79,7 +79,7 @@ public class ReasonableGridView extends GridView {
     }
   }
 
-  private int determineMaxColumns(int availableSpace) {
+  protected int determineMaxColumns(int availableSpace) {
     int requestedHorizontalSpacing = getRequestedHorizontalSpacing();
     return (availableSpace + requestedHorizontalSpacing) / (getRequestedColumnWidth() + requestedHorizontalSpacing);
   }
