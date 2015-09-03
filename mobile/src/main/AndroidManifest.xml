@@ -76,7 +76,7 @@
             android:label="@string/title_activity_game"
             android:theme="@style/AppCompatTheme.DarkActionBar">
         </activity>
-        <activity>
+        <activity
             android:name=".PlacePickerActivity"
             android:label="@string/activity_place_picker"
             android:theme="@style/AppCompatTheme"
