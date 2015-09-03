@@ -6,7 +6,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.util.AttributeSet;
 import android.view.View;
 
-import io.bqbl.AddGameActivity;
+import io.bqbl.addgame.AddGameActivity;
 import io.bqbl.data.CacheManager;
 import io.bqbl.data.Game;
 

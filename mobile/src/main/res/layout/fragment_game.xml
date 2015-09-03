@@ -90,7 +90,7 @@
         android:layout_below="@id/game_info"
         android:elevation="4dp">
 
-        <io.bqbl.utils.TeamGridView
+        <io.bqbl.utils.TallGridView
             android:id="@+id/user_grid"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

@@ -1,7 +1,22 @@
-<fragment xmlns:android="http://schemas.android.com/apk/res/android"
-          xmlns:tools="http://schemas.android.com/tools"
-          android:id="@+id/fragment"
-          android:name="io.bqbl.AddGameActivityFragment"
-          tools:layout="@layout/fragment_add_game"
-          android:layout_width="match_parent"
-          android:layout_height="match_parent"/>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/my_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/primary"
+        android:elevation="8dp"
+        android:fitsSystemWindows="true"
+        android:minHeight="?attr/actionBarSize"/>
+
+    <fragment
+        android:id="@+id/pick_sport_fragment"
+        android:name="io.bqbl.addgame.PickSportFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:layout="@layout/addgame_pick_sport"/>
+</LinearLayout>
