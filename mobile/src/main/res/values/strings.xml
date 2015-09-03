@@ -24,4 +24,5 @@
     <string name="boohoo_button_text">Boohoo!</string>
     <string name="title_activity_maps">Map</string>
     <string name="gcm_defaultSenderId">783799732849</string>
+    <string name="title_activity_comment">CommentActivity</string>
 </resources>

@@ -20,9 +20,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
+import io.bqbl.data.CacheManager;
 import io.bqbl.data.User;
 import io.bqbl.utils.Listener;
 import io.bqbl.utils.URLs;
@@ -179,12 +181,23 @@ public class FriendsFragment extends Fragment {
           }
         });
 
+        final int friendToDelete = friendId;
         mDeleteButton.setOnClickListener(new View.OnClickListener() {
           @Override
           public void onClick(View v) {
             friends.remove(position);
             notifyItemRemoved(position);
             notifyItemRangeChanged(position, friends.size());
+            MyApplication.getInstance().addToRequestQueue(
+                WebUtils.getJsonRequest(URLs.getAddFriendUrl(friendToDelete, false), new Response.Listener<JSONObject>() {
+                  @Override
+                  public void onResponse(JSONObject response) {
+                    Collection<Integer> globalFriends = CacheManager.getInstance().getCurrentUserFriends();
+                    if (globalFriends != null) {
+                      globalFriends.remove(Integer.valueOf(friendToDelete));
+                    }
+                  }
+                }));
           }
         });
       }

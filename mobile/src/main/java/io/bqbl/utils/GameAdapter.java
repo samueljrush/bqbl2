@@ -29,6 +29,7 @@ import java.util.List;
 import io.bqbl.MyApplication;
 import io.bqbl.ProfileActivity;
 import io.bqbl.R;
+import io.bqbl.comments.CommentActivity;
 import io.bqbl.data.Game;
 import io.bqbl.data.Place;
 import io.bqbl.data.Sports;
@@ -199,17 +200,17 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.ViewHolder> {
           final boolean hasWoohoo = game.woohoos().contains(userId);
           String url = URLs.getSetOohooUrl(userId, game.id(), hasWoohoo ? 0 : 1);
           Log.d(logTag("DEBUGLOG"), url);
+          if (hasWoohoo) {
+            game.woohoos().remove(Integer.valueOf(userId));
+          } else {
+            game.woohoos().add(userId);
+            game.boohoos().remove(Integer.valueOf(userId));
+            updateBoohooButton(false);
+          }
+          updateWoohooButton(!hasWoohoo);
           Request request = WebUtils.getJsonRequest(url, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
-              if (hasWoohoo) {
-                game.woohoos().remove(Integer.valueOf(userId));
-              } else {
-                game.woohoos().add(userId);
-                game.boohoos().remove(Integer.valueOf(userId));
-                updateBoohooButton(false);
-              }
-              updateWoohooButton(!hasWoohoo);
             }
           });
           MyApplication.getInstance().addToRequestQueue(request, "Sending Woohoo!");
@@ -223,35 +224,44 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.ViewHolder> {
           final int userId = MyApplication.getCurrentUser();
           final boolean hasBoohoo = game.boohoos().contains(MyApplication.getCurrentUser());
           String url = URLs.getSetOohooUrl(userId, game.id(), hasBoohoo ? 0 : -1);
+          if (hasBoohoo) {
+            game.boohoos().remove(Integer.valueOf(userId));
+          } else {
+            game.boohoos().add(userId);
+            game.woohoos().remove(Integer.valueOf(userId));
+            updateWoohooButton(false);
+          }
+          updateBoohooButton(!hasBoohoo);
           Request request = WebUtils.getJsonRequest(url, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
-              if (hasBoohoo) {
-                game.boohoos().remove(Integer.valueOf(userId));
-              } else {
-                game.boohoos().add(userId);
-                game.woohoos().remove(Integer.valueOf(userId));
-                updateWoohooButton(false);
-              }
-              updateBoohooButton(!hasBoohoo);
             }
           });
           MyApplication.getInstance().addToRequestQueue(request, "Sending Boohoo!");
         }
       });
+
+      View.OnClickListener commentClickListner = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+          CommentActivity.startActivity(mActivity, game);
+        }
+      };
+      mCommentButton.setOnClickListener(commentClickListner);
+      mWoohoosAndCommentsTextView.setOnClickListener(commentClickListner);
     }
-    
+
     private void updateWoohooButton(boolean hasWoohoo) {
       int woohooColor = hasWoohoo
           ? mItemView.getContext().getResources().getColor(R.color.woohoo_yes_color)
-          : mItemView.getContext().getResources().getColor(R.color.woohoo_no_color);
+          : mCommentButton.getCurrentTextColor();
       mWoohooButton.setTextColor(woohooColor);
     }
 
     private void updateBoohooButton(boolean hasBoohoo) {
       int boohooColor = hasBoohoo
           ? mItemView.getContext().getResources().getColor(R.color.boohoo_yes_color)
-          : mItemView.getContext().getResources().getColor(R.color.woohoo_no_color);
+          : mCommentButton.getCurrentTextColor();
       mBoohooButton.setTextColor(boohooColor);
     }
   }

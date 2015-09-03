@@ -36,7 +36,8 @@ public final class WebUtils {
     return new Response.ErrorListener() {
       @Override
       public void onErrorResponse(VolleyError error) {
-        Log.e(MyApplication.logTag(WebUtils.class.getSimpleName()), "Volley error encountered for url " + url, error);
+        Log.e(MyApplication.logTag(WebUtils.class.getSimpleName()),
+            String.format("Volley error (status: %d) encountered for url %s", error.networkResponse == null ? -1 : error.networkResponse.statusCode, url), error);
       }
     };
   }
@@ -45,6 +46,9 @@ public final class WebUtils {
     getBitmapRemoteUri(imageView, url, new Listener<Bitmap>() {
       @Override
       public void onResult(Bitmap bitmap) {
+        if (bitmap == null) {
+          return;
+        }
         imageView.setImageBitmap(bitmap);
       }
     });
@@ -54,6 +58,9 @@ public final class WebUtils {
     getBitmapRemoteUri(view, url, new Listener<Bitmap>() {
       @Override
       public void onResult(Bitmap bitmap) {
+        if (bitmap == null) {
+          return;
+        }
         view.setBackground(new BitmapDrawable(view.getResources(), bitmap));
       }
     });

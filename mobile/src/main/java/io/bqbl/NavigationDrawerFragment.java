@@ -26,8 +26,6 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import io.bqbl.data.User;
-import io.bqbl.utils.Listener;
 import io.bqbl.utils.URLs;
 
 import static io.bqbl.MyApplication.logTag;
@@ -177,7 +175,7 @@ public class NavigationDrawerFragment extends Fragment {
     // If the user hasn't 'learned' about the drawer, open it to introduce them to the drawer,
     // per the navigation drawer design guidelines.
     if (!mUserLearnedDrawer && !mFromSavedInstanceState) {
-      mDrawerLayout.openDrawer(mFragmentContainerView);
+      //mDrawerLayout.openDrawer(mFragmentContainerView);
     }
 
     // Defer code dependent on restoration of previous instance state.

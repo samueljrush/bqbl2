@@ -89,13 +89,16 @@ public abstract class Game {
       }
       JSONArray commentsArray = json.getJSONArray(JSON_KEY_COMMENTS);
       for (int i = 0; i < commentsArray.length(); i++) {
-        comments.add(Comment.fromJSON(gameId, commentsArray.getJSONObject(i)));
+        Comment comment = Comment.fromJSON(gameId, commentsArray.getJSONObject(i));
+        if (comment != null) {
+          comments.add(comment);
+        }
       }
       return create(gameId,
           json.getInt(JSON_KEY_SPORT_ID),
           json.getInt(JSON_KEY_CREATOR),
           json.getString(JSON_KEY_VENUE_ID),
-          new Date(json.getLong(JSON_KEY_DATE)),
+          new Date(json.getLong(JSON_KEY_DATE) * 1000),
           teams,
           woohoos,
           boohoos,

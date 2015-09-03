@@ -8,6 +8,8 @@ import android.util.LruCache;
 import android.util.Pair;
 
 import java.io.File;
+import java.util.HashSet;
+import java.util.Set;
 
 import io.bqbl.BuildConfig;
 import io.bqbl.MyApplication;
@@ -28,6 +30,7 @@ public final class CacheManager {
   private LruCache<Integer, Game> mGames = new LruCache<>(100);
   private LruCache<String, Place> mPlaces = new LruCache<>(100);
   private LruCache<String, Bitmap> mBitmapMemCache = new LruCache<>(10);
+  private Set<Integer> mCurrentUserFriends = null;
 
   private Object mBitmapDiskCacheLock = new Object();
   private DiskLruCache<Bitmap> mBitmapDiskCache;
@@ -123,6 +126,14 @@ public final class CacheManager {
       }
     }
     return null;
+  }
+
+  public Set<Integer> getCurrentUserFriends() {
+    return mCurrentUserFriends;
+  }
+
+  public void setCurrentUserFriends(Set<Integer> friends) {
+    mCurrentUserFriends = friends;
   }
 
   // Creates a unique subdirectory of the designated app cache directory. Tries to use external

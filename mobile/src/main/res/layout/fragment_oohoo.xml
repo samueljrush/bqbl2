@@ -1,0 +1,93 @@
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/oohoo_nav"
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        android:layout_alignParentTop="true"
+        android:background="@android:color/white"
+        android:gravity="center"
+        android:elevation="4dp"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/to_comments"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:padding="8dp"
+            android:clickable="true"
+            android:src="@drawable/ic_navigate_before_black_24dp"
+            android:background="@drawable/ripple_darkgrey"
+            android:tint="#66FFFFFF"/>
+
+
+        <LinearLayout
+            android:id="@+id/oohoo_switcher"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginRight="64dp"
+            android:background="@android:color/white"
+            android:gravity="center">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight=".5"
+                android:orientation="vertical">
+                <Button
+                    android:id="@+id/woohoo_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:gravity="center"
+                    android:text="Woohoos!"
+                    android:paddingRight="8dp"
+                    android:background="@drawable/ripple_darkgrey"
+                    android:textSize="18sp"/>
+                <View
+                    android:id="@+id/woohoo_tab"
+                    android:layout_width="match_parent"
+                    android:layout_height="8dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight=".5"
+                android:orientation="vertical">
+                <Button
+                    android:id="@+id/boohoo_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:gravity="center"
+                    android:text="Boohoos!"
+                    android:paddingRight="8dp"
+                    android:background="@drawable/ripple_darkgrey"
+                    android:textSize="18sp"/>
+                <View
+                    android:id="@+id/boohoo_tab"
+                    android:layout_width="match_parent"
+                    android:layout_height="8dp" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+    <View
+        android:id="@+id/nav_recycler_divider"
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_below="@id/oohoo_nav"
+        android:background="@color/divider_color"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/comment_recycler"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_below="@id/nav_recycler_divider"
+        android:layout_gravity="center"
+        android:background="#FFF"
+        />
+</RelativeLayout>

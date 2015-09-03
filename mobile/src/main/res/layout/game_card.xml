@@ -27,7 +27,6 @@
             android:numColumns="1"
             android:paddingLeft="16dp"
             android:paddingRight="16dp"
-            android:paddingBottom="16dp"
             android:stretchMode="none"
             android:verticalSpacing="16dp"/>
 
@@ -35,8 +34,10 @@
             android:id="@+id/woohoos_and_comments"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="@drawable/ripple_darkgrey"
             android:paddingStart="16dp"
             android:paddingBottom="4dp"
+            android:paddingTop="16dp"
             android:textSize="10dp"/>
 
         <View
@@ -44,7 +45,7 @@
             android:layout_height="1px"
             android:background="@color/divider_color"/>
 
-        <include layout="@layout/card_two_buttons"/>
+        <include layout="@layout/card_three_buttons"/>
     </LinearLayout>
 
 </android.support.v7.widget.CardView>

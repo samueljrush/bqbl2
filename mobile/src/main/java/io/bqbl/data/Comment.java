@@ -10,27 +10,30 @@ import java.util.Date;
 
 @AutoValue
 public abstract class Comment {
-  public static final String JSON_KEY_USERID = "userid";
+  public static final String JSON_KEY_USERID = "user_id";
   public static final String JSON_KEY_TEXT = "text";
+  public static final String JSON_KEY_GAME_ID = "game_id";
   public static final String JSON_KEY_DATE = "date";
+  public static final String JSON_KEY_COMMENT_ID = "id";
 
-  public static Comment create(int gameId, int userId, String text, Date date) {
-    return new AutoValue_Comment.Builder()
-        .gameId(gameId)
-        .userId(userId)
-        .text(text)
-        .date(date)
-        .build();
+  public static Comment create(int id, int gameId, int userId, String text, Date date) {
+    return new AutoValue_Comment(
+        id,
+        gameId,
+        userId,
+        text,
+        date);
   }
 
   public static Comment fromJSON(int gameId, JSONObject json) {
     try {
-      return new AutoValue_Comment.Builder()
-          .gameId(gameId)
-          .userId(json.getInt(JSON_KEY_USERID))
-          .text(json.getString(JSON_KEY_TEXT))
-          .date(new Date(json.getLong(JSON_KEY_DATE)))
-          .build();
+      return new AutoValue_Comment(
+          json.getInt(JSON_KEY_COMMENT_ID),
+          gameId,
+          json.getInt(JSON_KEY_USERID),
+          json.getString(JSON_KEY_TEXT),
+          new Date(json.getLong(JSON_KEY_DATE) * 1000));
+
     } catch (Exception e) {
       return null;
     }
@@ -39,14 +42,18 @@ public abstract class Comment {
   public JSONObject toJSON() {
     JSONObject commentJSON = new JSONObject();
     try {
-      commentJSON.put(JSON_KEY_USERID, userId())
+      commentJSON.put(JSON_KEY_COMMENT_ID, id())
+          .put(JSON_KEY_USERID, userId())
+          .put(JSON_KEY_GAME_ID, gameId())
           .put(JSON_KEY_TEXT, text())
-          .put(JSON_KEY_DATE, date());
+          .put(JSON_KEY_DATE, (int) (date().getTime() / 1000));
     } catch (JSONException e) {
       return null;
     }
     return commentJSON;
   }
+
+  public abstract int id();
 
   public abstract int gameId();
 
@@ -55,19 +62,4 @@ public abstract class Comment {
   public abstract String text();
 
   public abstract Date date();
-
-  public abstract Builder toBuilder();
-
-  @AutoValue.Builder
-  abstract static class Builder {
-    public abstract Builder gameId(int id);
-
-    public abstract Builder userId(int id);
-
-    public abstract Builder text(String text);
-
-    public abstract Builder date(Date date);
-
-    public abstract Comment build();
-  }
 }
