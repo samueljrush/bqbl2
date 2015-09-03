@@ -77,6 +77,11 @@
             android:theme="@style/AppCompatTheme">
         </activity>
         <activity
+            android:name=".PlacePickerActivity"
+            android:label="@string/activity_place_picker"
+            android:theme="@style/AppCompatTheme"
+        </activity>
+        <activity
             android:name=".ProfileActivity"
             android:label="@string/title_activity_profile"
             android:theme="@style/AppCompatTheme">
