@@ -26,6 +26,9 @@ public final class URLs {
   private static final String ADD_FRIEND_FORMAT = BQBLIO_JSON_URL + "/addfriend.php?user=%d&friend=%d&add=%d";
   private static final String SET_GCM_FORMAT = BQBLIO_JSON_URL + "/setgcm.php?user=%d&token=%s";
   private static final String ADD_OOHOO_FORMAT = BQBLIO_JSON_URL + "/woohoo.php?user_id=%d&game_id=%d&value=%d";
+  public static final String UPLOAD_PROFILE = BQBLIO_JSON_URL + "/uploadprofile.php";
+  public static final String USERS_PHP = BQBLIO_JSON_URL + "/users.php?userid=";
+
   private URLs() {}
 
   public static final String getUserPhotoUrl(int userId) {

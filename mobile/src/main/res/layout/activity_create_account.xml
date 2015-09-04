@@ -1,124 +1,147 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:paddingLeft="@dimen/activity_horizontal_margin"
-                android:paddingRight="@dimen/activity_horizontal_margin"
-                android:paddingTop="@dimen/activity_vertical_margin"
-                android:paddingBottom="@dimen/activity_vertical_margin"
-                tools:context="io.bqbl.CreateAccountActivity">
+                android:layout_height="match_parent">
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                  android:orientation="vertical" android:layout_width="match_parent"
-                  android:layout_height="wrap_content">
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/my_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/primary"
+        android:elevation="8dp"
+        android:fitsSystemWindows="true"
+        android:minHeight="?attr/actionBarSize"/>
 
-        <TableLayout
+    <TableLayout
+        android:id="@+id/settings_table"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp">
+
+        <TableRow
             android:layout_width="fill_parent"
             android:layout_height="wrap_content">
 
-            <TableRow
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:text="@string/create_activity_email_text"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@color/create_account_text_color"
+                />
 
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_weight="2"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="@string/create_activity_email_text"/>
+            <EditText
+                android:id="@+id/create_activity_email_edit"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:clickable="false"
+                android:editable="false"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:imeOptions="flagNoExtractUi"
+                android:textColor="#66000000"
+                />
+        </TableRow>
 
-                <EditText
-                    android:layout_width="0dp"
-                    android:layout_weight="3"
-                    android:editable="false"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/create_activity_email_edit"
-                    android:imeOptions="flagNoExtractUi"/>
-            </TableRow>
+        <TableRow
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
 
-            <TableRow
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:text="@string/create_activity_first_name_text"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@color/create_account_text_color"/>
 
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_weight="2"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="@string/create_activity_first_name_text"/>
+            <EditText
+                android:id="@+id/create_activity_first_name_edit"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:imeOptions="flagNoExtractUi"/>
+        </TableRow>
 
-                <EditText
-                    android:layout_width="0dp"
-                    android:layout_weight="3"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/create_activity_first_name_edit"
-                    android:imeOptions="flagNoExtractUi"/>
-            </TableRow>
+        <TableRow
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
 
-            <TableRow
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:text="@string/create_activity_last_name_text"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@color/create_account_text_color"/>
 
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_weight="2"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="@string/create_activity_last_name_text"/>
+            <EditText
+                android:id="@+id/create_activity_last_name_edit"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:imeOptions="flagNoExtractUi"/>
+        </TableRow>
 
-                <EditText
-                    android:layout_width="0dp"
-                    android:layout_weight="3"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/create_activity_last_name_edit"
-                    android:imeOptions="flagNoExtractUi"/>
-            </TableRow>
+        <TableRow
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
 
-            <TableRow
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:text="@string/create_activity_phone_number_text"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@color/create_account_text_color"/>
 
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_weight="2"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="@string/create_activity_phone_number_text"/>
+            <EditText
+                android:id="@+id/create_activity_phone_number_edit"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:imeOptions="flagNoExtractUi"/>
+        </TableRow>
+    </TableLayout>
 
-                <EditText
-                    android:layout_width="0dp"
-                    android:layout_weight="3"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/create_activity_phone_number_edit"
-                    android:imeOptions="flagNoExtractUi"/>
-            </TableRow>
-
-            <TableRow
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_weight="2"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="@string/create_activity_penis_size_text"/>
-
-                <EditText
-                    android:layout_width="0dp"
-                    android:layout_weight="3"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/create_activity_penis_size_edit"
-                    android:imeOptions="flagNoExtractUi"/>
-            </TableRow>
-        </TableLayout>
-
-        <Button
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="12dp">
+        <LinearLayout
+            android:orientation="vertical"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="right"
-            android:text="@string/create_activity_submit_text"
-            android:id="@+id/create_activity_submit"/>
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/profile_pic"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_gravity="center"
+                android:src="@drawable/defaultprofile"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="User Photo"
+                android:layout_gravity="center_vertical|start"
+                android:textSize="12sp"
+                android:textColor="@color/create_account_text_color"/>
+        </LinearLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <Button
+                android:id="@+id/create_activity_submit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/create_activity_submit_text"/>
+        </FrameLayout>
     </LinearLayout>
 
-</RelativeLayout>
+</LinearLayout>

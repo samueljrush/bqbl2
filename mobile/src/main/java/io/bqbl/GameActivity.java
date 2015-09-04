@@ -18,8 +18,12 @@ public class GameActivity extends AppCompatActivity {
   private int mGameId;
 
   public static void startActivity(Context context, Game game) {
+    startActivity(context, game.id());
+  }
+
+  public static void startActivity(Context context, int gameId) {
     Intent intent = new Intent(context, GameActivity.class);
-    intent.putExtra(EXTRA_GAME_ID, game.id());
+    intent.putExtra(EXTRA_GAME_ID, gameId);
     context.startActivity(intent, null);
   }
 
@@ -46,11 +50,6 @@ public class GameActivity extends AppCompatActivity {
     // automatically handle clicks on the Home/Up button, so long
     // as you specify a parent activity in AndroidManifest.xml.
     int id = item.getItemId();
-
-    //noinspection SimplifiableIfStatement
-    if (id == R.id.action_settings) {
-      return true;
-    }
 
     if (id == android.R.id.home) {
       finish();

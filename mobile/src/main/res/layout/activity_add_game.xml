@@ -13,10 +13,8 @@
         android:fitsSystemWindows="true"
         android:minHeight="?attr/actionBarSize"/>
 
-    <fragment
-        android:id="@+id/pick_sport_fragment"
-        android:name="io.bqbl.addgame.PickSportFragment"
+    <FrameLayout
+        android:id="@+id/the_fragment"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:layout="@layout/addgame_pick_sport"/>
+        android:layout_height="match_parent"/>
 </LinearLayout>

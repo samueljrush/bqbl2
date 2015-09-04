@@ -18,4 +18,5 @@
     <color name="boohoo_yes_color">#DB4437</color>
     <color name="woohoo_no_color">#000</color>
     <color name="darkgrey_button_pressed">#666666</color>
+    <color name="create_account_text_color">#AF000000</color>
 </resources>

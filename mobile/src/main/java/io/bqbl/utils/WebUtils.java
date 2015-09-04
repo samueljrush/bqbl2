@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.android.volley.ParseError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -13,6 +14,8 @@ import com.android.volley.toolbox.ImageRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 
 import org.json.JSONObject;
+
+import java.util.Arrays;
 
 import io.bqbl.MyApplication;
 import io.bqbl.data.CacheManager;
@@ -36,6 +39,12 @@ public final class WebUtils {
     return new Response.ErrorListener() {
       @Override
       public void onErrorResponse(VolleyError error) {
+        if (error instanceof ParseError) {
+          try {
+            Log.e(MyApplication.logTag(WebUtils.class.getSimpleName()), "Response: " +
+                Arrays.toString(((ParseError) error).networkResponse.data));
+          } catch (Exception e){}
+        }
         Log.e(MyApplication.logTag(WebUtils.class.getSimpleName()),
             String.format("Volley error (status: %d) encountered for url %s", error.networkResponse == null ? -1 : error.networkResponse.statusCode, url), error);
       }

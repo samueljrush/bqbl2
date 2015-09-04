@@ -2,7 +2,7 @@
     <string name="app_name">BQBLio</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
-    <string name="create_activity_submit_text">Submit</string>
+    <string name="create_activity_submit_text">Create Account</string>
     <string name="title_activity_feed">News Feed</string>
     <string name="title_activity_profile">BQBLio</string>
     <string name="title_activity_account_settings">AccountSettingsActivity</string>

@@ -20,13 +20,12 @@ public abstract class User {
   public static final String JSON_KEY_FIRST_NAME = "first_name";
   public static final String JSON_KEY_PHONE_NUMBER = "phone";
   public static final String JSON_KEY_LAST_NAME = "last_name";
-  public static final String JSON_KEY_PENIS_SIZE = "penis_size";
   public static final String JSON_KEY_EMAIL = "email";
   private static final String JSON_KEY_USERID = "userid";
   public static final String FULL_NAME_FORMAT_STRING = "%s %s";
 
-  public static User create(int id, String email, String first, String last, String phone, double penis) {
-    return new AutoValue_User.Builder().id(id).email(email).first(first).last(last).phone(phone).penis(penis).build();
+  public static User create(int id, String email, String first, String last, String phone) {
+    return new AutoValue_User.Builder().id(id).email(email).first(first).last(last).phone(phone).build();
     // (or just AutoValue_BQBLObjects_Animal if this is not nested)
   }
 
@@ -38,7 +37,6 @@ public abstract class User {
           .first(json.getString(JSON_KEY_FIRST_NAME))
           .last(json.getString(JSON_KEY_LAST_NAME))
           .phone(json.getString(JSON_KEY_PHONE_NUMBER))
-          .penis(json.getDouble(JSON_KEY_PENIS_SIZE))
           .build();
     } catch (JSONException e) {
       return null;
@@ -53,7 +51,6 @@ public abstract class User {
       json.put(JSON_KEY_FIRST_NAME, first());
       json.put(JSON_KEY_LAST_NAME, last());
       json.put(JSON_KEY_PHONE_NUMBER, phone());
-      json.put(JSON_KEY_PENIS_SIZE, penis());
     } catch (JSONException e) {
       // TODO: handle error
     }
@@ -101,7 +98,6 @@ public abstract class User {
   public abstract String first();
   public abstract String last();
   public abstract String phone();
-  public abstract double penis();
   public abstract Builder toBuilder();
 
   @AutoValue.Builder
@@ -111,7 +107,6 @@ public abstract class User {
     public abstract Builder first(String first);
     public abstract Builder last(String last);
     public abstract Builder phone(String phone);
-    public abstract Builder penis(double penis);
     public abstract User build();
     }
   }

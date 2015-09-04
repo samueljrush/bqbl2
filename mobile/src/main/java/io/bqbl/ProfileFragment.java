@@ -190,7 +190,7 @@ public class ProfileFragment extends Fragment {
     ((TextView) last10View.findViewById(android.R.id.text1)).setText("Last 10");
     ((TextView) last10View.findViewById(android.R.id.text2)).setText(last10String);
     ((TextView) numGamesView.findViewById(android.R.id.text1)).setText("Games");
-    ((TextView) winPctView.findViewById(android.R.id.text2)).setText(String.valueOf(gameInfos.size()));
+    ((TextView) numGamesView.findViewById(android.R.id.text2)).setText(String.valueOf(gameInfos.size()));
 
 
     final View winsCounter = getView().findViewById(R.id.wins_counter);
