@@ -4,7 +4,6 @@ import android.util.Log;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
-import com.google.auto.value.AutoValue;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -29,8 +28,7 @@ import static io.bqbl.MyApplication.logTag;
 /**
  * Created by sam on 7/26/2015.
  */
-@AutoValue
-public abstract class Game {
+public class Game {
   public static final String JSON_KEY_SPORT_ID = "sport_id";
   public static final String JSON_KEY_CREATOR = "creator";
   public static final String JSON_KEY_VENUE_ID = "venue_id";
@@ -43,7 +41,7 @@ public abstract class Game {
   protected Map<Integer, Team> userToTeam = new HashMap<>();
 
   public static Game create(int gameId, int sportId, int creator, String placeId, Date date, List<Team> teams, List<Integer> woohoos, List<Integer> boohoos, List<Comment> comments) {
-    Game game = new AutoValue_Game(gameId, sportId, creator, placeId, date, teams, woohoos, boohoos, comments);
+    Game game = new Game(gameId, sportId, creator, placeId, date, teams, woohoos, boohoos, comments);
     Collections.sort(teams, new Comparator<Team>() {
       @Override
       public int compare(Team lhs, Team rhs) {
@@ -66,6 +64,19 @@ public abstract class Game {
 
 
     return game;
+  }
+
+  public Game(int gameId, int sportId, int creator, String placeId, Date date, List<Team> teams,
+               List<Integer> woohoos, List<Integer> boohoos, List<Comment> comments) {
+    this.id=gameId;
+    this.sportId=sportId;
+    this.creator=creator;
+    this.placeId=placeId;
+    this.date=date;
+    this.teams=teams;
+    this.woohoos=woohoos;
+    this.boohoos=boohoos;
+    this.comments=comments;
   }
 
   public static Game fromJSON(int gameId, JSONObject json) {
@@ -131,7 +142,7 @@ public abstract class Game {
       game.put(JSON_KEY_SPORT_ID, sportId())
           .put(JSON_KEY_CREATOR, creator())
           .put(JSON_KEY_VENUE_ID, placeId())
-          .put(JSON_KEY_DATE, date().getTime())
+          .put(JSON_KEY_DATE, date().getTime() / 1000)
           .put(JSON_KEY_TEAMS, teams)
           .put(JSON_KEY_WOOHOOS, woohoos)
           .put(JSON_KEY_BOOHOOS, boohoos)
@@ -142,7 +153,31 @@ public abstract class Game {
     return game;
   }
 
-  private static void setResultTypes(List<Team> teams) {
+  public Team getTeamForUser(int user) {
+    for (Team team : teams) {
+      if (team.users.contains(user)) {
+        return team;
+      }
+    }
+    return null;
+  }
+
+  public static void setResultTypes(List<Team> teams) {
+    if (teams.size() == 1) {
+      try {
+        double score = Double.valueOf(teams.get(0).score());
+        if (score < 0) {
+          teams.get(0).resultTypeHolder.value = ResultType.LOSS;
+        } else if (score == 0) {
+          teams.get(0).resultTypeHolder.value = ResultType.TIE;
+        } else {
+          teams.get(0).resultTypeHolder.value = ResultType.WIN;
+        }
+      } catch (Exception e) {
+        teams.get(0).resultTypeHolder.value = ResultType.TIE;
+      }
+      return;
+    }
     if (teams.get(0).rank()
         == teams.get(teams.size() - 1).rank()) {
       for (Team team : teams) {
@@ -218,21 +253,46 @@ public abstract class Game {
     }
   }
 
-  public abstract int id();
 
-  public abstract int sportId();
+  public int id;
 
-  public abstract int creator();
+  public int sportId;
 
-  public abstract String placeId();
+  public int creator;
 
-  public abstract Date date();
+  public String placeId;
 
-  public abstract List<Team> teams();
+  public Date date;
 
-  public abstract List<Integer> woohoos();
+  public List<Team> teams;
 
-  public abstract List<Integer> boohoos();
+  public List<Integer> woohoos;
 
-  public abstract List<Comment> comments();
+  public List<Integer> boohoos;
+
+  public List<Comment> comments;
+
+  @Override
+  public String toString() {
+    return String.format("id: %d, sportId: %d, creator: %d, placeId: %s, date: %s, #teams: %d, #woohoos: %d, #boohoos: %d, #comments: %d",
+        id,sportId,creator,placeId,date.toString(),teams.size(),woohoos.size(),boohoos().size(),comments.size());
+  }
+
+  public int id(){return id;}
+
+  public int sportId(){return sportId;}
+
+  public int creator(){return creator;}
+
+  public String placeId(){return placeId;}
+
+  public Date date(){return date;}
+
+  public List<Team> teams(){return teams;}
+
+  public List<Integer> woohoos(){return woohoos;}
+
+  public List<Integer> boohoos(){return boohoos;}
+
+  public List<Comment> comments(){return comments;}
 }

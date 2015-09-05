@@ -8,14 +8,21 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlacePicker;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 
+import io.bqbl.MyApplication;
 import io.bqbl.R;
+import io.bqbl.data.Comment;
+import io.bqbl.data.Game;
 import io.bqbl.data.Team;
 
 import static io.bqbl.MyApplication.logTag;
@@ -30,18 +37,16 @@ public class AddGameActivity extends AppCompatActivity {
   public PickTimeFragment mPickTimeFragment = new PickTimeFragment();
   public PickPlaceFragment mPickPlaceFragment = new PickPlaceFragment();
   public PickTeamFragment mPickTeamFragment = new PickTeamFragment();
+  public PickNumTeamsFragment mPickNumTeamsFragment = new PickNumTeamsFragment();
+  public PickScoreFragment mPickScoreFragment = new PickScoreFragment();
 
-  private int mSportId = -1;
-  private Date mDate;
   private int mMonth;
   private int mDayOfMonth;
   private int mYear;
   private int mHours;
   private int mMinutes;
-
-  private String mPlaceId;
-  private List<Team> mTeams;
-
+  public Game mGame = new Game(-1, -1, MyApplication.getCurrentUser(), "", new Date(), new LinkedList<Team>(),
+      new LinkedList<Integer>(), new LinkedList<Integer>(), new LinkedList<Comment>());
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -90,19 +95,19 @@ public class AddGameActivity extends AppCompatActivity {
   }
 
   public void setSportId(int sportId) {
-    mSportId = sportId;
+    mGame.sportId = sportId;
   }
 
   public void setDate(Date date) {
-    mDate = date;
+    mGame.date = date;
   }
 
   public void setPlaceId(String placeId) {
-    mPlaceId = placeId;
+    mGame.placeId = placeId;
   }
 
   public void setTeams(List<Team> teams) {
-    mTeams = teams;
+    mGame.teams = teams;
   }
 
   public void setDate(int year, int month, int dayOfMonth) {
@@ -119,7 +124,7 @@ public class AddGameActivity extends AppCompatActivity {
   }
 
   private void setDate() {
-    mDate = new Date(mYear, mMonth, mDayOfMonth, mHours, mMinutes);
+    mGame.date = new Date(mYear, mMonth, mDayOfMonth, mHours, mMinutes);
   }
 
   @Override
@@ -137,10 +142,39 @@ public class AddGameActivity extends AppCompatActivity {
       //String attributionHtml = PlacePicker.getAttributions(data);
       //CharSequence attributions = attributionHtml == null ? "" : Html.fromHtml(attributionHtml);
       Log.d(logTag(this), "Switching to teams fragment");
-      switchFragments(mPickTeamFragment);
+      switchFragments(mPickNumTeamsFragment);
     } else {
       super.onActivityResult(requestCode, resultCode, data);
     }
 
   }
+
+  public void setNumTeams(int numTeams) {
+    mGame.teams = new ArrayList<>(numTeams);
+    for (int i = 0; i < numTeams; i++) {
+      mGame.teams.add(i, new Team());
+    }
+  }
+
+  public int getNumTeams(){
+    return mGame.teams().size();
+  }
+
+  @Override
+  public boolean onCreateOptionsMenu(Menu menu) {
+    // Inflate the menu; this adds items to the action bar if it is present.
+    getMenuInflater().inflate(R.menu.menu_game, menu);
+    return true;
+  }
+
+  @Override
+  public boolean onOptionsItemSelected(MenuItem item) {
+    // Handle action bar item clicks here. The action bar will
+    // automatically handle clicks on the Home/Up button, so long
+    // as you specify a parent activity in AndroidManifest.xml.
+    int id = item.getItemId();
+
+    return super.onOptionsItemSelected(item);
+  }
+
 }

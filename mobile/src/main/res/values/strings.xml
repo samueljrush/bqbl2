@@ -26,4 +26,5 @@
     <string name="gcm_defaultSenderId">783799732849</string>
     <string name="title_activity_comment">CommentActivity</string>
     <string name="title_activity_add_game">AddGameActivity</string>
+    <string name="enter_gambling_winnings">Enter net $$$</string>
 </resources>

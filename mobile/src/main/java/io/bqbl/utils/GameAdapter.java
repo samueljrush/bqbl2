@@ -44,10 +44,17 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.ViewHolder> {
   private final Activity mActivity;
   private List<Integer> mGameIds;
 
+  private int mTheUserId = -1;
+
   public GameAdapter(Activity activity, List<Integer> gameIds) {
     mActivity = activity;
     mGameIds = gameIds;
     setHasStableIds(true);
+  }
+
+  public GameAdapter(Activity activity, List<Integer> gameIds , int userId) {
+    this(activity, gameIds);
+    mTheUserId = userId;
   }
 
   public void setGameIds(List<Integer> gameIds) {
@@ -121,7 +128,28 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.ViewHolder> {
         @Override
         public void onResult(User user) {
           Log.d(logTag(this), String.format("Game %d showing user %s", game.id(), user));
-          mTitleTextView.setText(String.format("%s %s crushed it!", user.first(), user.last()));
+          if (mTheUserId == -1) {
+            mTitleTextView.setText(SetGameStrings.generateSomeString(user.first(), user.last()));
+          } else {
+            User.requestUser(mTheUserId, true, new Listener<User>() {
+              @Override
+              public void onResult(User user) {
+                Log.d(logTag(this), "User's team: " + game.getTeamForUser(mTheUserId).teamId + " " + game.getTeamForUser(user.id()).resultTypeHolder.value.name());
+
+                switch (game.getTeamForUser(mTheUserId).resultTypeHolder().value) {
+                  case LOSS:
+                  case RANK:
+                  case SILVER:
+                  case BRONZE:
+                    mTitleTextView.setText(SetGameStrings.generateLoserString(user.first(), user.last()));
+                    break;
+                  default:
+                    mTitleTextView.setText(SetGameStrings.generateWinnerString(user.first(), user.last()));
+                }
+              }
+            });
+          }
+
         }
       });
 

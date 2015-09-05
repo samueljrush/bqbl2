@@ -28,6 +28,7 @@ public final class URLs {
   private static final String ADD_OOHOO_FORMAT = BQBLIO_JSON_URL + "/woohoo.php?user_id=%d&game_id=%d&value=%d";
   public static final String UPLOAD_PROFILE = BQBLIO_JSON_URL + "/uploadprofile.php";
   public static final String USERS_PHP = BQBLIO_JSON_URL + "/users.php?userid=";
+  public static final String ADD_GAME_PHP = BQBLIO_JSON_URL + "/addgame.php";
 
   private URLs() {}
 

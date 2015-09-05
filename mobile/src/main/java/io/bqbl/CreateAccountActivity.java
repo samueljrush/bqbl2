@@ -63,12 +63,15 @@ public class CreateAccountActivity extends AppCompatActivity {
     mFirstNameView = (TextView) findViewById(R.id.create_activity_first_name_edit);
     mPhoneNumberView = (TextView) findViewById(R.id.create_activity_phone_number_edit);
 
-    TelephonyManager tMgr = (TelephonyManager) this.getSystemService(Context.TELEPHONY_SERVICE);
-    String phoneNumber = tMgr.getLine1Number();
-    if (phoneNumber != null) {
-      mPhoneNumberView.setText(phoneNumber.length() == 11 ? phoneNumber.substring(1) : phoneNumber);
-    }
+    try {
+      TelephonyManager tMgr = (TelephonyManager) this.getSystemService(Context.TELEPHONY_SERVICE);
+      String phoneNumber = tMgr.getLine1Number();
+      if (phoneNumber != null) {
+        mPhoneNumberView.setText(phoneNumber.length() == 11 ? phoneNumber.substring(1) : phoneNumber);
+      }
+    } catch (Exception e) {
 
+    }
     mEmail = getIntent().getExtras().getString(EMAIL_EXTRA);
     ((TextView) findViewById(R.id.create_activity_email_edit)).setText(mEmail);
     findViewById(R.id.create_activity_submit).setOnClickListener(mSubmitListener);

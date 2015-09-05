@@ -27,6 +27,7 @@
             android:numColumns="1"
             android:paddingLeft="16dp"
             android:paddingRight="16dp"
+            android:paddingBottom="16dp"
             android:stretchMode="none"
             android:verticalSpacing="16dp"/>
 
@@ -37,7 +38,6 @@
             android:background="@drawable/ripple_darkgrey"
             android:paddingStart="16dp"
             android:paddingBottom="4dp"
-            android:padding="16dp"
             android:textSize="10dp"/>
 
         <View

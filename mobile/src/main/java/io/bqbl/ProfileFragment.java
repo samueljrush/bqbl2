@@ -63,7 +63,7 @@ public class ProfileFragment extends Fragment {
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     mUserId = getActivity().getIntent().getIntExtra(ProfileActivity.EXTRA_USER_ID, -1);
-    mGameAdapter = new GameAdapter(getActivity(), Collections.<Integer>emptyList());
+    mGameAdapter = new GameAdapter(getActivity(), Collections.<Integer>emptyList(), mUserId);
   }
 
   @Override

@@ -33,7 +33,7 @@ import static io.bqbl.MyApplication.logTag;
 
 public class OohooAdapter extends RecyclerView.Adapter<OohooAdapter.ViewHolder> {
   private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("MMM dd");
-  private static final SimpleDateFormat TIME_FORMAT = new SimpleDateFormat("h:m a");
+  private static final SimpleDateFormat TIME_FORMAT = new SimpleDateFormat("hh:mm a");
   private List<Integer> mUserIds;
   private OohooFragment mFragment;
   private int mNotFriendColor;

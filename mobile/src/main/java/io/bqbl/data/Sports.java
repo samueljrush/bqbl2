@@ -5,9 +5,11 @@ import com.google.auto.value.AutoValue;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import io.bqbl.R;
 
@@ -15,6 +17,9 @@ import io.bqbl.R;
  * Created by sam on 7/31/2015.
  */
 public final class Sports {
+
+  public static final int GAMBLING_ID_SPECIAL_CASE = 102;
+  private static Set<Sport> soloSports = new HashSet<>();
 
   private static final Map<Integer, Sport> sports = new LinkedHashMap<>();
   private static final List<Sport> sportList = new ArrayList<>(110);
@@ -105,6 +110,8 @@ public final class Sports {
     addSport(Sport.create(58,"Shuffleboard",1,0xFFFF7043,R.drawable.drink24));
     addSport(Sport.create(93,"Cornhole",1,0xFFFF7043,R.drawable.drink24));
     addSport(Sport.create(94,"Horseshoes",1,0xFFFF7043,R.drawable.drink24));
+    addSport(Sport.create(102, "Gambling", 1, 0xFFFF7043, R.drawable.blackjack)); soloSports.add(sports.get(102));
+
 
     for (Integer sportId : sports.keySet()) {
       sportList.add(sports.get(sportId));
@@ -143,5 +150,9 @@ public final class Sports {
     public abstract int scoreType();
     public abstract int color();
     public abstract int iconResource();
+
+    public boolean isSoloSport() {
+      return soloSports.contains(this);
+    }
   }
 }
