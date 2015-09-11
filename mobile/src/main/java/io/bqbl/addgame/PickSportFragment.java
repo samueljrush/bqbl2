@@ -40,7 +40,7 @@ public class PickSportFragment extends Fragment {
     mActivity = (AddGameActivity) getActivity();
     mFragmentManager = getFragmentManager();
     mPickSportFragment = (PickSportFragment) getFragmentManager().findFragmentById(R.id.the_fragment);
-    Log.d(logTag(this), "PSP");
+    //Log.d(logTag(this), "PSP");
   }
 
   @Nullable
@@ -62,7 +62,7 @@ public class PickSportFragment extends Fragment {
         newView.setOnClickListener(new View.OnClickListener() {
           @Override
           public void onClick(View v) {
-            Log.d(logTag(this), "View clicked at position " + position);
+            //Log.d(logTag(this), "View clicked at position " + position);
             mActivity.setSportId(getItem(position).id());
             mActivity.switchFragments(mActivity.mPickDateFragment);
           }
@@ -71,7 +71,7 @@ public class PickSportFragment extends Fragment {
       }
     };
 
-    Log.d(logTag(this), "Num sports: " + adapter.getCount());
+    //Log.d(logTag(this), "Num sports: " + adapter.getCount());
     GridView gridView = (GridView) v.findViewById(R.id.sport_grid);
     gridView.setAdapter(adapter);
     return v;

@@ -50,7 +50,7 @@ public class MyApplication extends Application {
 
   public static boolean setCurrentUser(Context context, int user) {
     Intent intent = new Intent(getInstance(), RegistrationIntentService.class);
-    Log.d(logTag(getInstance()), "Starting service: " + getInstance().startService(intent));
+    //Log.d(logTag(getInstance()), "Starting service: " + getInstance().startService(intent));
     sCurrentUser = user;
     return SharedPreferencesUtils.putInt(context, R.string.pref_current_user, user);
   }
@@ -99,7 +99,7 @@ public class MyApplication extends Application {
     // set the default tag if tag is empty
     req.setTag(TextUtils.isEmpty(tag) ? TAG : tag);
     getRequestQueue().add(req);
-    //Log.d(logTag(this), "Making volley request with tag: " + tag);
+    ////Log.d(logTag(this), "Making volley request with tag: " + tag);
   }
 
   public <T> void addToRequestQueue(Request<T> req) {

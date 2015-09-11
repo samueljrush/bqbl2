@@ -18,43 +18,47 @@
 
     <FrameLayout
         android:id="@+id/game_info"
-        android:layout_height="wrap_content"
         android:layout_width="match_parent"
-        android:elevation="8dp"
+        android:layout_height="wrap_content"
         android:layout_below="@id/my_toolbar"
         android:background="@color/primary"
+        android:elevation="8dp"
         >
-            <LinearLayout
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="start|top"
+            android:gravity="top"
+            android:orientation="vertical"
+            android:paddingBottom="8dp"
+            android:paddingLeft="32dp">
+
+            <TextView
+                android:id="@+id/place_name"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:layout_gravity="start|top"
-                android:gravity="top"
-                android:paddingLeft="32dp"
-                android:paddingBottom="8dp">
-                <TextView
-                    android:id="@+id/place_name"
-                    android:maxLines="2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:textSize="24dp"
-                    android:textColor="@android:color/black"/>
-                <TextView
-                    android:id="@+id/date_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:textSize="14dp"
-                    android:textColor="@android:color/black"/>
+                android:maxLines="2"
+                android:textColor="@android:color/black"
+                android:textSize="24dp"/>
+
+            <TextView
+                android:id="@+id/date_text"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:textColor="@android:color/black"
+                android:textSize="14dp"/>
         </LinearLayout>
+
         <ImageView
             android:id="@+id/place_icon"
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:layout_gravity="center_vertical|end"
-            android:src="@drawable/ic_place_black_48dp"
-            android:scaleType="center"
+            android:layout_margin="16dp"
             android:background="@drawable/ripple_darkgrey"
-            android:layout_margin="16dp"/>
+            android:scaleType="center"
+            android:src="@drawable/ic_place_black_48dp"/>
     </FrameLayout>
 
     <LinearLayout
@@ -70,9 +74,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/ripple_darkgrey"
-            android:paddingTop="4dp"
             android:paddingBottom="4dp"
             android:paddingStart="16dp"
+            android:paddingTop="4dp"
             android:textSize="12dp"/>
 
         <View
@@ -83,34 +87,18 @@
         <include layout="@layout/card_three_buttons"/>
     </LinearLayout>
 
-    <FrameLayout
+    <io.bqbl.utils.TallGridView
+        android:id="@+id/user_grid"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@id/social_area"
         android:layout_below="@id/game_info"
-        android:elevation="4dp">
-
-        <io.bqbl.utils.TallGridView
-            android:id="@+id/user_grid"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center_horizontal"
-            android:layout_margin="12dp"
-            android:gravity="center"
-            android:horizontalSpacing="12dp"
-            android:numColumns="2"
-            android:verticalSpacing="12dp"
-            />
-
-        <TextView
-            android:id="@+id/no_comments_yet"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:layout_gravity="bottom"
-            android:paddingBottom="16dp"
-            android:text="No comments yet."
-            android:visibility="gone"/>
-
-    </FrameLayout>
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="12dp"
+        android:gravity="center"
+        android:horizontalSpacing="12dp"
+        android:numColumns="2"
+        android:verticalSpacing="12dp"
+        />
 
 </RelativeLayout>

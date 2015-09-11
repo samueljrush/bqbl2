@@ -16,6 +16,7 @@ import com.google.android.gms.location.places.ui.PlacePicker;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -47,6 +48,7 @@ public class AddGameActivity extends AppCompatActivity {
   private int mMinutes;
   public Game mGame = new Game(-1, -1, MyApplication.getCurrentUser(), "", new Date(), new LinkedList<Team>(),
       new LinkedList<Integer>(), new LinkedList<Integer>(), new LinkedList<Comment>());
+  public ChaiFragment mChaiFragment = new ChaiFragment();
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -124,13 +126,14 @@ public class AddGameActivity extends AppCompatActivity {
   }
 
   private void setDate() {
-    mGame.date = new Date(mYear, mMonth, mDayOfMonth, mHours, mMinutes);
+    Log.d(logTag(this), String.format("Date: %d/%d/%d %d:%d, Millis: %d", mMonth, mDayOfMonth, mYear, mHours, mMinutes, new GregorianCalendar(mYear, mMonth, mDayOfMonth, mHours, mMinutes).getTime().getTime()/1000));
+    mGame.date = new GregorianCalendar(mYear, mMonth, mDayOfMonth, mHours, mMinutes).getTime();
   }
 
   @Override
   protected void onActivityResult(int requestCode,
                                   int resultCode, Intent data) {
-    Log.d(logTag(this), String.format("request: %d, result: %d", requestCode, resultCode));
+    //Log.d(logTag(this), String.format("request: %d, result: %d", requestCode, resultCode));
     if (requestCode == PLACE_PICKER_REQUEST
         && resultCode == Activity.RESULT_OK) {
 
@@ -141,7 +144,7 @@ public class AddGameActivity extends AppCompatActivity {
       setPlaceId(placeId);
       //String attributionHtml = PlacePicker.getAttributions(data);
       //CharSequence attributions = attributionHtml == null ? "" : Html.fromHtml(attributionHtml);
-      Log.d(logTag(this), "Switching to teams fragment");
+      //Log.d(logTag(this), "Switching to teams fragment");
       switchFragments(mPickNumTeamsFragment);
     } else {
       super.onActivityResult(requestCode, resultCode, data);
@@ -152,7 +155,9 @@ public class AddGameActivity extends AppCompatActivity {
   public void setNumTeams(int numTeams) {
     mGame.teams = new ArrayList<>(numTeams);
     for (int i = 0; i < numTeams; i++) {
-      mGame.teams.add(i, new Team());
+      Team team = new Team();
+      team.teamId = i;
+      mGame.teams.add(i, team);
     }
   }
 

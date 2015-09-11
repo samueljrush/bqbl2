@@ -80,7 +80,7 @@ public class OohooFragment extends Fragment {
                 Log.e(logTag(OohooFragment.this), "Error parsing json", e);
               }
               mFriends = friendsCollection;
-              Log.d(logTag(this), String.format("found %d friends, notifying %d listeners", mFriends.size(), mFriendsListeners.size()));
+              //Log.d(logTag(this), String.format("found %d friends, notifying %d listeners", mFriends.size(), mFriendsListeners.size()));
               for (Listener<Collection<Integer>> listener : mFriendsListeners) {
                 listener.onResult(mFriends);
               }
@@ -180,7 +180,7 @@ public class OohooFragment extends Fragment {
 
     selectedView.setBackgroundColor(0xFFFFFFFF);
     nonSelectedView.setBackgroundColor(0xFFAAAAAA);
-    Log.d(logTag(this), String.format("Setting %s to dark", nonSelectedView));
+    //Log.d(logTag(this), String.format("Setting %s to dark", nonSelectedView));
   }
 
   public boolean getOohooState() {

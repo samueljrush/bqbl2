@@ -142,7 +142,7 @@ public class Game {
       game.put(JSON_KEY_SPORT_ID, sportId())
           .put(JSON_KEY_CREATOR, creator())
           .put(JSON_KEY_VENUE_ID, placeId())
-          .put(JSON_KEY_DATE, date().getTime() / 1000)
+          .put(JSON_KEY_DATE, (long) (date().getTime() / 1000))
           .put(JSON_KEY_TEAMS, teams)
           .put(JSON_KEY_WOOHOOS, woohoos)
           .put(JSON_KEY_BOOHOOS, boohoos)

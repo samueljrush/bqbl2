@@ -91,12 +91,12 @@ public class PlaceFragment extends Fragment {
     });
 
 
-    Log.d(logTag(this), "fetching: " + URLs.PLACE_HISTORY_PHP + "?id=" + mPlaceId);
+    //Log.d(logTag(this), "fetching: " + URLs.PLACE_HISTORY_PHP + "?id=" + mPlaceId);
     Request request = WebUtils.getJsonRequest(URLs.PLACE_HISTORY_PHP + "?id=" + mPlaceId, new Response.Listener<JSONObject>() {
       @Override
       public void onResponse(JSONObject response) {
         try {
-          Log.d(logTag(this), "response: " + response.toString());
+          //Log.d(logTag(this), "response: " + response.toString());
           JSONArray gamesArray = response.getJSONArray("games");
           // TODO: What if the user has no games?
           List<GameInfo> gameInfos = new ArrayList<GameInfo>(gamesArray.length());

@@ -137,7 +137,7 @@ public class FriendsFragment extends Fragment {
 
       public void bind(final List<JSONObject> friends, final int position) {
         JSONObject friend = friends.get(position);
-        Log.d(MyApplication.logTag(FriendsFragment.this), friend.toString());
+        //Log.d(MyApplication.logTag(FriendsFragment.this), friend.toString());
         int friendId = -1;
         try {
           friendId = friend.getInt(KEY_FRIEND_ID);

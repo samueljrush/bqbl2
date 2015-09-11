@@ -93,7 +93,7 @@ public class CreateAccountActivity extends AppCompatActivity {
     if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
       Bundle extras = data.getExtras();
       Bitmap imageBitmap = (Bitmap) extras.get("data");
-      Log.d(logTag(this), String.format("Bitmap bytes: %d", imageBitmap.getByteCount()));
+      //Log.d(logTag(this), String.format("Bitmap bytes: %d", imageBitmap.getByteCount()));
       new AsyncTask<Bitmap, Void, Bitmap>() {
         @Override
         protected Bitmap doInBackground(Bitmap... params) {
@@ -103,7 +103,7 @@ public class CreateAccountActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(Bitmap bitmap) {
-          Log.d(logTag(this), String.format("Bitmap of size %d ", bitmap.getByteCount()));
+          //Log.d(logTag(this), String.format("Bitmap of size %d ", bitmap.getByteCount()));
           mPhotoView.setImageBitmap(bitmap);
         }
       }.execute(imageBitmap);

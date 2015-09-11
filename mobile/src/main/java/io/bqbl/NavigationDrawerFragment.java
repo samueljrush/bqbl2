@@ -284,11 +284,11 @@ public class NavigationDrawerFragment extends Fragment {
         int userId = 1;//MyApplication.getCurrentUser(getActivity());
         String userPhotoUri = URLs.getUserPhotoUrl(userId);
         //WebUtils.setImageRemoteUri(userImageView, userPhotoUri);
-        Log.d(logTag(this), "Requesting user...");
+        //Log.d(logTag(this), "Requesting user...");
         /*MyApplication.getInstance().addToRequestQueue(User.requestUser(userId, new Listener<User>() {
           @Override
           public void onResult(User user) {
-            Log.d(logTag(this), "User: " + user.toString());
+            //Log.d(logTag(this), "User: " + user.toString());
             emailTextView.setText(user.email());
             nameTextView.setText(user.first() + " " + user.last());
           }

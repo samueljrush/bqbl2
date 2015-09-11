@@ -51,7 +51,7 @@ public final class URLs {
   public static String getAddFriendUrl(int userId, boolean isAddOperation) {
     String url = String.format(ADD_FRIEND_FORMAT, MyApplication.getCurrentUser(), userId,
         isAddOperation ? 1 : 0);
-    Log.d(logTag("DEBUGLOG"), "URL: " + url);
+    //Log.d(logTag("DEBUGLOG"), "URL: " + url);
     return url;
   }
 }

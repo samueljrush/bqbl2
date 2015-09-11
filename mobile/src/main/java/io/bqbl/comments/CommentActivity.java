@@ -39,7 +39,7 @@ public class CommentActivity extends Activity {
   }
 
   public void commentsToOohoos() {
-    Log.d(logTag(this), "switching To Oohoos");
+    //Log.d(logTag(this), "switching To Oohoos");
     FragmentManager fragmentManager = getFragmentManager();
     fragmentManager.beginTransaction()
         .hide(mCommentFragment)
@@ -49,7 +49,7 @@ public class CommentActivity extends Activity {
   }
 
   public void oohoosToComments() {
-    Log.d(logTag(this), "switching To Comments");
+    //Log.d(logTag(this), "switching To Comments");
     FragmentManager fragmentManager = getFragmentManager();
     fragmentManager.beginTransaction()
         .hide(mOohooFragment)
@@ -66,7 +66,7 @@ public class CommentActivity extends Activity {
     mOohooFragment = (OohooFragment) getFragmentManager().findFragmentById(R.id.oohoos_fragment);
 
     getFragmentManager().beginTransaction().hide(mOohooFragment).commit();
-    Log.d(logTag(this), "commentFrag: " + mCommentFragment + " oohooFrag: " + mOohooFragment);
+    //Log.d(logTag(this), "commentFrag: " + mCommentFragment + " oohooFrag: " + mOohooFragment);
   }
 
 

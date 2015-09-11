@@ -80,7 +80,7 @@ public class CommentFragment extends Fragment {
       public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
         if (actionId == EditorInfo.IME_ACTION_SEND || actionId == EditorInfo.IME_ACTION_DONE) {
           final Comment comment = Comment.create(-1, mGameId, getCurrentUser(), v.getText().toString(), new Date(System.currentTimeMillis()));
-          Log.d(logTag(this), "Comment json: " + comment.toJSON());
+          //Log.d(logTag(this), "Comment json: " + comment.toJSON());
           try {
             final JSONObject requestJson = new JSONObject();
             MyApplication.getInstance().addToRequestQueue(
@@ -92,7 +92,7 @@ public class CommentFragment extends Fragment {
                       int id = response.getInt(Comment.JSON_KEY_COMMENT_ID);
                       game.comments().add(Comment.create(id, comment.gameId(), comment.userId(), comment.text(), date));
                       int numComments = game.comments().size();
-                      Log.d(logTag(this), "Adding comment to game..." + comment.toString());
+                      //Log.d(logTag(this), "Adding comment to game..." + comment.toString());
                       mCommentAdapter.notifyItemInserted(numComments - 1);
                       mRecyclerView.scrollToPosition(numComments - 1);
                       editText.setText(null);
@@ -142,7 +142,7 @@ public class CommentFragment extends Fragment {
       public void onClick(View v) {
         final boolean hasWoohoo = game.woohoos().contains(userId);
         String url = URLs.getSetOohooUrl(userId, game.id(), hasWoohoo ? 0 : 1);
-        Log.d(logTag("DEBUGLOG"), url);
+        //Log.d(logTag("DEBUGLOG"), url);
         updateOohooButton(boohooButton, false);
         updateOohooButton(woohooButton, !hasWoohoo);
         if (hasWoohoo) {
@@ -166,7 +166,7 @@ public class CommentFragment extends Fragment {
       public void onClick(View v) {
         final boolean hasBoohoo = game.boohoos().contains(userId);
         String url = URLs.getSetOohooUrl(userId, game.id(), hasBoohoo ? 0 : 1);
-        Log.d(logTag("DEBUGLOG"), url);
+        //Log.d(logTag("DEBUGLOG"), url);
         updateOohooButton(woohooButton, false);
         updateOohooButton(boohooButton, !hasBoohoo);
         if (hasBoohoo) {
@@ -187,7 +187,7 @@ public class CommentFragment extends Fragment {
     view.findViewById(R.id.to_oohoos).setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
-        Log.d(logTag("DEBUGLOG"), "onClick");
+        //Log.d(logTag("DEBUGLOG"), "onClick");
         ((CommentActivity) getActivity()).commentsToOohoos();
       }
     });

@@ -98,7 +98,7 @@ public class GameFragment extends Fragment {
         ListAdapter adapter = new ArrayAdapter<Team>(mActivity, R.layout.team_card, game.teams()) {
           @Override
           public View getView(int position, View convertView, ViewGroup parent) {
-            Log.d(logTag(this), "Getting team view: " + position);
+            //Log.d(logTag(this), "Getting team view: " + position);
             final View newView = mLayoutInflater.inflate(R.layout.team_card, parent, false);
             ListView teamUserList = (ListView) newView.findViewById(R.id.user_list);
             Team team = game.teams().get(position);
@@ -172,7 +172,7 @@ public class GameFragment extends Fragment {
             final int userId = MyApplication.getCurrentUser();
             final boolean hasWoohoo = game.woohoos().contains(userId);
             String url = URLs.getSetOohooUrl(userId, game.id(), hasWoohoo ? 0 : 1);
-            Log.d(logTag("DEBUGLOG"), url);
+            //Log.d(logTag("DEBUGLOG"), url);
             if (hasWoohoo) {
               game.woohoos().remove(Integer.valueOf(userId));
             } else {
@@ -223,7 +223,7 @@ public class GameFragment extends Fragment {
         mCommentButton.setOnClickListener(commentClickListner);
         mWoohoosAndCommentsTextView.setOnClickListener(commentClickListner);
         gridView.setAdapter(adapter);
-        Log.d(logTag(this), "Adapter size " + adapter.getCount());
+        //Log.d(logTag(this), "Adapter size " + adapter.getCount());
       }
     });
     return view;
@@ -253,7 +253,7 @@ public class GameFragment extends Fragment {
       public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
         if (actionId == EditorInfo.IME_ACTION_SEND || actionId == EditorInfo.IME_ACTION_DONE) {
           final Comment comment = Comment.create(-1, mGameId, getCurrentUser(), v.getText().toString(), new Date(System.currentTimeMillis()));
-          Log.d(logTag(this), "Comment json: " + comment.toJSON());
+          //Log.d(logTag(this), "Comment json: " + comment.toJSON());
           try {
             final JSONObject requestJson = new JSONObject();
             MyApplication.getInstance().addToRequestQueue(
@@ -265,7 +265,7 @@ public class GameFragment extends Fragment {
                       int id = response.getInt(Comment.JSON_KEY_COMMENT_ID);
                       game.comments().add(Comment.create(id, comment.gameId(), comment.userId(), comment.text(), date));
                       int numComments = game.comments().size();
-                      Log.d(logTag(this), "Adding comment to game..." + comment.toString());
+                      //Log.d(logTag(this), "Adding comment to game..." + comment.toString());
                       mCommentAdapter.notifyItemInserted(numComments - 1);
                       mRecyclerView.scrollToPosition(numComments - 1);
                       editText.setText(null);

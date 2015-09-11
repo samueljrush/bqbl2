@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.InputType;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.text.method.DigitsKeyListener;
 import android.widget.EditText;
@@ -31,16 +32,39 @@ public class PickNumTeamsFragment extends DialogFragment {
     //input.addTextChangedListener(new PositiveIntTextWatcher());
 // Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
     input.setInputType(InputType.TYPE_CLASS_NUMBER);
-    input.setKeyListener(DigitsKeyListener.getInstance("0123456789"));
+    input.setKeyListener(DigitsKeyListener.getInstance("123456789"));
+    input.addTextChangedListener(new TextWatcher() {
+      @Override
+      public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+      }
+
+      @Override
+      public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+      }
+
+      @Override
+      public void afterTextChanged(Editable s) {
+        if (TextUtils.isEmpty(s)) {
+          input.setKeyListener(DigitsKeyListener.getInstance("123456789"));
+        } else {
+          input.setKeyListener(DigitsKeyListener.getInstance("0123456789"));
+        }
+      }
+    });
     builder.setView(input);
 
     return builder.setPositiveButton("Ok",
         new DialogInterface.OnClickListener() {
           public void onClick(DialogInterface dialog, int whichButton) {
+            if (TextUtils.isEmpty(input.getText())) {
+              return;
+            }
            int numTeams = Integer.valueOf(input.getText().toString());
            AddGameActivity mActivity = (AddGameActivity) getActivity();
            mActivity.setNumTeams(numTeams);
-            mActivity.switchFragments(mActivity.mPickTeamFragment);
+            mActivity.switchFragments(mActivity.mChaiFragment);
           }
         }
     ).setCancelable(false).create();

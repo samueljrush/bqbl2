@@ -51,9 +51,9 @@ public class WelcomeActivity extends AppCompatActivity {
   @Override
   public void onStart() {
     super.onStart();
-    Log.d(logTag(this), "Getting user id...");
+    //Log.d(logTag(this), "Getting user id...");
     int userid = MyApplication.getCurrentUser();
-    Log.d(logTag(this), "Got user id");
+    //Log.d(logTag(this), "Got user id");
     if (userid > 0) {
       Intent intent = new Intent(this, MainActivity.class);
       startActivity(intent);
@@ -74,7 +74,7 @@ public class WelcomeActivity extends AppCompatActivity {
     android.util.Log.v(logTag(this), "onActivityResult");
     if (requestCode == ACCOUNT_SELECTION_REQUEST && resultCode == Activity.RESULT_OK) {
       mHandler.removeCallbacks(mStartPickerRunnable);
-      Log.d(logTag(this), "onActivityResult");
+      //Log.d(logTag(this), "onActivityResult");
       final String accountName = data.getStringExtra(AccountManager.KEY_ACCOUNT_NAME);
       Request request = WebUtils.getJsonRequest("http://bqbl.io/io/json/userlookup.php?email=" + accountName, new Response.Listener<JSONObject>() {
         @Override

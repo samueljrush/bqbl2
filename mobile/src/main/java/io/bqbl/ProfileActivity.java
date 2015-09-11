@@ -31,7 +31,7 @@ public class ProfileActivity extends AppCompatActivity {
     actionBar.setDisplayHomeAsUpEnabled(true);
 
     //mToolbar = (Toolbar) findViewById(R.id.main_toolbar);
-    //android.util.Log.d(logTag("DEBUGLOG"), "toolbar null: " + (mToolbar == null));
+    //android.util.//Log.d(logTag("DEBUGLOG"), "toolbar null: " + (mToolbar == null));
     //setSupportActionBar(mToolbar);
   }
 

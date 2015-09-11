@@ -76,7 +76,7 @@ public class PickScoreFragment extends Fragment {
     ArrayAdapter<Team> adapter = new ArrayAdapter<Team>(mActivity, R.layout.team_card, game.teams()) {
       @Override
       public View getView(int position, View convertView, ViewGroup parent) {
-        Log.d(logTag(this), "Getting team view: " + position);
+        //Log.d(logTag(this), "Getting team view: " + position);
         final View newView = mLayoutInflater.inflate(R.layout.team_card_editable, parent, false);
         ListView teamUserList = (ListView) newView.findViewById(R.id.user_list);
         final Team team = game.teams().get(position);
@@ -88,7 +88,7 @@ public class PickScoreFragment extends Fragment {
           score.setHint(R.string.enter_gambling_winnings);
         }
         score.setInputType(InputType.TYPE_CLASS_NUMBER);
-        score.setKeyListener(DigitsKeyListener.getInstance("0123456789."));
+        score.setKeyListener(DigitsKeyListener.getInstance("-0123456789."));
         score.addTextChangedListener(new TextWatcher() {
           @Override
           public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -123,7 +123,7 @@ public class PickScoreFragment extends Fragment {
       }
     });
     gridView.setAdapter(adapter);
-    Log.d(logTag(this), "Adapter size " + adapter.getCount());
+    //Log.d(logTag(this), "Adapter size " + adapter.getCount());
     return view;
   }
 

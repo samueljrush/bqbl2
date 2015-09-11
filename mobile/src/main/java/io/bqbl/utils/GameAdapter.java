@@ -127,14 +127,14 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.ViewHolder> {
       User.requestUser(user0, true, new Listener<User>() {
         @Override
         public void onResult(User user) {
-          Log.d(logTag(this), String.format("Game %d showing user %s", game.id(), user));
+          //Log.d(logTag(this), String.format("Game %d showing user %s", game.id(), user));
           if (mTheUserId == -1) {
             mTitleTextView.setText(SetGameStrings.generateSomeString(user.first(), user.last()));
           } else {
             User.requestUser(mTheUserId, true, new Listener<User>() {
               @Override
               public void onResult(User user) {
-                Log.d(logTag(this), "User's team: " + game.getTeamForUser(mTheUserId).teamId + " " + game.getTeamForUser(user.id()).resultTypeHolder.value.name());
+                //Log.d(logTag(this), "User's team: " + game.getTeamForUser(mTheUserId).teamId + " " + game.getTeamForUser(user.id()).resultTypeHolder.value.name());
 
                 switch (game.getTeamForUser(mTheUserId).resultTypeHolder().value) {
                   case LOSS:
@@ -228,7 +228,7 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.ViewHolder> {
           final int userId = MyApplication.getCurrentUser();
           final boolean hasWoohoo = game.woohoos().contains(userId);
           String url = URLs.getSetOohooUrl(userId, game.id(), hasWoohoo ? 0 : 1);
-          Log.d(logTag("DEBUGLOG"), url);
+          //Log.d(logTag("DEBUGLOG"), url);
           if (hasWoohoo) {
             game.woohoos().remove(Integer.valueOf(userId));
           } else {

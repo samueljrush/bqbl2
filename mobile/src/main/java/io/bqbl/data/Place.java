@@ -1,5 +1,7 @@
 package io.bqbl.data;
 
+import android.text.TextUtils;
+
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.google.auto.value.AutoValue;
@@ -23,10 +25,10 @@ public abstract class Place {
   public static final String JSON_KEY_ICON_URL = "icon_url";
   public static final String JSON_KEY_PHOTO_URL = "photo_url";
 
-  public static Place create(String id, String name, double lat, double lng, String iconUrl, String photoReference) {
+  public static Place create(String id, String nameFromPlaces, double lat, double lng, String iconUrl, String photoReference) {
     return new AutoValue_Place.Builder()
         .id(id)
-        .name(name)
+        .nameFromPlaces(nameFromPlaces)
         .lat(lat)
         .lng(lng)
         .iconUrl(iconUrl)
@@ -38,7 +40,7 @@ public abstract class Place {
     try {
       return new AutoValue_Place.Builder()
           .id(id)
-          .name(json.getString(JSON_KEY_NAME))
+          .nameFromPlaces(json.getString(JSON_KEY_NAME))
           .lat(json.getDouble(JSON_KEY_LAT))
           .lng(json.getDouble(JSON_KEY_LNG))
           .iconUrl(json.getString(JSON_KEY_ICON_URL))
@@ -72,22 +74,40 @@ public abstract class Place {
     return request;
   }
 
+  public String name() {
+    return (TextUtils.isEmpty(nameFromPlaces()) || nameFromPlaces().equals("null"))
+        ? "Off the Grid"
+        : nameFromPlaces();
+  }
+
   public abstract String id();
-  public abstract String name();
+
+  public abstract String nameFromPlaces();
+
   public abstract double lat();
+
   public abstract double lng();
+
   public abstract String iconUrl();
+
   public abstract String photoReference();
+
   public abstract Builder toBuilder();
 
   @AutoValue.Builder
   abstract static class Builder {
     public abstract Builder id(String id);
-    public abstract Builder name(String name);
+
+    public abstract Builder nameFromPlaces(String nameFromPlaces);
+
     public abstract Builder lat(double lat);
+
     public abstract Builder lng(double lng);
+
     public abstract Builder iconUrl(String iconUrl);
+
     public abstract Builder photoReference(String photoReference);
+
     public abstract Place build();
   }
 }

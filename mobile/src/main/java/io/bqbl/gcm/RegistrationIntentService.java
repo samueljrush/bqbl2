@@ -30,18 +30,18 @@ public class RegistrationIntentService extends IntentService {
 
   public RegistrationIntentService() {
     super(TAG);
-    Log.d(logTag(TAG), "Service Constructed");
+    //Log.d(logTag(TAG), "Service Constructed");
   }
 
   @Override
   public void onCreate() {
     super.onCreate();
-    Log.d(logTag(TAG), "Service Created");
+    //Log.d(logTag(TAG), "Service Created");
   }
 
   @Override
   protected void onHandleIntent(Intent intent) {
-    Log.d(logTag(TAG), "Service Handling intent");
+    //Log.d(logTag(TAG), "Service Handling intent");
     SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
 
     try {
@@ -68,7 +68,7 @@ public class RegistrationIntentService extends IntentService {
       sharedPreferences.edit().putBoolean(QuickstartPreferences.SENT_TOKEN_TO_SERVER, true).apply();
       // [END register_for_gcm]
     } catch (Exception e) {
-      Log.d(logTag(TAG), "Failed to complete token refresh", e);
+      //Log.d(logTag(TAG), "Failed to complete token refresh", e);
       // If an exception happens while fetching the new token or updating our registration data
       // on a third-party server, this ensures that we'll attempt the update at a later time.
       sharedPreferences.edit().putBoolean(QuickstartPreferences.SENT_TOKEN_TO_SERVER, false).apply();

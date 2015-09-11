@@ -23,7 +23,7 @@ import static io.bqbl.MyApplication.logTag;
 
 public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHolder> {
   private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("MMM dd");
-  private static final SimpleDateFormat TIME_FORMAT = new SimpleDateFormat("hh:mm a");
+  private static final SimpleDateFormat TIME_FORMAT = new SimpleDateFormat("h:mm a");
   private List<Comment> mCommentList;
 
   public CommentAdapter(List<Comment> commentList) {
@@ -52,7 +52,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
   @Override
   public void onBindViewHolder(final ViewHolder holder, int position) {
     holder.bind(mCommentList.get(position));
-    //Log.d(logTag(this), String.format("Binding comment %d: %s", position, mCommentList.get(position).text()));
+    ////Log.d(logTag(this), String.format("Binding comment %d: %s", position, mCommentList.get(position).text()));
   }
 
   public class ViewHolder extends RecyclerView.ViewHolder {
@@ -71,7 +71,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
     }
 
     public void bind(Comment comment) {
-      Log.d(logTag(this), "Binding comment: time " + comment.date().getTime());
+      //Log.d(logTag(this), "Binding comment: time " + comment.date().getTime());
       WebUtils.setImageRemoteUri(mCommentImageView, URLs.getUserPhotoUrl(comment.userId()));
       mCommentTextView.setText(comment.text());
       mCommentTimeView.setText(getDateString(comment.date()));

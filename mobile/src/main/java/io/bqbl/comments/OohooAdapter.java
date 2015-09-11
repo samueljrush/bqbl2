@@ -33,7 +33,7 @@ import static io.bqbl.MyApplication.logTag;
 
 public class OohooAdapter extends RecyclerView.Adapter<OohooAdapter.ViewHolder> {
   private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("MMM dd");
-  private static final SimpleDateFormat TIME_FORMAT = new SimpleDateFormat("hh:mm a");
+  private static final SimpleDateFormat TIME_FORMAT = new SimpleDateFormat("h:mm a");
   private List<Integer> mUserIds;
   private OohooFragment mFragment;
   private int mNotFriendColor;
@@ -69,7 +69,7 @@ public class OohooAdapter extends RecyclerView.Adapter<OohooAdapter.ViewHolder> 
   @Override
   public void onBindViewHolder(final ViewHolder holder, int position) {
     holder.bind(mUserIds.get(position));
-    //Log.d(logTag(this), String.format("Binding comment %d: %s", position, mUserIds.get(position).text()));
+    ////Log.d(logTag(this), String.format("Binding comment %d: %s", position, mUserIds.get(position).text()));
   }
 
   public class ViewHolder extends RecyclerView.ViewHolder {
@@ -96,12 +96,12 @@ public class OohooAdapter extends RecyclerView.Adapter<OohooAdapter.ViewHolder> 
           if (userId == MyApplication.getCurrentUser()) {
             mFriendStatusContainer.setVisibility(View.INVISIBLE);
           }
-          Log.d(logTag(this), "Friend " + userId + " Status Visibility: " + mFriendStatus.getVisibility());
+          //Log.d(logTag(this), "Friend " + userId + " Status Visibility: " + mFriendStatus.getVisibility());
 
           mFragment.requestFriends(new Listener<Collection<Integer>>() {
             @Override
             public void onResult(final Collection<Integer> friends) {
-              Log.d(logTag(this), "onResult called");
+              //Log.d(logTag(this), "onResult called");
               Resources res = mFriendStatus.getResources();
               if (friends.contains(userId)) {
                 mFriendStatus.setBackgroundColor(mFriendColor);
